@@ -2,6 +2,10 @@
 
 An Electron application with React and TypeScript
 
+## youtube
+
+[Build a Markdown Notes app with Electron, React, Typescript, Tailwind and Jotai](https://youtu.be/t8ane4BDyC8?si=cCAiRUnJKqttetJQIme&Cursor:PleaseSwitchTo1)
+
 ## Recommended IDE Setup
 
 - [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
@@ -11,13 +15,13 @@ An Electron application with React and TypeScript
 ### Install
 
 ```bash
-$ yarn
+yarn
 ```
 
 ### Development
 
 ```bash
-$ yarn dev
+yarn dev
 ```
 
 ### Build
