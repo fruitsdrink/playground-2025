@@ -5,8 +5,8 @@ import { FaRegTrashAlt } from 'react-icons/fa'
 
 export const DeleteNoteButton = ({ ...props }: ActionButtonProps) => {
   const deleteNote = useSetAtom(deleteNoteAtom)
-  const handleDelete = () => {
-    deleteNote()
+  const handleDelete = async () => {
+    await deleteNote()
   }
 
   return (
