@@ -1,4 +1,6 @@
-# Welcome to your Expo app 👋
+# React Native - Local first with Drizzle and Expo 👋
+
+[Youtube](https://www.youtube.com/live/G5u_46C0xzU?si=Ll1ds_Whvdr5i10h)
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
