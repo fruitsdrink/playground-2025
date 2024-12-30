@@ -20,7 +20,7 @@ export const habitLogs = t.sqliteTable("habitt_logs", {
   //   .integer({ mode: "timestamp" })
   //   .notNull()
   // .default(sql`(CURRENT_DATE)`),
-  date: t.text().notNull(),
+  date: t.integer({ mode: "timestamp" }).notNull(),
   completed: t.integer({ mode: "boolean" }).default(true),
   habit_id: t.integer().references(() => habits.id, {
     onDelete: "cascade",

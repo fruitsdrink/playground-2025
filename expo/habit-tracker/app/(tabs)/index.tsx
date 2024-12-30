@@ -1,74 +1,185 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { db } from "@/db/init";
+import { habitLogs, habits } from "@/db/schema";
+import { and, between, eq } from "drizzle-orm";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useMemo, useRef, useState } from "react";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TextInput,
+  Button,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+} from "react-native";
+import dayjs from "dayjs";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+function HabitLogs({ habit }: { habit: typeof habits.$inferSelect }) {
+  const { data } = useLiveQuery(
+    db
+      .select()
+      .from(habitLogs)
+      .where(
+        and(
+          eq(habitLogs.habit_id, habit.id),
+          between(
+            habitLogs.date,
+            dayjs().startOf("month").toDate(),
+            dayjs().endOf("month").toDate()
+          )
+        )
+      )
+  );
+
+  const daysInMoth = useMemo(
+    () => [...Array(dayjs().daysInMonth()).keys()],
+    []
+  );
+
+  return (
+    <View style={{ gap: 8 }}>
+      <Text
+        style={{
+          fontStyle: "italic",
+        }}
+      >
+        HabitLog for {habit.id}
+      </Text>
+      <View style={{ gap: 4 }}>
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 4 }}>
+          {daysInMoth.map((day) => {
+            const log = data.find((log) => {
+              return dayjs(log.date).date() === day + 1;
+            });
+
+            const isFromFuture = dayjs().date() < day + 1;
+
+            return (
+              <Pressable
+                key={`day-${day}-${habit.id}`}
+                disabled={isFromFuture}
+                style={{ opacity: isFromFuture ? 0.3 : 1 }}
+                onPress={async () => {
+                  if (log) {
+                    await db.delete(habitLogs).where(eq(habitLogs.id, log.id));
+                  } else {
+                    await db.insert(habitLogs).values({
+                      habit_id: habit.id,
+                      date: dayjs()
+                        .set("date", day + 1)
+                        .toDate(),
+                      completed: true,
+                    });
+                  }
+                }}
+              >
+                <View
+                  style={[
+                    styles.log,
+                    log?.completed &&
+                      habit.color && {
+                        backgroundColor: habit.color,
+                      },
+                  ]}
+                >
+                  <Text style={{ fontSize: 12, opacity: 0 }}>{day + 1}</Text>
+                </View>
+              </Pressable>
+            );
+          })}
+        </View>
+      </View>
+    </View>
+  );
+}
+
+function Habit({ habit }: { habit: typeof habits.$inferSelect }) {
+  return (
+    <View style={{ gap: 4 }}>
+      <Text
+        style={{
+          fontSize: 20,
+          fontWeight: "600",
+        }}
+      >
+        {habit.name}
+      </Text>
+      <HabitLogs habit={habit} />
+    </View>
+  );
+}
+
+function AddHabit() {
+  const [name, setName] = useState("");
+  const ref = useRef<TextInput>(null);
+
+  return (
+    <View style={{ marginVertical: 20, padding: 20 }}>
+      <TextInput
+        ref={ref}
+        placeholder="Add a habit"
+        defaultValue={name}
+        onChangeText={setName}
+      />
+      <Button
+        title="Add Habit"
+        onPress={() => {
+          db.insert(habits)
+            .values({
+              name,
+              color: "turquoise",
+              description: "Random description",
+            })
+            .finally(() => {
+              ref.current?.clear();
+              ref.current?.blur();
+            });
+        }}
+      />
+    </View>
+  );
+}
 
 export default function HomeScreen() {
+  const { data, error } = useLiveQuery(db.select().from(habits));
+  if (error) {
+    console.log(error);
+  }
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView>
+        <AddHabit />
+        <View style={{ padding: 8, marginBottom: 50 }}>
+          <Text
+            style={{
+              fontSize: 32,
+              marginBottom: 12,
+              opacity: 0.3,
+              fontWeight: "700",
+            }}
+          >
+            Habits
+          </Text>
+          <View style={{ gap: 8 }}>
+            {data.map((habit) => (
+              <Habit key={habit.id} habit={habit} />
+            ))}
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  log: {
+    width: 24,
+    height: 24,
+    borderRadius: 4,
+    backgroundColor: "lightgrey",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
