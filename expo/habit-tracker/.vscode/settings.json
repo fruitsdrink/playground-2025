@@ -1,0 +1,14 @@
+{
+  "editor.tabSize": 2,
+  "editor.codeActionsOnSave": [
+    "source.addMissingImports",
+    "source.organizeImports"
+  ],
+  "editor.formatOnSave": true,
+  "files.eol": "\n",
+  "files.refactoring.autoSave": true,
+  "search.exclude": {
+    "**/.yarn": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
+}
