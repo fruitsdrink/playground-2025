@@ -4,7 +4,7 @@ import { observable } from "@legendapp/state";
 const initialValues = {
   name: "",
   description: "",
-  color: habitColors[0],
+  color: habitColors[0]
 };
 export const newHabit$ = observable({
   ...initialValues,
@@ -13,5 +13,8 @@ export const newHabit$ = observable({
   },
   clear: () => {
     newHabit$.assign(initialValues);
-  },
+    // newHabit$.name.set("");
+    // newHabit$.description.set("");
+    // newHabit$.color.set(habitColors[0]);
+  }
 });

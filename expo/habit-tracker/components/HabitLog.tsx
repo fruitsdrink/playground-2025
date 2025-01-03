@@ -31,13 +31,6 @@ export function HabitLog({ habit }: { habit: typeof habits.$inferSelect }) {
 
   return (
     <View style={{ gap: _spacing }}>
-      <Text
-        style={{
-          fontStyle: "italic",
-        }}
-      >
-        HabitLog for {habit.id}
-      </Text>
       <View style={{ gap: _spacing }}>
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: _spacing }}>
           {daysInMoth.map((day) => {
@@ -63,7 +56,7 @@ export function HabitLog({ habit }: { habit: typeof habits.$inferSelect }) {
                     await db.insert(habitLogs).values({
                       habit_id: habit.id,
                       date,
-                      completed: true,
+                      completed: true
                     });
                   }
                 }}
@@ -73,11 +66,11 @@ export function HabitLog({ habit }: { habit: typeof habits.$inferSelect }) {
                     styles.log,
                     log?.completed &&
                       habit.color && {
-                        backgroundColor: habit.color,
-                      },
+                        backgroundColor: habit.color
+                      }
                   ]}
                 >
-                  <Text style={{ fontSize: 12, opacity: 0 }}>{day + 1}</Text>
+                  <Text style={{ fontSize: 12, opacity: 0.5 }}>{day + 1}</Text>
                 </View>
               </Pressable>
             );
@@ -95,6 +88,6 @@ const styles = StyleSheet.create({
     borderRadius: _spacing,
     backgroundColor: "lightgrey",
     justifyContent: "center",
-    alignItems: "center",
-  },
+    alignItems: "center"
+  }
 });

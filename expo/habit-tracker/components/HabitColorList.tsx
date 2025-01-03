@@ -14,7 +14,7 @@ export const HabitColorList = observer(() => {
       style={{
         flexDirection: "row",
         flexWrap: "wrap",
-        gap: _spacing,
+        gap: _spacing
       }}
     >
       {habitColors.map((color, index) => {
@@ -29,7 +29,7 @@ export const HabitColorList = observer(() => {
               borderWidth: 1,
               borderColor: isSelected ? color : "transparent",
               borderRadius: _spacing + 2,
-              padding: 1,
+              padding: 1
             }}
           >
             <View
@@ -38,6 +38,7 @@ export const HabitColorList = observer(() => {
                 aspectRatio: 1,
                 borderRadius: _spacing,
                 backgroundColor: color,
+                position: "relative"
               }}
             />
             {isSelected && (
@@ -47,7 +48,7 @@ export const HabitColorList = observer(() => {
                 style={{
                   position: "absolute",
                   bottom: -2,
-                  right: -2,
+                  right: -2
                 }}
               >
                 <CircleCheck
