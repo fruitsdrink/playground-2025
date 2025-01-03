@@ -2,7 +2,7 @@ import { habitColors } from "@/constants/Colors";
 import { _habitLogsSize, _spacing } from "@/constants/layout";
 import { newHabit$ } from "@/state/habit";
 import { observer } from "@legendapp/state/react";
-import { CircleCheck } from "lucide-react-native";
+import { Check } from "lucide-react-native";
 import { Pressable, View } from "react-native";
 import Amimated, { ZoomIn, ZoomOut } from "react-native-reanimated";
 
@@ -26,10 +26,12 @@ export const HabitColorList = observer(() => {
               newHabit$.color.set(color);
             }}
             style={{
-              borderWidth: 1,
-              borderColor: isSelected ? color : "transparent",
+              // borderWidth: 1,
+              // borderColor: isSelected ? color : "transparent",
               borderRadius: _spacing + 2,
-              padding: 1
+              padding: 1,
+              justifyContent: "center",
+              alignItems: "center"
             }}
           >
             <View
@@ -47,15 +49,21 @@ export const HabitColorList = observer(() => {
                 exiting={ZoomOut.springify().damping(80).stiffness(200)}
                 style={{
                   position: "absolute",
-                  bottom: -2,
-                  right: -2
+                  width: "70%",
+                  aspectRatio: 1,
+                  borderRadius: _spacing,
+                  backgroundColor: "#000",
+                  justifyContent: "center",
+                  alignItems: "center"
+                  // bottom: -2,
+                  // right: -2
                 }}
               >
-                <CircleCheck
-                  size={12}
-                  color="#000"
-                  fill={color}
-                  // strokeWidth={2}
+                <Check
+                  size={10}
+                  color={color}
+                  fill={"transparent"}
+                  strokeWidth={3}
                 />
               </Amimated.View>
             )}

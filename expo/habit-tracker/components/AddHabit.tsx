@@ -2,7 +2,7 @@ import {
   _borderRadius,
   _buttonHeight,
   _spacing,
-  screen,
+  screen
 } from "@/constants/layout";
 import { db } from "@/db/init";
 import { habits } from "@/db/schema";
@@ -32,7 +32,7 @@ export const AddHabit = observer(() => {
       panelStyle={{
         position: "absolute",
         right: _borderRadius,
-        bottom: bottom + _borderRadius,
+        bottom: bottom + _borderRadius
       }}
       openedSize={screen.width - _borderRadius * 2}
       isOpen={isOpen}
@@ -44,7 +44,7 @@ export const AddHabit = observer(() => {
         autoCapitalize={"none"}
         autoCorrect={false}
         autoComplete="off"
-        placeholder="Habit name"
+        placeholder="Title (Drink water, Exercise, etc.)"
         defaultValue={newHabit$.name.peek()}
         onChangeText={(text) => newHabit$.name.set(text)}
         style={styles.input}
@@ -54,7 +54,7 @@ export const AddHabit = observer(() => {
         autoCapitalize={"none"}
         autoCorrect={false}
         autoComplete="off"
-        placeholder="Habit description"
+        placeholder="Description (Optional)"
         defaultValue={newHabit$.description.peek()}
         onChangeText={(text) => newHabit$.description.set(text)}
         style={styles.input}
@@ -68,7 +68,7 @@ export const AddHabit = observer(() => {
             .values({
               name,
               color,
-              description,
+              description
             })
             .finally(() => {
               isFabOpen$.set(false);
@@ -84,7 +84,7 @@ export const AddHabit = observer(() => {
             backgroundColor: "gold",
             borderRadius: _borderRadius,
             justifyContent: "center",
-            alignItems: "center",
+            alignItems: "center"
           }}
         >
           <Text style={{ fontWeight: "500" }}>Add new habit</Text>
@@ -99,10 +99,10 @@ const styles = StyleSheet.create({
     height: _buttonHeight,
     paddingHorizontal: _spacing * 2,
     borderRadius: _borderRadius,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#f0f0f0"
   },
   p: {
     color: "white",
-    opacity: 0.8,
-  },
+    opacity: 0.8
+  }
 });
