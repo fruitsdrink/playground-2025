@@ -2,9 +2,10 @@ import { Entypo } from "@expo/vector-icons";
 import {
   Dimensions,
   StyleSheet,
+  Text,
   TouchableWithoutFeedback,
   View,
-  ViewStyle
+  ViewStyle,
 } from "react-native";
 import Animated, {
   FadeIn,
@@ -14,7 +15,7 @@ import Animated, {
   KeyboardState,
   LinearTransition,
   useAnimatedKeyboard,
-  useAnimatedStyle
+  useAnimatedStyle,
 } from "react-native-reanimated";
 
 const AnimatedEntypo = Animated.createAnimatedComponent(Entypo);
@@ -23,6 +24,7 @@ const { width } = Dimensions.get("window");
 const _defaultDuration = 500;
 
 export type FabButtonProps = {
+  title?: string;
   onPress: () => void;
   isOpen: boolean;
   children: React.ReactNode;
@@ -33,13 +35,14 @@ export type FabButtonProps = {
 };
 
 export function FabButton({
+  title,
   onPress,
   isOpen,
   panelStyle,
   children,
   duration = _defaultDuration,
   openedSize = width * 0.85,
-  closedSize = 64
+  closedSize = 64,
 }: FabButtonProps) {
   const spacing = closedSize * 0.2;
   const closeIconSize = closedSize * 0.3;
@@ -51,7 +54,7 @@ export function FabButton({
       marginBottom:
         state.value === KeyboardState.OPEN
           ? keyboardHeight.value - 80 + spacing
-          : 0
+          : 0,
     };
   });
 
@@ -64,9 +67,9 @@ export function FabButton({
           width: isOpen ? openedSize : closedSize,
           height: isOpen ? "auto" : closedSize,
           borderRadius: closedSize / 2,
-          padding: spacing
+          padding: spacing,
         },
-        keyboardHeightStyle
+        keyboardHeightStyle,
       ]}
       // Use Layout if you're using an old version of Reanimated
       layout={LinearTransition.duration(duration)}
@@ -81,7 +84,7 @@ export function FabButton({
             top: 0,
             width: closedSize,
             height: closedSize,
-            zIndex: 2
+            zIndex: 2,
           }}
           // Use Layout if you're using an old version of Reanimated
           layout={LinearTransition.duration(duration)}
@@ -113,9 +116,11 @@ export function FabButton({
           exiting={FadeOutDown.duration(duration)}
           style={{ flex: 1, gap: spacing * 2, padding: spacing }}
         >
-          {/* <View style={styles.header}>
-            <Text style={styles.heading}>BLACK FRIDAY</Text>
-          </View> */}
+          {title && (
+            <View style={styles.header}>
+              <Text style={styles.heading}>{title}</Text>
+            </View>
+          )}
           <View style={[styles.content, { gap: spacing * 2 }]}>{children}</View>
         </Animated.View>
       )}
@@ -127,15 +132,15 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "white"
+    color: "white",
   },
   panel: {
     position: "absolute",
     overflow: "hidden",
     bottom: 80,
     backgroundColor: "#111",
-    zIndex: 9999
+    zIndex: 9999,
   },
   content: { flex: 1, paddingTop: 0 },
-  header: { justifyContent: "center" }
+  header: { justifyContent: "center" },
 });

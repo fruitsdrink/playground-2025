@@ -1,4 +1,5 @@
 import { AddHabit } from "@/components/AddHabit";
+import { Backdrop } from "@/components/BlurredBackdrop";
 import { Habit } from "@/components/Habit";
 import { _spacing } from "@/constants/layout";
 
@@ -16,6 +17,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <Backdrop onPress={() => {}} />
       <AddHabit />
       <ScrollView>
         <View style={{ padding: _spacing * 2 }}>
@@ -24,7 +26,7 @@ export default function HomeScreen() {
               fontSize: 32,
               marginBottom: 12,
               opacity: 0.3,
-              fontWeight: "700"
+              fontWeight: "700",
             }}
           >
             Habits
