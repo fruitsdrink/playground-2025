@@ -39,6 +39,7 @@ export function HabitLog({ habit }: { habit: typeof habits.$inferSelect }) {
             });
 
             const isFromFuture = dayjs().date() < day + 1;
+            const hasLogs = log?.completed || log?.count;
 
             return (
               <Pressable
@@ -51,12 +52,24 @@ export function HabitLog({ habit }: { habit: typeof habits.$inferSelect }) {
                     .toDate();
 
                   if (log) {
-                    await db.delete(habitLogs).where(eq(habitLogs.id, log.id));
+                    const newCount = (log.count ?? 0) + 1;
+                    db.update(habitLogs)
+                      .set({
+                        completed:
+                          newCount > habit.count!
+                            ? false
+                            : newCount === habit.count!,
+                        count: newCount > habit.count! ? 0 : newCount,
+                      })
+                      .where(eq(habitLogs.id, log.id))
+                      .execute();
+                    // await db.delete(habitLogs).where(eq(habitLogs.id, log.id));
                   } else {
                     await db.insert(habitLogs).values({
                       habit_id: habit.id,
                       date,
                       completed: true,
+                      count: 1,
                     });
                   }
                 }}
@@ -64,13 +77,29 @@ export function HabitLog({ habit }: { habit: typeof habits.$inferSelect }) {
                 <View
                   style={[
                     styles.log,
-                    log?.completed &&
-                      habit.color && {
-                        backgroundColor: habit.color,
-                      },
+                    // (log?.completed || log?.count! > 0) &&
+                    //   habit.color && {
+                    //     backgroundColor: habit.color,
+                    //   },
                   ]}
                 >
-                  <Text style={{ fontSize: 10, opacity: 0.5 }}>{day + 1}</Text>
+                  <View
+                    style={[
+                      StyleSheet.absoluteFillObject,
+                      {
+                        backgroundColor: hasLogs
+                          ? habit.color ?? "lightgrey"
+                          : "lightgrey",
+                        opacity: hasLogs
+                          ? (log?.count ?? 0) / (habit.count! ?? 1)
+                          : 1,
+                      },
+                    ]}
+                  />
+
+                  <Text style={{ fontSize: 10, opacity: 0.5 }}>
+                    {day + 1} {log?.count ?? 0}
+                  </Text>
                 </View>
               </Pressable>
             );
@@ -89,5 +118,6 @@ const styles = StyleSheet.create({
     backgroundColor: "lightgrey",
     justifyContent: "center",
     alignItems: "center",
+    overflow: "hidden",
   },
 });

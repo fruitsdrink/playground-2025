@@ -6,6 +6,7 @@ export const habits = t.sqliteTable("habits", {
   name: t.text().notNull(),
   color: t.text().default("#0099cc"),
   description: t.text().default(""),
+  count: t.integer().default(1),
   created_at: t.text().default(sql`(CURRENT_TIMESTAMP)`),
 });
 
@@ -25,6 +26,7 @@ export const habitLogs = t.sqliteTable("habitt_logs", {
   habit_id: t.integer().references(() => habits.id, {
     onDelete: "cascade",
   }), // foreign key
+  count: t.integer().default(0),
   created_at: t.text().default(sql`(CURRENT_TIMESTAMP)`),
 });
 

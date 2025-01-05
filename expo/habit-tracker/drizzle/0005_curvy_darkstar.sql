@@ -1,0 +1,1 @@
+ALTER TABLE `habits` ADD `count` integer DEFAULT 0;
