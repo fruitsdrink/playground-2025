@@ -3,6 +3,7 @@ import { habits } from "@/db/schema";
 import { Link } from "expo-router";
 import { ChevronRight } from "lucide-react-native";
 import { Text, View } from "react-native";
+import { CurrentDayStreak } from "./CurrentDayStreak";
 import { HabitLog } from "./HabitLog";
 
 export function Habit({ habit }: { habit: typeof habits.$inferSelect }) {
@@ -13,28 +14,29 @@ export function Habit({ habit }: { habit: typeof habits.$inferSelect }) {
           pathname: `/habit/[id]`,
           params: {
             id: habit.id.toString(),
-            name: habit.name
-          }
+            name: habit.name,
+          },
         }}
       >
         <View
           style={{
             flexDirection: "row",
             alignItems: "center",
-            gap: _spacing * 2
+            gap: _spacing * 2,
           }}
         >
           <View style={{ flex: 1 }}>
             <Text
               style={{
                 fontSize: 20,
-                fontWeight: "600"
+                fontWeight: "600",
               }}
             >
               {habit.name}
             </Text>
             {habit.description && <Text>{habit.description}</Text>}
           </View>
+          <CurrentDayStreak habit={habit} />
           <ChevronRight color="rgba(0,0,0,0.2)" />
         </View>
       </Link>
