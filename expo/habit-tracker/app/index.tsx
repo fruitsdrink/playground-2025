@@ -7,7 +7,7 @@ import { db } from "@/db/init";
 import { habits } from "@/db/schema";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import React from "react";
-import { SafeAreaView, ScrollView, Text, View } from "react-native";
+import { FlatList, SafeAreaView } from "react-native";
 
 export default function HomeScreen() {
   const { data, error } = useLiveQuery(db.select().from(habits));
@@ -19,25 +19,15 @@ export default function HomeScreen() {
     <SafeAreaView style={{ flex: 1 }}>
       <Backdrop onPress={() => {}} />
       <AddHabit />
-      <ScrollView>
-        <View style={{ padding: _spacing * 2 }}>
-          <Text
-            style={{
-              fontSize: 32,
-              marginBottom: 12,
-              opacity: 0.3,
-              fontWeight: "700",
-            }}
-          >
-            Habits
-          </Text>
-          <View style={{ gap: _spacing * 2 }}>
-            {data.map((habit) => (
-              <Habit key={habit.id} habit={habit} />
-            ))}
-          </View>
-        </View>
-      </ScrollView>
+      <FlatList
+        data={data}
+        keyExtractor={(habit) => habit.id.toString()}
+        contentContainerStyle={{
+          padding: _spacing * 2,
+          gap: _spacing * 2,
+        }}
+        renderItem={({ item }) => <Habit key={item.id} habit={item} />}
+      />
     </SafeAreaView>
   );
 }
