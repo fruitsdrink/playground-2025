@@ -23,6 +23,9 @@ export default function HomeScreen() {
     <SafeAreaView style={{ flex: 1 }}>
       <Backdrop onPress={() => {}} />
       <AddHabit />
+      {/* <View style={{ backgroundColor: "white", padding: _spacing * 2 }}>
+        <Text style={{ fontSize: 32, fontWeight: "bold" }}>Habits</Text>
+      </View> */}
       <FlatList
         data={data}
         keyExtractor={(habit) => habit.id.toString()}

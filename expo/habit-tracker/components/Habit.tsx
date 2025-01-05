@@ -5,6 +5,7 @@ import { ChevronRight } from "lucide-react-native";
 import { memo } from "react";
 import { Text, View } from "react-native";
 import { CurrentDayStreak } from "./CurrentDayStreak";
+import { HabitIcon } from "./HabitIcon";
 import { HabitLog } from "./HabitLog";
 
 export const Habit = memo(
@@ -30,6 +31,7 @@ export const Habit = memo(
             style={{ flex: 1 }}
           >
             <View style={{ flex: 1 }}>
+              <HabitIcon habit={habit} color={habit.color ?? undefined} />
               <Text
                 style={{
                   fontSize: 20,

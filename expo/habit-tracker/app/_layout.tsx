@@ -43,11 +43,25 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen
           name="index"
-          options={{ title: "Habits", headerShown: false }}
+          options={{
+            headerShadowVisible: false,
+            title: "Habits",
+            headerLargeTitle: true,
+            // headerShown: true,
+            // headerTitleStyle: { fontSize: 24, fontWeight: "bold" },
+          }}
         />
         <Stack.Screen
           name="habit/[id]"
           options={{
+            title: "",
+            presentation: "formSheet",
+          }}
+        />
+        <Stack.Screen
+          name="icons"
+          options={{
+            title: "Icon",
             presentation: "formSheet",
           }}
         />

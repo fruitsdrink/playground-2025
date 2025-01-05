@@ -3,6 +3,7 @@ import { Dimensions, Insets } from "react-native";
 const { width, height } = Dimensions.get("window");
 export const _spacing = 4;
 export const _buttonHeight = 44;
+export const _buttonIconSize = 32;
 const _itemsPerRow = 15;
 export const _habitLogsSize =
   (width - (_itemsPerRow + 1) * _spacing) / _itemsPerRow;

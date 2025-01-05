@@ -1,4 +1,5 @@
 import { habitColors } from "@/constants/Colors";
+import { LucideIconName } from "@/utils/icons";
 import { observable } from "@legendapp/state";
 
 const initialValues = {
@@ -6,6 +7,7 @@ const initialValues = {
   description: "",
   color: habitColors[0],
   count: 1,
+  icon: "" as LucideIconName,
 };
 export const newHabit$ = observable({
   ...initialValues,

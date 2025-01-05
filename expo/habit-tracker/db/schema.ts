@@ -7,6 +7,7 @@ export const habits = t.sqliteTable("habits", {
   color: t.text().default("#0099cc"),
   description: t.text().default(""),
   count: t.integer().default(1),
+  icon: t.text().default(""),
   created_at: t.text().default(sql`(CURRENT_TIMESTAMP)`),
 });
 
