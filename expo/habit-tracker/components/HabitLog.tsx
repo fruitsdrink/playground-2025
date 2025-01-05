@@ -82,7 +82,9 @@ export function HabitLog({ habit }: { habit: typeof habits.$inferSelect }) {
                     backgroundColor: hasLogs
                       ? habit.color ?? "lightgrey"
                       : "lightgrey",
-                    opacity: hasLogs
+                    opacity: isFromFuture
+                      ? 0.3
+                      : hasLogs
                       ? (log?.count ?? 0) / (habit.count! ?? 1)
                       : 1,
                   },
