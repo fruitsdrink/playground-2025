@@ -22,6 +22,7 @@ export default function HomeScreen() {
       <FlatList
         data={data}
         keyExtractor={(habit) => habit.id.toString()}
+        automaticallyAdjustsScrollIndicatorInsets
         contentContainerStyle={{
           padding: _spacing * 2,
           gap: _spacing * 2,
