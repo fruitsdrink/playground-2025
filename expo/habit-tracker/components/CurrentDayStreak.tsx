@@ -1,6 +1,6 @@
 import { db } from "@/db/init";
 import { habitLogs, habits } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Text, View } from "react-native";
 
@@ -10,7 +10,12 @@ export const CurrentDayStreak = ({
   habit: typeof habits.$inferSelect;
 }) => {
   const { data } = useLiveQuery(
-    db.select().from(habitLogs).where(eq(habitLogs.habit_id, habit.id)).limit(1)
+    db
+      .select()
+      .from(habitLogs)
+      .where(eq(habitLogs.habit_id, habit.id))
+      .orderBy(desc(habitLogs.date))
+      .limit(1)
   );
   const currentDay = data?.[0];
   console.log(currentDay);
