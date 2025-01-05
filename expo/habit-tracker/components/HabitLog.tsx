@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { and, between, eq } from "drizzle-orm";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { useMemo } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export function HabitLog({ habit }: { habit: typeof habits.$inferSelect }) {
   const { data } = useLiveQuery(
@@ -44,11 +44,12 @@ export function HabitLog({ habit }: { habit: typeof habits.$inferSelect }) {
             const hasLogs = log?.completed || log?.count;
 
             return (
-              <Pressable
+              <View
                 key={`day-${day}-${habit.id}`}
-                disabled={isFromFuture}
-                style={{ opacity: isFromFuture ? 0.5 : 1 }}
-                onPress={async () => {
+                onTouchStart={async () => {
+                  if (isFromFuture) {
+                    return;
+                  }
                   const date = dayjs()
                     .set("date", day + 1)
                     .toDate();
@@ -75,35 +76,18 @@ export function HabitLog({ habit }: { habit: typeof habits.$inferSelect }) {
                     });
                   }
                 }}
-              >
-                <View
-                  style={[
-                    styles.log,
-                    // (log?.completed || log?.count! > 0) &&
-                    //   habit.color && {
-                    //     backgroundColor: habit.color,
-                    //   },
-                  ]}
-                >
-                  <View
-                    style={[
-                      StyleSheet.absoluteFillObject,
-                      {
-                        backgroundColor: hasLogs
-                          ? habit.color ?? "lightgrey"
-                          : "lightgrey",
-                        opacity: hasLogs
-                          ? (log?.count ?? 0) / (habit.count! ?? 1)
-                          : 1,
-                      },
-                    ]}
-                  />
-
-                  <Text style={{ fontSize: 10, opacity: 0.5 }}>
-                    {day + 1} {log?.count ?? 0}
-                  </Text>
-                </View>
-              </Pressable>
+                style={[
+                  styles.log,
+                  {
+                    backgroundColor: hasLogs
+                      ? habit.color ?? "lightgrey"
+                      : "lightgrey",
+                    opacity: hasLogs
+                      ? (log?.count ?? 0) / (habit.count! ?? 1)
+                      : 1,
+                  },
+                ]}
+              />
             );
           })}
         </View>
