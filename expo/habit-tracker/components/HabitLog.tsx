@@ -22,6 +22,8 @@ export function HabitLog({ habit }: { habit: typeof habits.$inferSelect }) {
           )
         )
       )
+      .orderBy(habitLogs.date),
+    [habit.id]
   );
 
   const daysInMoth = useMemo(
@@ -45,7 +47,7 @@ export function HabitLog({ habit }: { habit: typeof habits.$inferSelect }) {
               <Pressable
                 key={`day-${day}-${habit.id}`}
                 disabled={isFromFuture}
-                style={{ opacity: isFromFuture ? 0.3 : 1 }}
+                style={{ opacity: isFromFuture ? 0.5 : 1 }}
                 onPress={async () => {
                   const date = dayjs()
                     .set("date", day + 1)

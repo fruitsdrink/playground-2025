@@ -5,12 +5,16 @@ import { _spacing } from "@/constants/layout";
 
 import { db } from "@/db/init";
 import { habits } from "@/db/schema";
+import { asc } from "drizzle-orm";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import React from "react";
 import { FlatList, SafeAreaView } from "react-native";
 
 export default function HomeScreen() {
-  const { data, error } = useLiveQuery(db.select().from(habits));
+  const { data, error } = useLiveQuery(
+    db.select().from(habits).orderBy(asc(habits.created_at)),
+    []
+  );
   if (error) {
     console.log(error);
   }
