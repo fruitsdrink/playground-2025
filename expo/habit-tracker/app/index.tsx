@@ -5,12 +5,16 @@ import { _spacing } from "@/constants/layout";
 
 import { db } from "@/db/init";
 import { habits } from "@/db/schema";
+import { asc } from "drizzle-orm";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import React from "react";
-import { SafeAreaView, ScrollView, Text, View } from "react-native";
+import { FlatList, SafeAreaView } from "react-native";
 
 export default function HomeScreen() {
-  const { data, error } = useLiveQuery(db.select().from(habits));
+  const { data, error } = useLiveQuery(
+    db.select().from(habits).orderBy(asc(habits.created_at)),
+    []
+  );
   if (error) {
     console.log(error);
   }
@@ -19,25 +23,19 @@ export default function HomeScreen() {
     <SafeAreaView style={{ flex: 1 }}>
       <Backdrop onPress={() => {}} />
       <AddHabit />
-      <ScrollView>
-        <View style={{ padding: _spacing * 2 }}>
-          <Text
-            style={{
-              fontSize: 32,
-              marginBottom: 12,
-              opacity: 0.3,
-              fontWeight: "700",
-            }}
-          >
-            Habits
-          </Text>
-          <View style={{ gap: _spacing * 2 }}>
-            {data.map((habit) => (
-              <Habit key={habit.id} habit={habit} />
-            ))}
-          </View>
-        </View>
-      </ScrollView>
+      {/* <View style={{ backgroundColor: "white", padding: _spacing * 2 }}>
+        <Text style={{ fontSize: 32, fontWeight: "bold" }}>Habits</Text>
+      </View> */}
+      <FlatList
+        data={data}
+        keyExtractor={(habit) => habit.id.toString()}
+        automaticallyAdjustsScrollIndicatorInsets
+        contentContainerStyle={{
+          padding: _spacing * 2,
+          gap: _spacing * 2,
+        }}
+        renderItem={({ item }) => <Habit key={item.id} habit={item} />}
+      />
     </SafeAreaView>
   );
 }

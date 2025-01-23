@@ -2,7 +2,7 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import {
   DarkTheme,
   DefaultTheme,
-  ThemeProvider
+  ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -19,7 +19,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf")
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
   const { success, error } = useLocalMigrations();
@@ -43,9 +43,28 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen
           name="index"
-          options={{ title: "Habits", headerShown: false }}
+          options={{
+            headerShadowVisible: false,
+            title: "Habits",
+            headerLargeTitle: true,
+            // headerShown: true,
+            // headerTitleStyle: { fontSize: 24, fontWeight: "bold" },
+          }}
         />
-        <Stack.Screen name="habit/[id]" />
+        <Stack.Screen
+          name="habit/[id]"
+          options={{
+            title: "",
+            presentation: "formSheet",
+          }}
+        />
+        <Stack.Screen
+          name="icons"
+          options={{
+            title: "Icon",
+            presentation: "formSheet",
+          }}
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />

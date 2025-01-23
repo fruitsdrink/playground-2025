@@ -1,0 +1,1 @@
+ALTER TABLE `habitt_logs` ADD `count` integer DEFAULT 0;

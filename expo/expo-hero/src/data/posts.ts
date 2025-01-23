@@ -27,7 +27,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/animation/onboarding-pagination-indicator.mp4"),
     github: "https://github.com/fruitsdrink/rn-onboarding-component-",
     youtube: "https://youtu.be/m8ATJwrAif0",
-    tags: ["动画", "reanimated", "onboarding", "轮播图"]
+    tags: ["动画", "reanimated", "onboarding", "轮播图"],
   },
   {
     id: "2",
@@ -38,7 +38,7 @@ export const posts: Post[] = [
     image: require("@assets/images/cover/reanimated.png"),
     youtube: "https://youtu.be/bP72HF-G4aQ",
     tags: ["动画", "reanimated"],
-    isTop: false
+    isTop: false,
   },
   {
     id: "3",
@@ -48,7 +48,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/animation/reanimated-carousel.mp4"),
     imageSizeType: "vertical",
     youtube: "https://youtu.be/LflZJ4sY5Pw",
-    tags: ["动画", "reanimated", "轮播图"]
+    tags: ["动画", "reanimated", "轮播图"],
   },
   {
     id: "4",
@@ -58,7 +58,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/animation/reanimated-slider.mp4"),
     imageSizeType: "vertical",
     youtube: "https://youtu.be/wIh60UQzUKY",
-    tags: ["FlatList", "动画", "reanimated", "轮播图"]
+    tags: ["FlatList", "动画", "reanimated", "轮播图"],
   },
   {
     id: "5",
@@ -68,7 +68,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/onboarding-screen/onboarding-screen-01.mp4"),
     imageSizeType: "vertical",
     youtube: "https://youtu.be/7ZkwC8NKPzM",
-    tags: ["引导屏", "onboarding", "FlatList"]
+    tags: ["引导屏", "onboarding", "FlatList"],
   },
   {
     id: "6",
@@ -78,7 +78,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/onboarding-screen/onboarding-screen-02.mp4"),
     imageSizeType: "vertical",
     youtube: "https://youtu.be/0eWe01XPM40",
-    tags: ["引导屏", "onboarding", "FlatList"]
+    tags: ["引导屏", "onboarding", "FlatList"],
   },
   {
     id: "7",
@@ -88,7 +88,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/onboarding-screen/onboarding-screen-03.mp4"),
     imageSizeType: "vertical",
     youtube: "https://youtu.be/1XP28xVToho",
-    tags: ["引导屏", "onboarding", "原生动画", "ScrollView", "动画"]
+    tags: ["引导屏", "onboarding", "原生动画", "ScrollView", "动画"],
   },
   {
     id: "8",
@@ -98,7 +98,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/onboarding-screen/onboarding-screen-04.mp4"),
     imageSizeType: "vertical",
     youtube: "https://youtu.be/OT-73hpwxXQ",
-    tags: ["引导屏", "onboarding", "reanimated", "动画", "ScrollView"]
+    tags: ["引导屏", "onboarding", "reanimated", "动画", "ScrollView"],
   },
   {
     id: "9",
@@ -108,7 +108,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/onboarding-screen/onboarding-screen-05.mp4"),
     imageSizeType: "vertical",
     youtube: "https://youtu.be/YE7c6ch2msY",
-    tags: ["引导屏", "onboarding", "原生动画", "动画", "FlatList"]
+    tags: ["引导屏", "onboarding", "原生动画", "动画", "FlatList"],
   },
   {
     id: "10",
@@ -118,7 +118,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/onboarding-screen/onboarding-screen-06.mp4"),
     imageSizeType: "vertical",
     youtube: "https://youtu.be/XHFND34Tx9g",
-    tags: ["引导屏", "onboarding", "FlatList"]
+    tags: ["引导屏", "onboarding", "FlatList"],
   },
   {
     id: "11",
@@ -128,7 +128,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/animation/reanimated-wallpaper-carousel.mp4"),
     imageSizeType: "vertical",
     youtube: "https://youtu.be/qaGRabISXwI",
-    tags: ["视差", "轮播图", "TanStack Query", "FlatList", "reanimated"]
+    tags: ["视差", "轮播图", "TanStack Query", "FlatList", "reanimated"],
   },
   {
     id: "12",
@@ -138,7 +138,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/animation/animated-flatlist.mp4"),
     imageSizeType: "vertical",
     youtube: "https://youtu.be/F8x-dyIsrJ8",
-    tags: ["FlatList", "原生动画", "动画"]
+    tags: ["FlatList", "原生动画", "动画"],
   },
   {
     id: "13",
@@ -148,7 +148,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/animation/reanimated-wallpaper-carousel2.mp4"),
     imageSizeType: "vertical",
     youtube: "https://www.youtube.com/live/8Saxitk5IWg",
-    tags: ["视差", "轮播图", "TanStack Query", "FlatList", "reanimated"]
+    tags: ["视差", "轮播图", "TanStack Query", "FlatList", "reanimated"],
   },
   {
     id: "14",
@@ -158,7 +158,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/animation/tiktok-incoming-message.mp4"),
     imageSizeType: "vertical",
     youtube: "https://youtu.be/dFUaYZ_AXcc",
-    tags: ["FlatList", "reanimated", "SegmentedControl", "动画"]
+    tags: ["FlatList", "reanimated", "SegmentedControl", "动画"],
   },
   {
     id: "15",
@@ -168,7 +168,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/animation/reanimated-vertical-list.mp4"),
     imageSizeType: "vertical",
     youtube: "https://youtu.be/dFUaYZ_AXcc",
-    tags: ["FlatList", "reanimated", "动画"]
+    tags: ["FlatList", "reanimated", "动画"],
   },
   {
     id: "16",
@@ -178,7 +178,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/animation/reanimated-layout.mp4"),
     imageSizeType: "vertical",
     youtube: "https://youtu.be/tROYCoYpO58",
-    tags: ["FlatList", "reanimated", "动画", "Moti"]
+    tags: ["FlatList", "reanimated", "动画", "Moti"],
   },
   {
     id: "17",
@@ -188,7 +188,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/not-just/tesla-clone.mp4"),
     imageSizeType: "vertical",
     youtube: "https://youtu.be/iQ_0Fd_N3Mk",
-    tags: ["NotJust", "FlatList"]
+    tags: ["NotJust", "FlatList"],
   },
   {
     id: "18",
@@ -198,7 +198,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/tabbar/tabbar01.mp4"),
     imageSizeType: "vertical",
     youtube: "https://youtu.be/GrLCS5ww030",
-    tags: ["Tabbar", "动画", "reanimated"]
+    tags: ["Tabbar", "动画", "reanimated"],
   },
   {
     id: "19",
@@ -208,7 +208,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/animation/reanimated-top-tabs.mp4"),
     imageSizeType: "vertical",
     youtube: "https://youtu.be/zBBMimH6lTc",
-    tags: ["Tabbar", "动画", "reanimated", "LucideIcon", "动态组件"]
+    tags: ["Tabbar", "动画", "reanimated", "LucideIcon", "动态组件"],
   },
   {
     id: "20",
@@ -218,7 +218,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/animation/reanimated-counter.mp4"),
     imageSizeType: "vertical",
     youtube: "https://youtu.be/Rv91NdVtnsw",
-    tags: ["动画", "reanimated", "LucideIcon", "动态组件", "数字"]
+    tags: ["动画", "reanimated", "LucideIcon", "动态组件", "数字"],
   },
   {
     id: "21",
@@ -228,7 +228,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/animation/reanimated-leaderboard.mp4"),
     imageSizeType: "vertical",
     youtube: "https://youtu.be/ycnnhfHO8wU",
-    tags: ["动画", "reanimated"]
+    tags: ["动画", "reanimated"],
   },
   {
     id: "22",
@@ -238,7 +238,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/animation/reanimated-sentence.mp4"),
     imageSizeType: "vertical",
     youtube: "https://www.youtube.com/live/-YjeQ9zvM3E",
-    tags: ["动画", "reanimated", "文字"]
+    tags: ["动画", "reanimated", "文字"],
   },
   {
     id: "23",
@@ -248,7 +248,7 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/animation/reanimated-accordion.mp4"),
     imageSizeType: "vertical",
     youtube: "https://www.youtube.com/live/T-b0gxkW9MM",
-    tags: ["动画", "reanimated", "手风琴", "下拉组件"]
+    tags: ["动画", "reanimated", "手风琴", "下拉组件"],
   },
   {
     id: "24",
@@ -258,6 +258,17 @@ export const posts: Post[] = [
     video: require("@assets/videos/cover/tabbar/tabbar02.mp4"),
     imageSizeType: "vertical",
     bilibili: "https://www.bilibili.com/video/BV1rZHnegEcG",
-    tags: ["Tabbar"]
-  }
+    tags: ["Tabbar"],
+  },
+  {
+    id: "25",
+    title: "收藏动画",
+    href: "/animation/reanimated-heart",
+    date: "2025-01-05",
+    video: require("@assets/videos/cover/animation/reanimated-heart.mp4"),
+    imageSizeType: "vertical",
+    youtube:
+      "https://www.youtube.com/watch?v=yz9E10Dq8Bg&list=PLjHsmVtnAr9TWoMAh-3QMiP7bPUqPFuFZ&index=1Ime&Cursor:PleaseSwitchTo1",
+    tags: ["动画", "reanimated"],
+  },
 ];

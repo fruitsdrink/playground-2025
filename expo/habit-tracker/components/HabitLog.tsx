@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { and, between, eq } from "drizzle-orm";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { useMemo } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export function HabitLog({ habit }: { habit: typeof habits.$inferSelect }) {
   const { data } = useLiveQuery(
@@ -22,6 +22,8 @@ export function HabitLog({ habit }: { habit: typeof habits.$inferSelect }) {
           )
         )
       )
+      .orderBy(habitLogs.date),
+    [habit.id]
   );
 
   const daysInMoth = useMemo(
@@ -39,40 +41,55 @@ export function HabitLog({ habit }: { habit: typeof habits.$inferSelect }) {
             });
 
             const isFromFuture = dayjs().date() < day + 1;
+            const hasLogs = log?.completed || log?.count;
 
             return (
-              <Pressable
+              <View
                 key={`day-${day}-${habit.id}`}
-                disabled={isFromFuture}
-                style={{ opacity: isFromFuture ? 0.3 : 1 }}
-                onPress={async () => {
+                onTouchStart={async () => {
+                  if (isFromFuture) {
+                    return;
+                  }
                   const date = dayjs()
                     .set("date", day + 1)
                     .toDate();
 
                   if (log) {
-                    await db.delete(habitLogs).where(eq(habitLogs.id, log.id));
+                    const newCount = (log.count ?? 0) + 1;
+                    db.update(habitLogs)
+                      .set({
+                        completed:
+                          newCount > habit.count!
+                            ? false
+                            : newCount === habit.count!,
+                        count: newCount > habit.count! ? 0 : newCount,
+                      })
+                      .where(eq(habitLogs.id, log.id))
+                      .execute();
+                    // await db.delete(habitLogs).where(eq(habitLogs.id, log.id));
                   } else {
                     await db.insert(habitLogs).values({
                       habit_id: habit.id,
                       date,
-                      completed: true
+                      completed: true,
+                      count: 1,
                     });
                   }
                 }}
-              >
-                <View
-                  style={[
-                    styles.log,
-                    log?.completed &&
-                      habit.color && {
-                        backgroundColor: habit.color
-                      }
-                  ]}
-                >
-                  <Text style={{ fontSize: 12, opacity: 0.5 }}>{day + 1}</Text>
-                </View>
-              </Pressable>
+                style={[
+                  styles.log,
+                  {
+                    backgroundColor: hasLogs
+                      ? habit.color ?? "lightgrey"
+                      : "lightgrey",
+                    opacity: isFromFuture
+                      ? 0.3
+                      : hasLogs
+                      ? (log?.count ?? 0) / (habit.count! ?? 1)
+                      : 1,
+                  },
+                ]}
+              />
             );
           })}
         </View>
@@ -88,6 +105,7 @@ const styles = StyleSheet.create({
     borderRadius: _spacing,
     backgroundColor: "lightgrey",
     justifyContent: "center",
-    alignItems: "center"
-  }
+    alignItems: "center",
+    overflow: "hidden",
+  },
 });
