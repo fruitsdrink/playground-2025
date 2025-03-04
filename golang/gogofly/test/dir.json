@@ -1,0 +1,54 @@
+{
+  "name": "src",
+  "children": [
+    {
+      "name": "api",
+      "description": "接口"
+    },
+    {
+      "name": "cmd",
+      "description": "命令行"
+    },
+    {
+      "name": "conf",
+      "description": "存放配置文件"
+    },
+    {
+      "name": "dao",
+      "description": "存放数据访问对象"
+    },
+    {
+      "name": "global",
+      "description": "全局变量"
+    },
+    {
+      "name": "log",
+      "description": "日志"
+    },
+    {
+      "name": "middleware",
+      "description": "中间件"
+    },
+    {
+      "name": "model",
+      "description": "模型"
+    },
+    {
+      "name": "router",
+      "description": "路由"
+    },
+    {
+      "name": "service",
+      "children": [
+        {
+          "name": "dto",
+          "description": "数据传输对象"
+        }
+      ]
+    },
+    {
+      "name": "utils",
+      "description": "工具"
+    }
+  ]
+}
