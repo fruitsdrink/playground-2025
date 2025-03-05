@@ -1,5 +1,5 @@
 {
-  "name": "src",
+  "name": "",
   "children": [
     {
       "name": "api",
@@ -19,7 +19,17 @@
     },
     {
       "name": "global",
-      "description": "全局变量"
+      "description": "全局变量",
+      "children": [
+        {
+          "name": "constant",
+          "description": "常量"
+        },
+        {
+          "name": "types",
+          "description": "类型"
+        }
+      ]
     },
     {
       "name": "log",
