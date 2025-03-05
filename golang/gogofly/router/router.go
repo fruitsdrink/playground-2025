@@ -67,7 +67,7 @@ func RunServer() {
 
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("listen: %s\n", err)
+			log.Fatalf("Start Server Error: %s\n", err)
 		} else {
 
 		}
