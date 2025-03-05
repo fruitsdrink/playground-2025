@@ -59,6 +59,10 @@
     {
       "name": "utils",
       "description": "工具"
+    },
+    {
+      "name": "resources",
+      "description": "资源"
     }
   ]
 }
