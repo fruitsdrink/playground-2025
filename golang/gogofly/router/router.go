@@ -65,16 +65,20 @@ func RunServer() {
 		Handler: r,
 	}
 
+	isRunning := true
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("Start Server Error: %s\n", err)
+			isRunning = false
 			return
 		}
 	}()
 
-	utils.ShowBanner()
-	startInfo := fmt.Sprintf("Server Start at: %s", port)
-	fmt.Println(eroticgo.GREEN.Sprint(startInfo))
+	if isRunning {
+		utils.ShowBanner()
+		startInfo := fmt.Sprintf("Server Start at: %s", port)
+		fmt.Println(eroticgo.GREEN.Sprint(startInfo))
+	}
 
 	<-ctx.Done()
 
