@@ -16,6 +16,7 @@
     "pflag",
     "sagikazarmark",
     "sourcegraph",
-    "subosito"
+    "subosito",
+    "swaggerfiles"
   ]
 }

@@ -1,4 +1,4 @@
-package baseInfo
+package baseinfo
 
 import (
 	"github.com/gin-gonic/gin"

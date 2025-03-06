@@ -9,12 +9,16 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/gin-gonic/gin"
-	"github.com/gogofly/global/types"
 	"github.com/gogofly/router/auth"
-	baseInfo "github.com/gogofly/router/baseinfo"
+	"github.com/gogofly/router/baseinfo"
+
+	"github.com/gin-gonic/gin"
+	docs "github.com/gogofly/docs"
+	"github.com/gogofly/global/types"
 	"github.com/gogofly/utils"
 	"github.com/spf13/viper"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/yyle88/eroticgo"
 )
 
@@ -31,7 +35,7 @@ func registerRoute(fn types.IFnRegisterRoute) {
 
 func initRoutes() {
 	auth.Init(registerRoute)
-	baseInfo.Init(registerRoute)
+	baseinfo.Init(registerRoute)
 }
 
 func initRouter() *gin.Engine {
@@ -46,7 +50,17 @@ func initRouter() *gin.Engine {
 		route(publicRouterGroup, authRouterGroup)
 	}
 
+	// swagger
+	initSwagger(r)
 	return r
+}
+
+func initSwagger(r *gin.Engine) {
+	docs.SwaggerInfo.Title = "GoGoFly"
+	docs.SwaggerInfo.Description = "GoGoFly API"
+	docs.SwaggerInfo.Version = "0.0.1"
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 }
 
 func RunServer() {
@@ -68,8 +82,8 @@ func RunServer() {
 	isRunning := true
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("Start Server Error: %s\n", err)
 			isRunning = false
+			log.Fatalf("Start Server Error: %s\n", err)
 			return
 		}
 	}()
