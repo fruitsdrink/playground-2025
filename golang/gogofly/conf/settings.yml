@@ -27,10 +27,11 @@ db:
   logSql: true # 是否开启SQL日志
   maxIdleConns: 10 # 最大空闲连接数
   maxOpenConns: 100 # 最大打开连接数
-  connMaxLifetime: 300 # 连接最大复用时间，单位为秒
+  connMaxLifetime: "1h" # 连接最大复用时间，支持1s/1m/1h
   autoMigrate: true # 是否自动迁移
 redis:
   url: "127.0.0.1:6379" # redis地址
   password: "" # redis密码
   db: 0 # redis数据库
   prefix: "gogofly" # redis key前缀
+  duration: "1h" # 缓存时间,支持1s/1m/1h

@@ -15,7 +15,14 @@ func (l customerLogger) Printf(format string, v ...interface{}) {
 	l.logger.Infof(format, v...)
 }
 
-func Init() (*SettingsConfig, *zap.SugaredLogger, *RedisClient, *gorm.DB, error) {
+type Conf struct {
+	Settings *SettingsConfig
+	Logger *zap.SugaredLogger
+	Redis *RedisClient
+	DB *gorm.DB
+}
+
+func Init() (*Conf, error) {
 	err := error(nil)
 	settings := InitSettings()
 	logger := InitLogger(settings)
@@ -28,5 +35,12 @@ func Init() (*SettingsConfig, *zap.SugaredLogger, *RedisClient, *gorm.DB, error)
 	if dbErr != nil {
 		utils.AppendError(err, dbErr)
 	}
-	return settings, logger, redis,db, err
+	result := &Conf{
+		Settings: settings,
+		Logger: logger,
+		Redis: redis,
+		DB: db,
+	}
+
+	return result, err
 }

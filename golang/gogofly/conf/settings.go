@@ -84,6 +84,8 @@ type redisConfig struct{
 	Db int `mapstructure:"db"`
 	// key前缀
 	Prefix string `mapstructure:"prefix"`
+	// 缓存时间,支持1s/1m/1h
+	Duration string `mapstructure:"duration"`
 }
 
 // 配置

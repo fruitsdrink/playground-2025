@@ -14,16 +14,16 @@ var (
 )
 
 func init() {
-	settings, logger, redis, db, err := conf.Init()
+	conf, err := conf.Init()
 	if err != nil {
-		if logger != nil {
-			logger.Error("初始化失败: ", err.Error())
+		if conf.Logger != nil {
+			conf.Logger.Error("初始化失败: ", err.Error())
 		}else{
 			panic("初始化失败: " + err.Error())
 		}
 	}
-	Settings = settings
-	Logger = logger
-	Redis = redis
-	DB = db
+	Settings = conf.Settings
+	Logger = conf.Logger
+	Redis = conf.Redis
+	DB = conf.DB
 }
