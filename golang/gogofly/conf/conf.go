@@ -1,13 +1,32 @@
 package conf
 
 import (
-	"github.com/gogofly/global"
+	"github.com/gogofly/utils"
+	"go.uber.org/zap"
+	"gorm.io/gorm"
 )
 
+type customerLogger struct {
+	logger *zap.SugaredLogger
+}
 
-func Init() {
-	global.Settings = InitSettings()
-	global.Logger = InitLogger(global.Settings)
+// Printf(string, ...interface{})
+func (l customerLogger) Printf(format string, v ...interface{}) {
+	l.logger.Infof(format, v...)
+}
+
+func Init() (*SettingsConfig, *zap.SugaredLogger, *RedisClient, *gorm.DB, error) {
+	err := error(nil)
+	settings := InitSettings()
+	logger := InitLogger(settings)
+	redis, redisErr := InitRedis(settings)
+	if redisErr != nil {
+		utils.AppendError(err, redisErr)
+	}
 	// 必须在InitLogger之后调用
-	global.DB = InitDB()
+	db, dbErr := InitDB(settings, customerLogger{logger: logger})
+	if dbErr != nil {
+		utils.AppendError(err, dbErr)
+	}
+	return settings, logger, redis,db, err
 }

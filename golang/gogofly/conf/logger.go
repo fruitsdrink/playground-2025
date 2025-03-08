@@ -6,7 +6,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gogofly/global/types"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
@@ -14,7 +13,7 @@ import (
 
 
 
-func InitLogger(settings *types.SettingsConfig) *zap.SugaredLogger {
+func InitLogger(settings *SettingsConfig) *zap.SugaredLogger {
 	encoder := getEncoder()
 	writers := getWriters(settings)
 	writeSyncer := zapcore.NewMultiWriteSyncer(writers...)
@@ -38,7 +37,7 @@ func getEncoder() zapcore.Encoder {
 	return zapcore.NewJSONEncoder(encoderConfig)
 }
 
-func getWriters(settings *types.SettingsConfig) []zapcore.WriteSyncer {
+func getWriters(settings *SettingsConfig) []zapcore.WriteSyncer {
 	writers := []zapcore.WriteSyncer{}
 	if settings.Log.Console {
 		writers = append(writers, getConsoleWriter())
@@ -50,7 +49,7 @@ func getConsoleWriter() zapcore.WriteSyncer {
 	return zapcore.AddSync(os.Stdout)
 }
 
-func getFileWriteSyncer(settings *types.SettingsConfig) zapcore.WriteSyncer {
+func getFileWriteSyncer(settings *SettingsConfig) zapcore.WriteSyncer {
 	separator := string(filepath.Separator)
 	rootDir, _ := os.Getwd()
 	logFilePath := rootDir + separator + settings.Log.Path + separator + time.Now().Format(time.DateOnly) + ".log"

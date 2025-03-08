@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/gogofly/global"
 	"github.com/gogofly/model"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -12,56 +11,48 @@ import (
 	"gorm.io/gorm/schema"
 )
 
-type customerLogger struct {
-}
-
-// Printf(string, ...interface{})
-func (l customerLogger) Printf(format string, v ...interface{}) {
-	global.Logger.Infof(format, v...)
-}
-
-func InitDB() *gorm.DB {
 
 
-	dsn := createDsn()
-	logger := createLogger()
+func InitDB(settings *SettingsConfig, dbLogger logger.Writer) (*gorm.DB, error) {
 
-	db, err := createDB(dsn, logger)
+
+	dsn := createDsn(settings, dbLogger)
+	logger := createLogger(settings, dbLogger)
+
+	db, err := createDB(dsn, logger, settings)
 
 	if err != nil {
-		global.Logger.Fatal("数据库连接失败: ", err)
-		panic("数据库连接失败: " + err.Error())
+		return nil, err
 	}
-	global.Logger.Info("数据库连接成功")
 	
-	autoMigrate(db)
+	autoMigrate(db, settings, dbLogger)
 
-	return db
+	return db, nil
 }
 
 
-func createDsn() string {
-	host := global.Settings.Db.Host
-	port := global.Settings.Db.Port
-	user := global.Settings.Db.User
-	password := global.Settings.Db.Password
-	dbname := global.Settings.Db.DbName
+func createDsn(settings *SettingsConfig, dbLogger logger.Writer) string {
+	host := settings.Db.Host
+	port := settings.Db.Port
+	user := settings.Db.User
+	password := settings.Db.Password
+	dbname := settings.Db.DbName
 
 
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local", user, password, host, port, dbname)
-	global.Logger.Info("数据库连接字符串: ", dsn)
+	dbLogger.Printf("数据库连接字符串: %s", dsn)
 
 	return dsn
 }
 
-func createLogger() logger.Interface {
+func createLogger(settings *SettingsConfig, dbLogger logger.Writer) logger.Interface {
 	logMode := logger.Info
-	if(!global.Settings.Db.LogSql){
+	if(!settings.Db.LogSql){
 		logMode = logger.Error
 	}
 
 	logger := logger.New(
-		customerLogger{},
+		dbLogger,
 		logger.Config{
 			SlowThreshold: time.Second, // 慢 SQL 阈值
 			LogLevel:      logMode,     // Log level
@@ -74,11 +65,11 @@ func createLogger() logger.Interface {
 	return logger	
 }
 
-func createDB(dsn string, logger logger.Interface) (*gorm.DB, error){
-	tablePrefix := global.Settings.Db.TablePrefix
-	maxIdleConns := global.Settings.Db.MaxIdleConns
-	maxOpenConns := global.Settings.Db.MaxOpenConns
-	maxLifetime := global.Settings.Db.ConnMaxLifetime
+func createDB(dsn string, logger logger.Interface, settings *SettingsConfig) (*gorm.DB, error){
+	tablePrefix := settings.Db.TablePrefix
+	maxIdleConns := settings.Db.MaxIdleConns
+	maxOpenConns := settings.Db.MaxOpenConns
+	maxLifetime := settings.Db.ConnMaxLifetime
 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
@@ -108,18 +99,18 @@ func createDB(dsn string, logger logger.Interface) (*gorm.DB, error){
 	return db, err
 }
 
-func autoMigrate(db *gorm.DB) {
-	autoMigrate := global.Settings.Db.AutoMigrate
+func autoMigrate(db *gorm.DB, settings *SettingsConfig, dbLogger logger.Writer) {
+	autoMigrate := settings.Db.AutoMigrate
 
 	if autoMigrate {
 		// 自动迁移
-		global.Logger.Info("开始自动迁移")
+		dbLogger.Printf("开始自动迁移")
 		err := db.AutoMigrate(model.Models...)
 		if err!= nil {
-			global.Logger.Fatal("自动迁移失败: ", err)
+			dbLogger.Printf("自动迁移失败: ", err)
 			panic("自动迁移失败: " + err.Error())
 		}else{
-			global.Logger.Info("自动迁移成功")
+			dbLogger.Printf("自动迁移成功")
 		}
 	}
 }

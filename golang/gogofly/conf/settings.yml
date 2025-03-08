@@ -29,3 +29,8 @@ db:
   maxOpenConns: 100 # 最大打开连接数
   connMaxLifetime: 300 # 连接最大复用时间，单位为秒
   autoMigrate: true # 是否自动迁移
+redis:
+  url: "127.0.0.1:6379" # redis地址
+  password: "" # redis密码
+  db: 0 # redis数据库
+  prefix: "gogofly" # redis key前缀
