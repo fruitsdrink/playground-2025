@@ -83,6 +83,24 @@ func setDefaultValue(settings *types.SettingsConfig){
 	if settings.Swagger.Path[len(settings.Swagger.Path)-4:] != "*any" {
 		settings.Swagger.Path = settings.Swagger.Path + "/*any"
 	}
+
+	if settings.Db.Host == "" {
+		settings.Db.Host = "127.0.0.1"
+	}
+	if settings.Db.Port == 0 {
+		settings.Db.Port = 3306
+	}
+	if settings.Db.User == "" {
+		settings.Db.User = "root"
+	}
+	if settings.Db.Password == "" {
+		settings.Db.Password = ""
+	}
+	
+	if settings.Db.TablePrefix == "" {
+		settings.Db.TablePrefix = "sys_"
+	}
+	
 }
 
 

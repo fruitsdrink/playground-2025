@@ -17,3 +17,15 @@ swagger:
   description: "GoGoFly" # swagger描述
   version: "1.0" # swagger版本
   path: "/swagger" # swagger路径
+db:
+  host: "127.0.0.1" # 数据库地址
+  port: 3306 # 数据库端口
+  user: "root" # 数据库用户名
+  password: "root" # 数据库密码
+  dbname: "gogofly" # 数据库名称
+  tablePrefix: "sys_" # 表前缀
+  logSql: true # 是否开启SQL日志
+  maxIdleConns: 10 # 最大空闲连接数
+  maxOpenConns: 100 # 最大打开连接数
+  connMaxLifetime: 300 # 连接最大复用时间，单位为秒
+  autoMigrate: true # 是否自动迁移
