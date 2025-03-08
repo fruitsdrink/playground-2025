@@ -1,15 +1,18 @@
 package auth
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"github.com/gogofly/api/base"
 )
 
-type IAuthApi struct{}
+type IAuthApi struct{
+	*base.BaseApi
+}
 
-func NewAuthApi() *IAuthApi {
-	return &IAuthApi{}
+var AuthApi *IAuthApi
+
+func init() {
+	AuthApi = &IAuthApi{}
 }
 
 // @Tags 登录授权
@@ -22,9 +25,7 @@ func NewAuthApi() *IAuthApi {
 // @Success 200 {object} map[string]interface{} "登录成功"
 // @Failure 400 {object} map[string]interface{} "登录失败"
 func (m *IAuthApi) Login(ctx *gin.Context) {
-	ctx.AbortWithStatusJSON(http.StatusOK, gin.H{
-		"code": 0,
-		"msg":  "success",
-		"data": nil,
-	})
+	// base.OK(ctx, "登录成功")
+
+	m.FailWithBadRequest(ctx, "登录失败")
 }

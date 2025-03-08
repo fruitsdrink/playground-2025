@@ -9,13 +9,11 @@ import (
 	"time"
 
 	"github.com/gogofly/global"
-	"github.com/gogofly/router/auth"
-	"github.com/gogofly/router/baseinfo"
+	"github.com/gogofly/router/system"
 	"github.com/yyle88/eroticgo"
 
 	"github.com/gin-gonic/gin"
 	docs "github.com/gogofly/docs"
-	"github.com/gogofly/types"
 	"github.com/gogofly/utils"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -23,20 +21,9 @@ import (
 
 
 
-var (
-	routes []types.IFnRegisterRoute
-)
 
-func registerRoute(fn types.IFnRegisterRoute) {
-	if fn == nil {
-		return
-	}
-	routes = append(routes, fn)
-}
-
-func initRoutes() {
-	auth.Init(registerRoute)
-	baseinfo.Init(registerRoute)
+func initRoutes(publicRouterGroup *gin.RouterGroup, authRouterGroup *gin.RouterGroup) {
+	system.Init(publicRouterGroup, authRouterGroup)
 }
 
 func initRouter() *gin.Engine {
@@ -50,11 +37,7 @@ func initRouter() *gin.Engine {
 	publicRouterGroup := r.Group("/api/v1")
 	authRouterGroup := r.Group("/api/v1")
 
-	initRoutes()
-
-	for _, route := range routes {
-		route(publicRouterGroup, authRouterGroup)
-	}
+	initRoutes(publicRouterGroup, authRouterGroup)
 
 	// swagger
 	initSwagger(r)
