@@ -34,4 +34,8 @@ redis:
   password: "" # redis密码
   db: 0 # redis数据库
   prefix: "gogofly" # redis key前缀
-  duration: "1h" # 缓存时间,支持1s/1m/1h
+  expiresAt: "1h" # 缓存时间,支持1s/1m/1h
+jwt:
+  secret: "gogofly_secret" # jwt密钥
+  expiresAt: "1h" # jwt过期时间,支持1s/1m/1h
+

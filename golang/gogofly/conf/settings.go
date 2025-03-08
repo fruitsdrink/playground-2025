@@ -85,7 +85,15 @@ type redisConfig struct{
 	// key前缀
 	Prefix string `mapstructure:"prefix"`
 	// 缓存时间,支持1s/1m/1h
-	Duration string `mapstructure:"duration"`
+	ExpiresAt string `mapstructure:"expiresAt"`
+}
+
+// jwt配置
+type jwtConfig struct {
+	// jwt密钥
+	Secret string `mapstructure:"secret"`
+	// jwt过期时间,支持1s/1m/1h
+	ExpiresAt string `mapstructure:"expiresAt"`
 }
 
 // 配置
@@ -102,6 +110,8 @@ type SettingsConfig struct {
 	Db dbConfig `mapstructure:"db"`
 	// redis配置
 	Redis redisConfig `mapstructure:"redis"`
+	// jwt配置
+	Jwt jwtConfig `mapstructure:"jwt"`
 }
 
 

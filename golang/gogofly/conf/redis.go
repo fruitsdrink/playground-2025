@@ -23,7 +23,7 @@ func InitRedis(settings *SettingsConfig) (*RedisClient, error) {
 	})
 
 	redisPrefix = settings.Redis.Prefix
-	parsedDuration, durationErr := time.ParseDuration(settings.Redis.Duration)
+	parsedDuration, durationErr := time.ParseDuration(settings.Redis.ExpiresAt)
 	if durationErr != nil {
 		parsedDuration = 0
 	}

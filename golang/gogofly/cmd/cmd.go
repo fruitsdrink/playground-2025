@@ -9,7 +9,7 @@ import (
 )
 
 func Start() {
-	conf.Init()
+	conf.Init()	
 	router.RunServer()
 }
 
