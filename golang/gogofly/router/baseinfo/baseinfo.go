@@ -2,7 +2,7 @@ package baseinfo
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/gogofly/global/types"
+	"github.com/gogofly/types"
 )
 
 func Init(registerRouteFn types.IFnInitRoute) {

@@ -8,6 +8,7 @@
     "gorm",
     "Infof",
     "natefinch",
+    "swaggo",
     "varchar"
   ],
   "ignoreWords": [],

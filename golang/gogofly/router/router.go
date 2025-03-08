@@ -15,11 +15,13 @@ import (
 
 	"github.com/gin-gonic/gin"
 	docs "github.com/gogofly/docs"
-	"github.com/gogofly/global/types"
+	"github.com/gogofly/types"
 	"github.com/gogofly/utils"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
+
+
 
 var (
 	routes []types.IFnRegisterRoute
