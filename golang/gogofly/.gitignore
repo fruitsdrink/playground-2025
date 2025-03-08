@@ -88,6 +88,13 @@ fabric.properties
 # .idea/misc.xml
 # *.ipr
 
+# custom
+log/
+.env
+.env.local
+.env.prod
+.env.production
+
 # Sonarlint plugin
 # https://plugins.jetbrains.com/plugin/7973-sonarlint
 .idea/**/sonarlint/

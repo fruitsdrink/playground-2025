@@ -3,23 +3,22 @@ package router
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os/signal"
 	"syscall"
 	"time"
 
+	"github.com/gogofly/global"
 	"github.com/gogofly/router/auth"
 	"github.com/gogofly/router/baseinfo"
+	"github.com/yyle88/eroticgo"
 
 	"github.com/gin-gonic/gin"
 	docs "github.com/gogofly/docs"
 	"github.com/gogofly/global/types"
 	"github.com/gogofly/utils"
-	"github.com/spf13/viper"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"github.com/yyle88/eroticgo"
 )
 
 var (
@@ -39,6 +38,11 @@ func initRoutes() {
 }
 
 func initRouter() *gin.Engine {
+	ginMode := "release"
+	if(global.Settings.Mode.Dev){
+		ginMode = "debug"
+	}
+	gin.SetMode(ginMode)
 	r := gin.Default()
 
 	publicRouterGroup := r.Group("/api/v1")
@@ -56,11 +60,11 @@ func initRouter() *gin.Engine {
 }
 
 func initSwagger(r *gin.Engine) {
-	docs.SwaggerInfo.Title = "GoGoFly"
-	docs.SwaggerInfo.Description = "GoGoFly API"
-	docs.SwaggerInfo.Version = "0.0.1"
+	docs.SwaggerInfo.Title = global.Settings.Swagger.Title
+	docs.SwaggerInfo.Description = global.Settings.Swagger.Description
+	docs.SwaggerInfo.Version = global.Settings.Swagger.Version
 
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+	r.GET(global.Settings.Swagger.Path, ginSwagger.WrapHandler(swaggerfiles.Handler))
 }
 
 func RunServer() {
@@ -69,13 +73,11 @@ func RunServer() {
 
 	r := initRouter()
 
-	port := viper.GetString("server.port")
-	if port == "" {
-		port = "8080"
-	}
+	port := global.Settings.Server.Port
+	name := global.Settings.Server.Name
 
 	srv := &http.Server{
-		Addr:    fmt.Sprintf(":%s", port),
+		Addr:    fmt.Sprintf(":%d", port),
 		Handler: r,
 	}
 
@@ -83,27 +85,29 @@ func RunServer() {
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			isRunning = false
-			log.Fatalf("Start Server Error: %s\n", err)
+			global.Logger.Fatalf("Start Server Error: %s\n", err)
 			return
 		}
 	}()
 
+	// 启动成功，打印启动信息
 	if isRunning {
 		utils.ShowBanner()
-		startInfo := fmt.Sprintf("Server Start at: %s", port)
-		fmt.Println(eroticgo.GREEN.Sprint(startInfo))
+		startInfo := fmt.Sprintf("%s Server Start at: %d", name, port)
+		fmt.Println(eroticgo.GREEN.Sprint(startInfo + "\n"))
+		global.Logger.Info(startInfo)
 	}
 
 	<-ctx.Done()
 
 	stop()
-	log.Println("shutting down gracefully, press Ctrl+C again to force")
+	global.Logger.Info("shutting down gracefully, press Ctrl+C again to force")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
-		log.Fatal("Server forced to shutdown: ", err)
+		global.Logger.Fatal("Server forced to shutdown: ", err)
 	}
 
-	log.Println("Server exiting")
+	global.Logger.Info("Server exiting")
 }

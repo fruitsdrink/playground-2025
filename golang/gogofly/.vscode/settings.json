@@ -4,10 +4,12 @@
     "baseinfo",
     "eroticgo",
     "fsnotify",
+    "godotenv",
     "gogofly",
     "gonic",
     "gopkg",
     "gotenv",
+    "joho",
     "locafero",
     "magiconair",
     "mapstructure",
@@ -17,6 +19,7 @@
     "sagikazarmark",
     "sourcegraph",
     "subosito",
-    "swaggerfiles"
+    "swaggerfiles",
+    "Syncer"
   ]
 }

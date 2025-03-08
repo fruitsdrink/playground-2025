@@ -1,2 +1,19 @@
+mode:
+  dev: true # 是否为开发模式
 server:
-  port: 8090
+  name: "GoGoFly" # 服务名称
+  port: 8090 # 服务端口
+log:
+  level: INFO # 日志级别 DEBUG, INFO, WARN, ERROR, FATAL
+  path: ./log # 日志路径
+  maxSize: 1 # 日志文件最大大小，单位MB
+  maxBackups: 10 # 保留日志文件的最大数量
+  maxAge: 28 # 保留日志文件的最大天数
+  compress: true # 是否压缩日志文件
+  console: true # 是否开启控制台输出
+swagger:
+  enable: true # 是否开启swagger
+  title: "GoGoFly" # swagger标题
+  description: "GoGoFly" # swagger描述
+  version: "1.0" # swagger版本
+  path: "/swagger" # swagger路径
