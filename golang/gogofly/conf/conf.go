@@ -6,13 +6,20 @@ import (
 	"gorm.io/gorm"
 )
 
-type customerLogger struct {
+type CustomerLogger struct {
 	logger *zap.SugaredLogger
 }
 
+var Logger CustomerLogger
+
 // Printf(string, ...interface{})
-func (l customerLogger) Printf(format string, v ...interface{}) {
+func (l CustomerLogger) Printf(format string, v ...interface{}) {
 	l.logger.Infof(format, v...)
+}
+
+func (l CustomerLogger) Write(p []byte) (n int, err error) {
+	l.logger.Infof("%s", string(p))
+	return len(p), nil
 }
 
 type Conf struct {
@@ -31,7 +38,8 @@ func Init() (*Conf, error) {
 		utils.AppendError(err, redisErr)
 	}
 	// 必须在InitLogger之后调用
-	db, dbErr := InitDB(settings, customerLogger{logger: logger})
+	Logger = CustomerLogger{logger: logger}
+	db, dbErr := InitDB(settings, Logger)
 	if dbErr != nil {
 		utils.AppendError(err, dbErr)
 	}

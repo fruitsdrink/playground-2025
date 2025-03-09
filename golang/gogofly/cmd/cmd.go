@@ -6,23 +6,21 @@ import (
 	"github.com/gogofly/conf"
 	"github.com/gogofly/global"
 	"github.com/gogofly/modules"
-	"github.com/yyle88/eroticgo"
+	"github.com/gogofly/utils"
 )
 
 func Start() {
 	conf.Init()	
-	app := modules.Factory()
-
-	app.Run(modules.AppOptions{
+	app := modules.Factory(modules.AppOptions{
 		Name: global.Settings.Server.Name,
 		Port: global.Settings.Server.Port,
-	}, func (opts modules.AppCallbackFnOptions){
-		if opts.Banner != "" {
-			fmt.Printf("\n\n%s\n\n", opts.Banner)
-		}
+		Cors: global.Settings.Server.Cors,
+	})
 
-		startInfo := fmt.Sprintf("服务启动成功，监听端口：%d\n", opts.Port)
-		fmt.Println(eroticgo.GREEN.Sprint(startInfo))
+	app.Run(func(options modules.AppOptions){
+		
+		startInfo := fmt.Sprintf("服务启动成功，监听端口：%d", options.Port)
+		utils.Banner("GoGoFly", startInfo)		
 		global.Logger.Info(startInfo)
 	}, nil)
 }

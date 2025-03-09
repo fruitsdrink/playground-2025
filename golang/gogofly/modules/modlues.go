@@ -7,7 +7,7 @@ import (
 )
 
 type Module interface {
-	Init(r *gin.Engine, publicRouterGroup *gin.RouterGroup, authRouterGroup *gin.RouterGroup)
+	Init(publicRouterGroup *gin.RouterGroup, authRouterGroup *gin.RouterGroup)
 }
 
 func (a *App) importModules() {
@@ -21,11 +21,11 @@ func (a *App) importModules() {
  * @param prg public router group
  * @param arg auth router group
  */
-func (a *App) registerModules(r *gin.Engine, prg *gin.RouterGroup, arg *gin.RouterGroup) {
+func (a *App) registerModules(publicRouterGroup *gin.RouterGroup, authRouterGroup *gin.RouterGroup) {
 	for _, module := range a.modules {
 		// 打印module的内存地址
 		if module != nil {
-			module.Init(r, prg, arg)
+			module.Init(publicRouterGroup, authRouterGroup)
 		}
 	}
 }

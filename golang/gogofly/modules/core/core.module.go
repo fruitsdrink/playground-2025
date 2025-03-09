@@ -1,8 +1,6 @@
 package core
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 	"github.com/gogofly/modules/core/auth"
 )
@@ -16,8 +14,6 @@ func NewModule() *CoreModule {
 	}
 }
 
-func (c *CoreModule) Init(r *gin.Engine, publicRouterGroup *gin.RouterGroup, authRouterGroup *gin.RouterGroup) {
-	fmt.Println("core module init: ", c.authModule)
-	group := publicRouterGroup.Group("auth")
-	c.authModule.Init(r,group, authRouterGroup)
+func (c *CoreModule) Init(publicRouterGroup *gin.RouterGroup, authRouterGroup *gin.RouterGroup) {
+	c.authModule.Init(publicRouterGroup, authRouterGroup)
 }

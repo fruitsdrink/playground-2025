@@ -15,7 +15,8 @@ func NewModule() *AuthModule {
 }
 
 
-func (am *AuthModule) Init(r *gin.Engine, publicRouterGroup *gin.RouterGroup, authRouterGroup *gin.RouterGroup) {
-	publicRouterGroup.POST("/login", am.controller.Login)
+func (am *AuthModule) Init(publicRouterGroup *gin.RouterGroup, authRouterGroup *gin.RouterGroup) {
+	authGroup := publicRouterGroup.Group("auth")
+	authGroup.POST("/login", am.controller.Login)
 	
 }

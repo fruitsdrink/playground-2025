@@ -15,6 +15,6 @@ func NewModule() *SystemModule {
 	}
 }
 
-func (sm *SystemModule) Init(r *gin.Engine, publicRouterGroup *gin.RouterGroup, authRouterGroup *gin.RouterGroup) {
-	sm.UserModule.Init(r, publicRouterGroup, authRouterGroup)
+func (sm *SystemModule) Init(publicRouterGroup *gin.RouterGroup, authRouterGroup *gin.RouterGroup) {
+	sm.UserModule.Init(publicRouterGroup, authRouterGroup)
 }

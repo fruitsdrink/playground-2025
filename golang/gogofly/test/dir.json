@@ -36,6 +36,10 @@
       "description": "中间件"
     },
     {
+      "name": "validators",
+      "description": "验证器"
+    },
+    {
       "name": "model",
       "description": "模型"
     },

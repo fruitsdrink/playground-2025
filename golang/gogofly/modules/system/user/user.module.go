@@ -11,7 +11,7 @@ func NewModule() *UserModule {
 	}
 }
 
-func (am *UserModule) Init(r *gin.Engine, publicRouterGroup *gin.RouterGroup, authRouterGroup *gin.RouterGroup) {
+func (am *UserModule) Init(publicRouterGroup *gin.RouterGroup, authRouterGroup *gin.RouterGroup) {
 	userGroup := authRouterGroup.Group("user")
 	userGroup.GET("", am.controller.FindList)
 }

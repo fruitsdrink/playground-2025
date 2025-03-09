@@ -8,8 +8,10 @@
     "gorm",
     "Infof",
     "natefinch",
+    "prettyjson",
     "primarykey",
     "swaggo",
+    "templ",
     "varchar",
     "yyle"
   ],

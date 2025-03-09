@@ -3,27 +3,27 @@ package modules
 import (
 	"context"
 	"fmt"
+	"io"
 	"net/http"
+	"os"
 	"os/signal"
 	"syscall"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gogofly/conf"
 	"github.com/gogofly/global"
-	"github.com/gogofly/utils"
 	"github.com/yyle88/eroticgo"
 )
 
 type AppOptions struct {
 	Name string
 	Port int
+	Cors bool
 }
 
-type AppCallbackFnOptions struct {
-	AppOptions
-	Banner string
-}
 type App struct {
+	Options AppOptions
 	modules []Module
 }
 
@@ -34,7 +34,12 @@ func (a *App) initRouter() *gin.Engine {
 		ginMode = "debug"
 	}
 	gin.SetMode(ginMode)
+	fileWriter := conf.Logger
+	gin.DefaultWriter = io.MultiWriter(fileWriter, os.Stdout)
 	r := gin.Default()
+
+	// 注册中间件,必须先注册中间件
+	a.RegisterMiddlewares(r)
 
 	publicRouterGroup := r.Group("/api/v1")
 	authRouterGroup := r.Group("/api/v1")
@@ -42,24 +47,28 @@ func (a *App) initRouter() *gin.Engine {
 	// 注入模块
 	a.importModules()
 	// 注册模块
-	a.registerModules(r, publicRouterGroup, authRouterGroup)
-
+	a.registerModules(publicRouterGroup, authRouterGroup)
+	// 注册验证器
+	a.RegisterValidator(r)
 	// swagger
 	a.initSwagger(r)
 	return r
 }
 
-func Factory() *App {
-	return &App{}
+func Factory(options AppOptions) *App {
+	return &App{
+		Options: options,
+	}
 }
 
-func (a *App) Run(options AppOptions, cbFn func(opt AppCallbackFnOptions), cbStop func(err error)) {
+func (a *App) Run(cbFn func(options AppOptions), cbStop func(err error)) {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 
+	// 注册路由
 	r := a.initRouter()
 
-	port := options.Port
+	port := a.Options.Port
 
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%d", port),
@@ -76,11 +85,7 @@ func (a *App) Run(options AppOptions, cbFn func(opt AppCallbackFnOptions), cbSto
 
 	// 启动成功，打印启动信息
 	if isRunning {
-		opts := AppCallbackFnOptions{
-			AppOptions: options,
-			Banner: utils.GetBanner(),
-		}
-		cbFn(opts)
+		cbFn(a.Options)
 	}
 
 	<-ctx.Done()

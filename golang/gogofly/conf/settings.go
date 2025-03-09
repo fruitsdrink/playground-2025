@@ -18,6 +18,8 @@ type serverConfig struct{
 	Name string `mapstructure:"name"`
 	// 服务端口号
 	Port int `mapstructure:"port"`
+	// 是否允许跨域
+	Cors bool `mapstructure:"cors"`
 }
 
 // swagger配置

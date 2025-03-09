@@ -29,12 +29,13 @@ func InitLogger(settings *SettingsConfig) *zap.SugaredLogger {
 
 func getEncoder() zapcore.Encoder {
 	encoderConfig := zap.NewProductionEncoderConfig()
+	// encoderConfig := zap.NewDevelopmentEncoderConfig()
 	encoderConfig.TimeKey = "time"
 	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
 	encoderConfig.EncodeTime = func(t time.Time, pae zapcore.PrimitiveArrayEncoder) {
 		pae.AppendString(t.Local().Format(time.DateTime))
 	}
-	return zapcore.NewJSONEncoder(encoderConfig)
+	return zapcore.NewConsoleEncoder(encoderConfig)
 }
 
 func getWriters(settings *SettingsConfig) []zapcore.WriteSyncer {

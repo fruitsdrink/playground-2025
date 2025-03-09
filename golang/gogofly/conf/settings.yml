@@ -3,6 +3,7 @@ mode:
 server:
   name: "GoGoFly" # 服务名称
   port: 8090 # 服务端口
+  cors: true # 是否允许跨域
 log:
   level: INFO # 日志级别 DEBUG, INFO, WARN, ERROR, FATAL
   path: ./log # 日志路径
