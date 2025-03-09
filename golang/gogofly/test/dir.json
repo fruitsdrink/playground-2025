@@ -2,10 +2,6 @@
   "name": "",
   "children": [
     {
-      "name": "api",
-      "description": "接口"
-    },
-    {
       "name": "cmd",
       "description": "命令行"
     },
@@ -44,10 +40,6 @@
       "description": "模型"
     },
     {
-      "name": "router",
-      "description": "路由"
-    },
-    {
       "name": "service",
       "children": [
         {
@@ -67,6 +59,36 @@
     {
       "name": "types",
       "description": "类型定义"
+    },
+    {
+      "name": "modules",
+      "description": "模块",
+      "children": [
+        {
+          "name": "core",
+          "description": "核心模块",
+          "children": [
+            {
+              "name": "base",
+              "description": "基础服务"
+            },
+            {
+              "name": "auth",
+              "description": "登录授权模块"
+            }
+          ]
+        },
+        {
+          "name": "system",
+          "description": "系统模块",
+          "children": [
+            {
+              "name": "user",
+              "description": "用户管理模块"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

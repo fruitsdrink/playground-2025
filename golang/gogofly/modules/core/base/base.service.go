@@ -8,13 +8,13 @@ import (
 	"github.com/gogofly/types"
 )
 
-type BaseApi struct{}
+type BaseService struct{}
 
-func (m *BaseApi) Test(ctx *gin.Context) {
+func (m *BaseService) Test(ctx *gin.Context) {
 	fmt.Println("test")
 }
 
-func (m *BaseApi) OK(ctx *gin.Context, data any) {
+func (m *BaseService) OK(ctx *gin.Context, data any) {
 	ctx.AbortWithStatusJSON(http.StatusOK, types.ResponseJson[any]{
 		Msg: "success",
 		Data: data,
@@ -22,7 +22,7 @@ func (m *BaseApi) OK(ctx *gin.Context, data any) {
 }
 
 
-func (m *BaseApi) FailWithCode(ctx *gin.Context, status int, code int, msg string) {
+func (m *BaseService) FailWithCode(ctx *gin.Context, status int, code int, msg string) {
 	ctx.AbortWithStatusJSON(status, types.ResponseJson[any]{
 		Code: code,
 		Msg: msg,
@@ -30,27 +30,27 @@ func (m *BaseApi) FailWithCode(ctx *gin.Context, status int, code int, msg strin
 	})
 }
 
-func (m *BaseApi) Fail(ctx *gin.Context, status int, msg string) {
+func (m *BaseService) Fail(ctx *gin.Context, status int, msg string) {
 	m.FailWithCode(ctx, status, 0, msg)
 }
 
-func (m *BaseApi) FailWithBadRequest(ctx *gin.Context, msg string) {
+func (m *BaseService) FailWithBadRequest(ctx *gin.Context, msg string) {
 	m.FailWithCode(ctx, http.StatusBadRequest, 0, msg)
 }
 
-func (m *BaseApi) FailWithNotFound(ctx *gin.Context, msg string) {
+func (m *BaseService) FailWithNotFound(ctx *gin.Context, msg string) {
 	m.FailWithCode(ctx, http.StatusNotFound, 0, msg)
 }
 
-func (m *BaseApi) FailWithUnauthorized(ctx *gin.Context) {
+func (m *BaseService) FailWithUnauthorized(ctx *gin.Context) {
 	m.FailWithCode(ctx, http.StatusUnauthorized, 0, "Unauthorized")
 }
 
-func (m *BaseApi) FailWithForbidden(ctx *gin.Context) {
+func (m *BaseService) FailWithForbidden(ctx *gin.Context) {
 	m.FailWithCode(ctx, http.StatusForbidden, 0, "Forbidden")
 }
 
-func (m *BaseApi) FailWithInternal(ctx *gin.Context) {
+func (m *BaseService) FailWithInternal(ctx *gin.Context) {
 	m.FailWithCode(ctx, http.StatusInternalServerError, 0, "Internal Server Error")
 }
 

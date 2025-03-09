@@ -8,7 +8,7 @@ import (
 const fileName = "banner.txt"
 const dirName = "resources"
 
-func getBanner() string {
+func GetBanner() string {
 	banner, err := os.ReadFile(dirName + "/" + fileName)
 	if err != nil {
 		return ""
@@ -18,7 +18,7 @@ func getBanner() string {
 
 }
 func ShowBanner() {
-	banner := getBanner()
+	banner := GetBanner()
 	if banner != "" {
 		fmt.Printf("\n\n%s\n\n", banner)
 	}
