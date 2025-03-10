@@ -90,6 +90,7 @@ fabric.properties
 
 # custom
 log/
+uploads/
 .env
 .env.local
 .env.prod

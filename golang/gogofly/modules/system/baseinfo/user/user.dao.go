@@ -33,9 +33,13 @@ func (d *UserDao) Create(data *dto.CreateUserDto) (*system.User, error) {
 }
 
 func (d *UserDao) Update(id uint, data *dto.UpdateUserDto)(*system.User, error){
-	user := data.ToModel()
-	user.Id = id
-	err := d.Orm.Updates(&user).Error
+	var user system.User
+	err := d.Orm.First(&user, id).Error
+	if err != nil {
+		return nil, errors.New("用户不存在")
+	}
+	data.FillModel(&user)
+	err = d.Orm.Save(&user).Error
 	return &user, err
 }
 

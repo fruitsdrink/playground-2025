@@ -1,6 +1,7 @@
 package base
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"reflect"
@@ -8,7 +9,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+	"github.com/gogofly/global"
 	"github.com/gogofly/types"
+	"github.com/gogofly/utils"
 )
 
 type BaseController struct {
@@ -174,4 +177,42 @@ func (b *BaseController) ParamUint(ctx *gin.Context, key string) uint{
 		return 0
 	}
 	return uint(val)
+}
+
+func (b *BaseController) FromFile(ctx *gin.Context, key string, path string, fileName string, allowTypes []string) (*types.FileInfo, error ){
+	file, err := ctx.FormFile(key)
+	if err!= nil {
+		return nil, err
+	}
+
+	if(file!= nil){
+		fileInfo := types.FileInfo{}
+		fileInfo.FromFile(path, fileName, file)
+
+		fmt.Printf("fileInfo: %+v\n", fileInfo)
+		// 验证文件类型
+		if len(allowTypes) >0 {
+			if !utils.InArray(fileInfo.MimeType, allowTypes) {
+				global.Logger.Errorf("文件类型不正确: %+v", fileInfo)
+				return nil, errors.New("文件类型不正确")
+			}
+		}
+		err := ctx.SaveUploadedFile(file, fileInfo.FullName)
+		if err!= nil {
+			global.Logger.Error("上传文件失败：", err)
+			return nil, err
+		}
+		return &fileInfo,nil
+	}
+	return nil, errors.New("文件不存在")
+}
+
+func (b *BaseController) FromFileUpload(ctx *gin.Context, key string, fileName string, allowTypes []string) (*types.FileInfo, error) {
+	return b.FromFile(ctx, key, "./upload", fileName, allowTypes)
+}
+
+func (b *BaseController) FromFileUploadAvatar(ctx *gin.Context, key string) (*types.FileInfo, error) {
+	// 随机文件名
+	fileName := utils.RandString()
+	return b.FromFileUpload(ctx, key, fileName, []string{"image/jpeg", "image/png", "image/gif"})
 }

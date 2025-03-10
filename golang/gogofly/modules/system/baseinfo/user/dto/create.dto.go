@@ -11,6 +11,7 @@ type CreateUserDto struct{
 	Email string `json:"email" form:"email"`
 	Phone string `json:"phone" form:"phone"`
 	Status uint `json:"status" form:"status"`
+	Avatar string
 }
 
 func (d *CreateUserDto) ToModel() system.User {
@@ -21,5 +22,17 @@ func (d *CreateUserDto) ToModel() system.User {
 		Email: d.Email,
 		Phone: d.Phone,
 		Status: d.Status,
+		Avatar: d.Avatar,
 	}
+}
+
+func (d *CreateUserDto) FillModel(user *system.User) {
+	user.UserName = d.UserName
+	if(d.Password != ""){
+		user.Password = d.Password
+	}
+	user.RealName = d.RealName
+	user.Email = d.Email
+	user.Phone = d.Phone
+	user.Status = d.Status
 }

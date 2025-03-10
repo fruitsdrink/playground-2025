@@ -3,9 +3,13 @@ package utils
 import (
 	"fmt"
 	"reflect"
+	"strings"
+
+	"slices"
 
 	"github.com/dimiro1/banner"
 	"github.com/mattn/go-colorable"
+	uuid "github.com/satori/go.uuid"
 )
 
 func If(condition bool, trueVal, falseVal interface{}) interface{} {
@@ -68,4 +72,17 @@ func Banner(text string, serverInfo string){
 	bannerText := fmt.Sprintf(templ, text, serverInfo)
 		 banner.InitString(colorable.NewColorableStdout(), true, true, bannerText)	
 		 fmt.Println()
+}
+
+// 生成随机字符串
+func RandString() string {
+	uuid := uuid.NewV4()
+	ret := uuid.String()
+	// 将-号替换为空
+	ret = strings.Replace(ret, "-", "", -1)
+	return ret
+}
+
+func InArray(value string, array []string) bool {
+	return slices.Contains(array, value)
 }
