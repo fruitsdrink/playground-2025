@@ -6,10 +6,15 @@ type UserController struct {
 	service *UserService
 }
 
+var userController *UserController
+
 func NewController() *UserController {
-	return &UserController{
-		service: NewService(),
+	if userController == nil {
+		userController = &UserController{
+			service: NewService(),
+		}
 	}
+	return userController
 }
 
 func (uc *UserController) FindList(ctx *gin.Context) {

@@ -9,10 +9,15 @@ type SystemModule struct {
 	UserModule *user.UserModule
 }
 
+var systemModule *SystemModule
+
 func NewModule() *SystemModule {
-	return &SystemModule{
-		UserModule: user.NewModule(),
+	if systemModule == nil {
+		systemModule = &SystemModule{
+			UserModule: user.NewModule(),
+		}
 	}
+	return systemModule
 }
 
 func (sm *SystemModule) Init(publicRouterGroup *gin.RouterGroup, authRouterGroup *gin.RouterGroup) {

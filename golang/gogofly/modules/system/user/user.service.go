@@ -7,10 +7,19 @@ import (
 
 type UserService struct {
 	base.BaseService
+	dao *UserDao
 }
 
+var userService *UserService
+
 func NewService() *UserService {
-	return &UserService{}
+	if userService == nil {
+		userService = &UserService{
+			dao: NewDao(),
+		}
+	}
+
+	return userService
 }
 
 func (us *UserService) FindList(ctx *gin.Context) {

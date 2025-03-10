@@ -5,10 +5,16 @@ import "github.com/gin-gonic/gin"
 type UserModule struct {
 	controller *UserController
 }
+
+var userModule *UserModule
+
 func NewModule() *UserModule {
-	return &UserModule{
-		controller: NewController(),
+	if userModule == nil {
+		userModule = &UserModule{
+			controller: NewController(),
+		}
 	}
+	return userModule
 }
 
 func (am *UserModule) Init(publicRouterGroup *gin.RouterGroup, authRouterGroup *gin.RouterGroup) {
