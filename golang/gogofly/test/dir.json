@@ -10,10 +10,6 @@
       "description": "存放配置文件"
     },
     {
-      "name": "dao",
-      "description": "存放数据访问对象"
-    },
-    {
       "name": "global",
       "description": "全局变量",
       "children": [
@@ -42,15 +38,6 @@
     {
       "name": "model",
       "description": "模型"
-    },
-    {
-      "name": "service",
-      "children": [
-        {
-          "name": "dto",
-          "description": "数据传输对象"
-        }
-      ]
     },
     {
       "name": "utils",
@@ -93,6 +80,10 @@
           ]
         }
       ]
+    },
+    {
+      "name": "seed",
+      "description": "种子数据"
     }
   ]
 }

@@ -11,16 +11,23 @@ type AuthController struct{
 	service *AuthService
 }
 
+var authController *AuthController
 func NewController() *AuthController {
-	return &AuthController{
-		service: NewService(),
+	if authController == nil {
+		authController = &AuthController{
+			service: NewService(),
+		}
 	}
+	return authController
 }
 
 func (ac *AuthController) Login(ctx *gin.Context) {
 	var loginDto dto.LoginDto
 	if ac.ParseDto(ctx, &loginDto) {
-		ac.service.Login(ctx, loginDto)
+		ac.TryCatchWithStatus(ctx, func() (any, int, error) {
+			result, err := ac.service.Login(loginDto)
+			return result, 0, err
+		})
 	}
 }
 

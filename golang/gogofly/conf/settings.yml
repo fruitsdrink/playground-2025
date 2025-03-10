@@ -30,6 +30,7 @@ db:
   maxOpenConns: 100 # 最大打开连接数
   connMaxLifetime: "1h" # 连接最大复用时间，支持1s/1m/1h
   autoMigrate: true # 是否自动迁移
+  enableSeed: true # 是否启用种子数据
 redis:
   url: "127.0.0.1:6379" # redis地址
   password: "" # redis密码

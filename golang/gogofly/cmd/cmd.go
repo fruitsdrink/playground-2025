@@ -6,6 +6,7 @@ import (
 	"github.com/gogofly/conf"
 	"github.com/gogofly/global"
 	"github.com/gogofly/modules"
+	"github.com/gogofly/seed"
 	"github.com/gogofly/utils"
 )
 
@@ -17,11 +18,12 @@ func Start() {
 		Cors: global.Settings.Server.Cors,
 	})
 
-	app.Run(func(options modules.AppOptions){
-		
+	app.Run(func(options modules.AppOptions){	
 		startInfo := fmt.Sprintf("服务启动成功，监听端口：%d", options.Port)
 		utils.Banner("GoGoFly", startInfo)		
 		global.Logger.Info(startInfo)
+		// 初始化种子数据
+		seed.Seed()
 	}, nil)
 }
 

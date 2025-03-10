@@ -6,7 +6,7 @@ import (
 
 type User struct {
 	types.BaseModelWithId
-	UserName string `gorm:"size:64;not null;comment:'名称'" json:"userName"`
+	UserName string `gorm:"size:64;not null;comment:'名称;uniqueIndex:idx_user_name'" json:"userName"`
 	Password string `gorm:"size:128;not null;comment:'密码'" json:"-"`
 	RealName string `gorm:"comment:'真实姓名'" json:"realName"`
 	Email string `gorm:"comment:'邮箱'" json:"email"`

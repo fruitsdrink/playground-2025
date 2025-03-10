@@ -74,6 +74,8 @@ type dbConfig struct{
 	ConnMaxLifetime string `mapstructure:"connMaxLifetime"`
 	// 是否自动迁移
 	AutoMigrate bool `mapstructure:"autoMigrate"`
+	// 是否启用种子数据
+	EnableSeed bool `mapstructure:"enableSeed"`
 }
 
 // redis配置

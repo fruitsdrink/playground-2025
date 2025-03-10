@@ -14,8 +14,5 @@ func NewService() *UserService {
 }
 
 func (us *UserService) FindList(ctx *gin.Context) {
-	us.OK(ctx, gin.H{
-		"items": []string{"1", "2", "3"},
-		"total": 10,
-	})
+	
 }

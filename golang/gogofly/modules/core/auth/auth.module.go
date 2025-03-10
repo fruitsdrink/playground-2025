@@ -8,10 +8,15 @@ type AuthModule struct {
 	controller *AuthController
 }
 
+var authModule *AuthModule
+
 func NewModule() *AuthModule {
-	return &AuthModule{
-		controller: NewController(),
+	if authModule == nil {
+		authModule = &AuthModule{
+			controller: NewController(),
+		}
 	}
+	return authModule
 }
 
 
