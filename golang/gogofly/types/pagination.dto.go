@@ -1,7 +1,7 @@
 package types
 
 type PaginationDto struct {
-	Page     int `form:"page" json:"page" uri:"page" default:"1""`
+	Page     int `form:"page" json:"page" uri:"page" default:"1"`
 	Size int `form:"size" json:"size" uri:"size" default:"10"`
 }
 
