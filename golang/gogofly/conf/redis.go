@@ -82,3 +82,7 @@ func (rc *RedisClient) Clear() error {
 	}
 	return nil
 }
+
+func (rc *RedisClient) GetExpireDuration(key string) (time.Duration, error) {
+	return client.TTL(context.Background(), rc.getKey(key)).Result()
+}

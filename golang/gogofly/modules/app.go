@@ -13,6 +13,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gogofly/conf"
 	"github.com/gogofly/global"
+	"github.com/gogofly/middleware"
 	"github.com/yyle88/eroticgo"
 )
 
@@ -43,6 +44,7 @@ func (a *App) initRouter() *gin.Engine {
 
 	publicRouterGroup := r.Group("/api/v1")
 	authRouterGroup := r.Group("/api/v1")
+	authRouterGroup.Use(middleware.JwtAuth())
 
 	// 注入模块
 	a.importModules()
