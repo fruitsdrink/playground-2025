@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"os"
 	"reflect"
 	"strings"
 
@@ -85,4 +86,8 @@ func RandString() string {
 
 func InArray(value string, array []string) bool {
 	return slices.Contains(array, value)
+}
+
+func DeleteFile(path string) error {
+	return os.Remove(path)
 }

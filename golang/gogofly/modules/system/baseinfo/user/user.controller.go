@@ -25,16 +25,15 @@ func NewController() *UserController {
 
 func (uc *UserController) Create(ctx *gin.Context) {
 	var data dto.CreateUserDto
-	// 上传头像
-
-	avatarInfo, err := uc.FromFileUploadAvatar(ctx, "file")
-	if(err!= nil){
-		global.Logger.Errorf("上传头像失败: %v", err)
-		uc.FailWithBadRequest(ctx, "上传头像失败")
-		return
-	}
 	
 	if uc.ParseDto(ctx, &data) {		
+		// 上传头像
+		avatarInfo, err := uc.FromFileUploadAvatar(ctx, "file")
+		if(err!= nil){
+			global.Logger.Errorf("上传头像失败: %v", err)
+			uc.FailWithBadRequest(ctx, "上传头像失败")
+			return
+		}
 		uc.TryCatchWithStatus(ctx, func() (any, int, error) {
 			if avatarInfo != nil {
 				data.Avatar = avatarInfo.FullName
@@ -49,6 +48,16 @@ func (uc *UserController) Update(ctx *gin.Context){
 	id := uc.ParamUint(ctx, "id")
 	var data dto.UpdateUserDto
 	if uc.ParseDto(ctx, &data) {
+		// 上传头像
+		avatarInfo, err := uc.FromFileUploadAvatar(ctx, "file")
+		if(err!= nil){
+			global.Logger.Errorf("上传头像失败: %v", err)
+			uc.FailWithBadRequest(ctx, "上传头像失败")
+			return
+		}
+		if avatarInfo != nil {
+			data.Avatar = avatarInfo.FullName
+		}
 		uc.TryCatchWithStatus(ctx, func() (any, int, error) {
 			result, err := uc.service.Update(id, &data)
 			return result, 0, err

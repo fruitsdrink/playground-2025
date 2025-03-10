@@ -3,9 +3,11 @@ package user
 import (
 	"errors"
 
+	"github.com/gogofly/model/system"
 	"github.com/gogofly/modules/core/base"
 	"github.com/gogofly/modules/system/baseinfo/user/dto"
 	"github.com/gogofly/types"
+	"github.com/gogofly/utils"
 )
 
 type UserService struct {
@@ -51,7 +53,7 @@ func (us *UserService) validateOnCreate(data *dto.CreateUserDto) error {
 }
 
 func (us *UserService) Update(id uint,data *dto.UpdateUserDto) (*dto.UserResponse, error) {
-	err := us.validateOnUpdate(id, data)
+	oldUser,err := us.validateOnUpdate(id, data)
 	if err!= nil {
 		return nil, err
 	}
@@ -60,30 +62,33 @@ func (us *UserService) Update(id uint,data *dto.UpdateUserDto) (*dto.UserRespons
 	if err!= nil {
 		return nil, err
 	}
+	// 删除旧头像文件
+	if oldUser.Avatar != "" {
+		utils.DeleteFile(oldUser.Avatar)
+	}
 
 	ret := dto.UserResponse{}
 	ret.FillModel(user)
 	return &ret, err
 }
 
-func (us *UserService) validateOnUpdate(id uint, data *dto.UpdateUserDto) error {
-	user, err := us.dao.FindOne(id)
+func (us *UserService) validateOnUpdate(id uint, data *dto.UpdateUserDto) (*system.User, error) {
+	resultUser, err := us.dao.FindOne(id)
 	if err!= nil {
-		return err
+		return nil, err
 	}
-	if user.Id ==0 {
-		return errors.New("用户不存在")
+	if resultUser.Id ==0 {
+		return nil, errors.New("用户不存在")
 	}
-
 	
-	user, err = us.dao.FindUserByUsername(data.UserName)
+	user, err := us.dao.FindUserByUsername(data.UserName)
 	if err!= nil {
-		return err
+		return nil, err
 	}
 	if(user.Id !=0 && user.Id != id) {
-		return errors.New("用户名已存在")
+		return nil, errors.New("用户名已存在")
 	}
-	return nil
+	return resultUser, nil
 }
 
 func (us *UserService) Delete(id uint) error {

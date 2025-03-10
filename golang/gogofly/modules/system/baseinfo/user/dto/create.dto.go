@@ -35,4 +35,5 @@ func (d *CreateUserDto) FillModel(user *system.User) {
 	user.Email = d.Email
 	user.Phone = d.Phone
 	user.Status = d.Status
+	user.Avatar = d.Avatar
 }
