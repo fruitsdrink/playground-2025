@@ -19,5 +19,11 @@ func NewModule() *UserModule {
 
 func (am *UserModule) Init(publicRouterGroup *gin.RouterGroup, authRouterGroup *gin.RouterGroup) {
 	userGroup := authRouterGroup.Group("user")
-	userGroup.GET("", am.controller.FindList)
+	{
+		userGroup.POST("/", am.controller.Create)
+		userGroup.PUT("/:id", am.controller.Update)
+		userGroup.DELETE("/:id", am.controller.Delete)
+		userGroup.GET("/", am.controller.FindList)
+		userGroup.GET("/:id", am.controller.FindOne)
+	}
 }

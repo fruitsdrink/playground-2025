@@ -12,8 +12,8 @@ type ResponseJson[T any] struct {
 }
 
 type FindListData[T any] struct {
-	Items []T `json:"items"`
-	Total int `json:"total"`
+	Items []*T `json:"items"`
+	Total int64 `json:"total"`
 }
 
 func (r *ResponseJson[T]) IsEmpty() bool {

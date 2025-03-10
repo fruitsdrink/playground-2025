@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"reflect"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -156,4 +157,21 @@ func (b *BaseController) ParseDtoWithCustomerValidate(ctx *gin.Context, target a
 
 func (b *BaseController) ParseDto(ctx *gin.Context, target any) bool {
 	return b.ParseDtoWithCustomerValidate(ctx, target, nil)
+}
+
+func (b *BaseController) ParamInt(ctx *gin.Context, key string) int{
+	val, err := strconv.ParseInt(ctx.Param(key), 10, 64)
+	if err!= nil {
+		return 0
+	}
+
+	return int(val)
+}
+
+func (b *BaseController) ParamUint(ctx *gin.Context, key string) uint{
+	val, err := strconv.ParseUint(ctx.Param(key), 10, 64)
+	if err!= nil {
+		return 0
+	}
+	return uint(val)
 }

@@ -2,11 +2,11 @@ package system
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/gogofly/modules/system/user"
+	"github.com/gogofly/modules/system/baseinfo"
 )
 
 type SystemModule struct {
-	UserModule *user.UserModule
+	BaseInfoModule *baseinfo.BaseInfoModule
 }
 
 var systemModule *SystemModule
@@ -14,12 +14,15 @@ var systemModule *SystemModule
 func NewModule() *SystemModule {
 	if systemModule == nil {
 		systemModule = &SystemModule{
-			UserModule: user.NewModule(),
+			BaseInfoModule: baseinfo.NewModule(),
 		}
 	}
 	return systemModule
 }
 
 func (sm *SystemModule) Init(publicRouterGroup *gin.RouterGroup, authRouterGroup *gin.RouterGroup) {
-	sm.UserModule.Init(publicRouterGroup, authRouterGroup)
+	systemGroup := authRouterGroup.Group("system")
+	{
+		sm.BaseInfoModule.Init(publicRouterGroup, systemGroup)
+	}
 }
