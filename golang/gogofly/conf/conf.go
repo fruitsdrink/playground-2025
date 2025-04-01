@@ -1,20 +1,54 @@
 package conf
 
 import (
-	"fmt"
-
-	"github.com/spf13/viper"
+	"github.com/gogofly/utils"
+	"go.uber.org/zap"
+	"gorm.io/gorm"
 )
 
-func InitConfig() {
-	viper.SetConfigName("settings")
-	viper.SetConfigType("yaml")
-	viper.AddConfigPath("./conf")
+type CustomerLogger struct {
+	logger *zap.SugaredLogger
+}
 
-	err := viper.ReadInConfig()
-	if err != nil {
-		panic("Read Config Error: " + err.Error())
+var Logger CustomerLogger
+
+// Printf(string, ...interface{})
+func (l CustomerLogger) Printf(format string, v ...interface{}) {
+	l.logger.Infof(format, v...)
+}
+
+func (l CustomerLogger) Write(p []byte) (n int, err error) {
+	l.logger.Infof("%s", string(p))
+	return len(p), nil
+}
+
+type Conf struct {
+	Settings *SettingsConfig
+	Logger *zap.SugaredLogger
+	Redis *RedisClient
+	DB *gorm.DB
+}
+
+func Init() (*Conf, error) {
+	err := error(nil)
+	settings := InitSettings()
+	logger := InitLogger(settings)
+	redis, redisErr := InitRedis(settings)
+	if redisErr != nil {
+		utils.AppendError(err, redisErr)
+	}
+	// 必须在InitLogger之后调用
+	Logger = CustomerLogger{logger: logger}
+	db, dbErr := InitDB(settings, Logger)
+	if dbErr != nil {
+		utils.AppendError(err, dbErr)
+	}
+	result := &Conf{
+		Settings: settings,
+		Logger: logger,
+		Redis: redis,
+		DB: db,
 	}
 
-	fmt.Println(viper.Get("server.port"))
+	return result, err
 }

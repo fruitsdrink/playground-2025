@@ -1,0 +1,21 @@
+{
+  "version": "0.2",
+  "ignorePaths": [],
+  "dictionaryDefinitions": [],
+  "dictionaries": [],
+  "words": [
+    "Cust",
+    "dbname",
+    "gorm",
+    "Infof",
+    "natefinch",
+    "prettyjson",
+    "primarykey",
+    "swaggo",
+    "templ",
+    "varchar",
+    "yyle"
+  ],
+  "ignoreWords": [],
+  "import": []
+}

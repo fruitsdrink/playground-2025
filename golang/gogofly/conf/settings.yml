@@ -1,2 +1,43 @@
+mode:
+  dev: true # 是否为开发模式
 server:
-  port: 8090
+  name: "GoGoFly" # 服务名称
+  port: 8090 # 服务端口
+  cors: true # 是否允许跨域
+log:
+  level: INFO # 日志级别 DEBUG, INFO, WARN, ERROR, FATAL
+  path: ./log # 日志路径
+  maxSize: 1 # 日志文件最大大小，单位MB
+  maxBackups: 10 # 保留日志文件的最大数量
+  maxAge: 28 # 保留日志文件的最大天数
+  compress: true # 是否压缩日志文件
+  console: true # 是否开启控制台输出
+swagger:
+  enable: true # 是否开启swagger
+  title: "GoGoFly" # swagger标题
+  description: "GoGoFly" # swagger描述
+  version: "1.0" # swagger版本
+  path: "/swagger" # swagger路径
+db:
+  host: "127.0.0.1" # 数据库地址
+  port: 3306 # 数据库端口
+  user: "root" # 数据库用户名
+  password: "root" # 数据库密码
+  dbname: "gogofly" # 数据库名称
+  tablePrefix: "sys_" # 表前缀
+  logSql: true # 是否开启SQL日志
+  maxIdleConns: 10 # 最大空闲连接数
+  maxOpenConns: 100 # 最大打开连接数
+  connMaxLifetime: "1h" # 连接最大复用时间，支持1s/1m/1h
+  autoMigrate: true # 是否自动迁移
+  enableSeed: true # 是否启用种子数据
+redis:
+  url: "127.0.0.1:6379" # redis地址
+  password: "" # redis密码
+  db: 0 # redis数据库
+  prefix: "gogofly" # redis key前缀
+  expiresAt: "1h" # 缓存时间,支持1s/1m/1h
+jwt:
+  secret: "gogofly_secret" # jwt密钥
+  expiresAt: "1h" # jwt过期时间,支持1s/1m/1h
+
