@@ -2,6 +2,22 @@
 
 This Turborepo starter is maintained by the Turborepo core team.
 
+## 视频地址
+
+[youtube](https://www.youtube.com/watch?v=nx-cj3dqWNE)
+
+## docker
+
+```sh
+docker build -t api-server -f apps/api-server/Dockerfile .
+docker build -t web -f apps/web/Dockerfile .
+```
+
+```sh
+docker run api-server
+docker run web
+```
+
 ## Using this example
 
 Run the following command:
