@@ -1,9 +1,8 @@
+import { useAppRouter } from "./hooks";
+
 function App() {
-  return (
-    <>
-      <div>main</div>
-    </>
-  );
+  const { AppRouterProvider } = useAppRouter();
+  return <AppRouterProvider />;
 }
 
 export default App;
