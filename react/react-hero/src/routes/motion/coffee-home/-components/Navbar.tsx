@@ -6,7 +6,7 @@ interface Props {
 }
 export default function Navbar({ toggleMenu }: Props) {
   return (
-    <nav className="absolute top-0 left-0 w-full pt-10 text-white z-40">
+    <nav className="absolute top-0 left-0 w-full pt-10 text-white z-[9999]">
       <div className="container mx-auto p-[2rem] md:p-[1rem]">
         <div className="flex justify-between items-center">
           {/* logo section */}

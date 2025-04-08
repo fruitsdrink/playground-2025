@@ -30,7 +30,7 @@ export function Hero() {
             <div className="text-[#f1dabf] mt-[100px] md:mt-0 p-4 space-y-28">
               <motion.h1
                 initial={{ opacity: 0, y: -100 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{
                   type: "spring",
                   stiffness: 100,
@@ -43,7 +43,7 @@ export function Hero() {
               </motion.h1>
               <motion.div
                 initial={{ opacity: 0, y: 100 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{
                   type: "spring",
                   stiffness: 100,
@@ -69,7 +69,8 @@ export function Hero() {
             <div className="relative">
               <motion.img
                 initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
                 transition={{
                   type: "spring",
                   stiffness: 100,
@@ -83,7 +84,7 @@ export function Hero() {
               {/* orange circle ring */}
               <motion.div
                 initial={{ opacity: 0, y: 100 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{
                   type: "spring",
                   stiffness: 100,
@@ -95,7 +96,7 @@ export function Hero() {
               {/* big text section */}
               <motion.div
                 initial={{ opacity: 0, x: -100 }}
-                animate={{ opacity: 1, x: 0 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 transition={{
                   type: "spring",
                   stiffness: 100,
@@ -110,33 +111,35 @@ export function Hero() {
               </motion.div>
             </div>
             {/* third div section */}
-            <motion.div
-              initial={{ opacity: 0, y: 100 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                type: "spring",
-                stiffness: 100,
-                damping: 10,
-                delay: 1.2,
-              }}
-              className="text-[#f1dabf] mt-[100px] md:mt-0 p-4 space-y-28"
-            >
-              <h1 className="opacity-0 text-7xl font-bold leading-tight ml-14">
-                Blvck Tumbler
-              </h1>
-              <div className="relative">
-                <div className="z-10 space-y-4 relative">
-                  <h1 className="text-2xl">Blvck Tumbler</h1>
-                  <h1 className="text-sm opacity-55 leading-loose">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Temporibus quidem eveniet odio placeat quo similique sed
-                    ipsum nisi ea in?
-                  </h1>
+            <div className="hidden lg:block">
+              <motion.div
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 10,
+                  delay: 1.2,
+                }}
+                className="text-lightOrange mt-[100px] md:mt-0 p-4 space-y-28"
+              >
+                <h1 className="opacity-0 text-7xl font-bold leading-tight ml-14">
+                  Blvck Tumbler
+                </h1>
+                <div className="relative">
+                  <div className="z-10 space-y-4 relative">
+                    <h1 className="text-2xl">Blvck Tumbler</h1>
+                    <h1 className="text-sm opacity-55 leading-loose">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Temporibus quidem eveniet odio placeat quo similique sed
+                      ipsum nisi ea in?
+                    </h1>
+                  </div>
+                  <div className="absolute -top-6 -right-10 w-[250px] h-[190px] bg-[#1a1f25]/50"></div>
                 </div>
-                <div className="absolute -top-6 -right-10 w-[250px] h-[190px] bg-[#1a1f25]/50"></div>
-              </div>
-            </motion.div>
-            <div></div>
+              </motion.div>
+              <div></div>
+            </div>
           </div>
         </div>
 
@@ -145,7 +148,7 @@ export function Hero() {
           <motion.div
             initial={{ x: "100%" }}
             whileInView={{ x: 0 }}
-            className="absolute top-0 right-0 w-[140px] h-full bg-gradient-to-b from-[#f19509]/80 to-[#e86f00]/80 backdrop-blur-sm z-10"
+            className="absolute top-0 right-0 w-[140px] h-full bg-gradient-to-b from-[#f19509]/80 to-[#e86f00]/80 backdrop-blur-sm z-50"
           >
             <div className="flex justify-center items-center w-full h-full">
               <div className="flex flex-col gap-6 items-center justify-center text-white">

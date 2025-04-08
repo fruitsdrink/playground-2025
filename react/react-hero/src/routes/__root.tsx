@@ -1,4 +1,9 @@
-import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
+import {
+  createRootRouteWithContext,
+  Outlet,
+  Scripts,
+  HeadContent,
+} from "@tanstack/react-router";
 
 interface RouterContext {
   user: {
@@ -10,7 +15,9 @@ interface RouterContext {
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => (
     <main>
+      <HeadContent />
       <Outlet />
+      <Scripts />
     </main>
   ),
 });
