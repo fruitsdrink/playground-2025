@@ -45,6 +45,13 @@ type Post {
   comments: [Comment!]!
 }
 
+type AuthPayload {
+  id: Float!
+  name: String!
+  avatar: String
+  accessToken: String!
+}
+
 type Query {
   posts: [Post!]!
 }
@@ -52,7 +59,7 @@ type Query {
 type Mutation {
   """Create a new user"""
   createUser(createUserInput: CreateUserInput!): User!
-  signIn(signInInput: SignInInput!): String!
+  signIn(signInInput: SignInInput!): AuthPayload!
 }
 
 input CreateUserInput {
