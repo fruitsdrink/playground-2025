@@ -4,12 +4,13 @@
   "description": "ElectronJS 基础应用",
   "main": "main.js",
   "scripts": {
-    "dev": "electron ."
+    "dev": "nodemon --exec electron ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^35.2.1"
+    "electron": "^35.2.1",
+    "nodemon": "^3.1.10"
   }
 }
