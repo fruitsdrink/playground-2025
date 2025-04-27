@@ -8,3 +8,8 @@ contextBridge.exposeInMainWorld("api", {
     });
   }
 });
+
+window.addEventListener("contextmenu", (e) => {
+  e.preventDefault();
+  ipcRenderer.send("contextmenu");
+});

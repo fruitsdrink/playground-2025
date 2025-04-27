@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain, Menu } = require("electron");
 const { createWindow } = require("./window");
 const { createMenu } = require("./menu");
 
@@ -20,4 +20,18 @@ app.on("activate", () => {
   ) {
     createWindow();
   }
+});
+
+ipcMain.on("contextmenu", (event) => {
+  const template = [
+    {
+      label: "退出",
+      click: () => {
+        app.quit();
+      }
+    }
+  ];
+  const menu = Menu.buildFromTemplate(template);
+  const win = BrowserWindow.fromWebContents(event.sender);
+  menu.popup({ window: win });
 });
