@@ -1,0 +1,17 @@
+{
+  "name": "dialog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "dev": "nodemon --exec electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.9.0",
+  "devDependencies": {
+    "electron": "^35.2.1",
+    "nodemon": "^3.1.10"
+  }
+}
