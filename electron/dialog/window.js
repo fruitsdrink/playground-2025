@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { shell, BrowserWindow } = require("electron");
 const path = require("path");
 
 const createWindow = () => {
@@ -9,12 +9,18 @@ const createWindow = () => {
     y: 100,
     alwaysOnTop: true,
     webPreferences: {
-      preload: path.resolve(__dirname, "preload.js")
-    }
+      preload: path.resolve(__dirname, "preload.js"),
+    },
   });
 
   win.loadFile(path.resolve(__dirname, "index.html"));
+  win.webContents.setWindowOpenHandler((details) => {
+    console.log(details);
+    shell.openExternal(details.url);
 
+    // 禁用electron内置浏览器打开
+    return { action: "deny" };
+  });
   win.webContents.openDevTools();
   return win;
 };
