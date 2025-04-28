@@ -9,6 +9,7 @@ onMounted(async () => {
   const constraints = {
     audio: false,
     video: true
+    // eslint-disable-next-line no-undef
   } as MediaStreamConstraints
 
   navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
@@ -26,8 +27,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main class="w-screen h-screen flex justify-center items-center drag">
+  <main class="w-screen h-screen flex justify-center items-center">
     <div id="tip">Camera</div>
-    <video class="object-cover w-full h-full hidden drag" />
+    <video class="object-cover w-full h-full hidden" />
   </main>
 </template>

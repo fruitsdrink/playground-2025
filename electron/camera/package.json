@@ -23,6 +23,7 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^4.0.0",
+    "@icon-park/vue-next": "^1.4.2",
     "element-plus": "^2.9.9"
   },
   "devDependencies": {
