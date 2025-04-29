@@ -17,10 +17,16 @@ const api = {
       cb(width, height)
     })
   },
-  setWindowPosition: (
+  setWindowPosition: (opt: {
     position: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'center'
-  ) => {
-    ipcRenderer.send('setWindowPosition', position)
+    displayId: number
+  }) => {
+    ipcRenderer.send('setWindowPosition', opt)
+  },
+  currentDisplayId: (cb: (id: number) => void) => {
+    ipcRenderer.on('currentDisplayId', (_event, id) => {
+      cb(id)
+    })
   }
 }
 

@@ -8,9 +8,11 @@ declare global {
       drag: (opt: { x: number; y: number }) => void
       setWindowSize: (opt: { width: number; height: number; aspectRatio: number }) => void
       setResize: (cb: (width: number, height: number) => void) => void
-      setWindowPosition: (
+      setWindowPosition: (opt: {
         position: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'center'
-      ) => void
+        displayId: number
+      }) => void
+      currentDisplayId: (cb: (id: number) => void) => void
     }
   }
 }

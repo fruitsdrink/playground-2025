@@ -22,6 +22,10 @@ window.api.setResize((width, height) => {
   config.width = width
   config.height = height
 })
+
+window.api.currentDisplayId((id: number) => {
+  config.displayId = id
+})
 </script>
 
 <template>

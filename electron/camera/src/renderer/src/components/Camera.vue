@@ -39,7 +39,10 @@ onMounted(async () => {
     // }
   })
 
-  window.api.setWindowPosition(config.position)
+  window.api.setWindowPosition({
+    position: config.position,
+    displayId: config.displayId
+  })
 })
 
 const changeRound = (): void => {
@@ -73,7 +76,10 @@ const setWindowSize = (): void => {
 const changePosition = (
   value: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'center'
 ): void => {
-  window.api.setWindowPosition(value)
+  window.api.setWindowPosition({
+    position: value,
+    displayId: config.displayId
+  })
   config.position = value
 }
 

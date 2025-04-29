@@ -9,7 +9,8 @@ export const useConfigStore = defineStore(
       rounded: false,
       width: 500,
       height: 281,
-      position: 'center' as 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'center'
+      position: 'center' as 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'center',
+      displayId: 0
     })
 
     return {

@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain, IpcMainEvent } from 'electron'
+import { BrowserWindow, ipcMain, IpcMainEvent, screen } from 'electron'
 
 ipcMain.on(
   'setWindowSize',
@@ -10,12 +10,16 @@ ipcMain.on(
     if (!win) return
     win.setAspectRatio(aspectRatio)
 
-    if (width) {
-      win.setBounds({
-        width,
-        height
-      })
-      // win.setSize(width, height || width / aspectRatio)
+    const currentDisplay = screen.getDisplayMatching(win.getBounds())
+    let x = win.getBounds().x
+    if (width && currentDisplay.bounds.width + width > currentDisplay.size.width) {
+      x = currentDisplay.bounds.x + currentDisplay.size.width - width
     }
+
+    win.setBounds({
+      width,
+      height,
+      x
+    })
   }
 )
