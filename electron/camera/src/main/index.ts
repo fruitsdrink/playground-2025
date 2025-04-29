@@ -2,22 +2,27 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import './ipc'
+import { createTray } from './tray'
+import './windowSize'
 
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 300,
-    height: 300,
-    minWidth: 240,
-    minHeight: 240,
-    maxWidth: 500,
-    maxHeight: 500,
-    show: false,
-    x: 1500,
-    y: 100,
+    // width: 500,
+    // height: 281,
+    // minWidth: 240,
+    // minHeight: 135,
+    // show: false,
+    // x: 1500,
+    // y: 100,
     frame: false,
+    transparent: true,
     alwaysOnTop: true,
+    hasShadow: true,
     autoHideMenuBar: true,
+    hiddenInMissionControl: true,
+    skipTaskbar: true, // 任务栏隐藏
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
@@ -25,7 +30,7 @@ function createWindow(): void {
     }
   })
 
-  mainWindow.setAspectRatio(1)
+  // 窗口大小
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
@@ -34,6 +39,11 @@ function createWindow(): void {
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
     return { action: 'deny' }
+  })
+
+  mainWindow.on('resized', () => {
+    const { width, height } = mainWindow.getBounds()
+    mainWindow.webContents.send('resize', { width, height })
   })
 
   // HMR for renderer base on electron-vite cli.
@@ -50,6 +60,9 @@ function createWindow(): void {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  // 隐藏dock图标
+  app.dock?.hide()
+
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
 
@@ -64,6 +77,7 @@ app.whenReady().then(() => {
   ipcMain.on('ping', () => console.log('pong'))
 
   createWindow()
+  createTray()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
