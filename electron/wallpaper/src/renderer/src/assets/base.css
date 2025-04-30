@@ -1,7 +1,8 @@
-html {
+.drag {
   -webkit-app-region: drag;
 }
 
+.no-drag,
 input,
 textarea,
 button,
