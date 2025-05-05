@@ -5,6 +5,7 @@ import path from 'path';
 
 @Injectable()
 export class AppService {
+  private prevFile: string;
   async getRandomImage() {
     const files = await readdir(path.resolve(__dirname, '..', 'wallpaper'));
     const index = _.random(files.length - 1);
@@ -12,5 +13,16 @@ export class AppService {
 
     const file = await readFile(randomFile);
     return file;
+  }
+
+  async getRandomImageUrl(): Promise<string> {
+    const files = await readdir(path.resolve(__dirname, '..', 'wallpaper'));
+    const index = _.random(files.length - 1);
+    if (this.prevFile === files[index]) {
+      return await this.getRandomImageUrl();
+    }
+    this.prevFile = files[index];
+
+    return `http://localhost:3000/wallpaper/${files[index]}`;
   }
 }

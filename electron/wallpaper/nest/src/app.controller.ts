@@ -6,7 +6,6 @@ import { Response } from 'express';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
   async getRandomImage(@Res() res: Response) {
     const buffer = await this.appService.getRandomImage();
     return new Promise((resolve) => {
@@ -14,7 +13,12 @@ export class AppController {
         // res.set('Context-Type', 'image/jpeg');
         res.type('image/jpeg');
         resolve(res.send(buffer));
-      }, 2000);
+      }, 1000);
     });
+  }
+
+  @Get()
+  async getRandomImageUrl() {
+    return await this.appService.getRandomImageUrl();
   }
 }

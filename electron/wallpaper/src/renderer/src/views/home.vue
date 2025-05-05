@@ -1,17 +1,21 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { ElLoading } from 'element-plus'
+import { http } from '@renderer/plugins/axios'
 
 const imgRef = ref<HTMLImageElement>()
 const isLoading = ref<boolean>(false)
-const loadImg = (): void => {
+
+const loadImg = async (): Promise<void> => {
   if (!imgRef.value || isLoading.value) return
 
   isLoading.value = true
   const loading = ElLoading.service({
     background: 'rgba(255, 255, 255, 0.2)'
   })
-  imgRef.value.src = `http://localhost:3000?r=${Math.random()}`
+  const res = await http.get('/')
+
+  imgRef.value.src = res.data
   imgRef.value.addEventListener('load', () => {
     loading.close()
     isLoading.value = false
@@ -29,7 +33,7 @@ onMounted(() => {
       ref="imgRef"
       src=""
       alt=""
-      class="aspect-video no-drag cursor-pointer flex-1"
+      class="aspect-video no-drag cursor-pointer flex-1 object-cover"
       draggable="false"
       @click="loadImg"
     />

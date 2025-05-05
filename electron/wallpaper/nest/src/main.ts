@@ -7,6 +7,7 @@ async function bootstrap() {
   app.useStaticAssets('wallpaper', {
     prefix: '/wallpaper',
   });
+  app.enableCors();
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
