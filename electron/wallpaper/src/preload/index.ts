@@ -1,8 +1,16 @@
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
-const api = {}
+const api = {
+  setWallpaper: async (url: string): Promise<void> => {
+    await ipcRenderer.invoke('setWallpaper', url)
+  },
+  downloadImage: async (url: string): Promise<void> => {
+    // alert(url)
+    return await ipcRenderer.invoke('downloadImage', url)
+  }
+}
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
