@@ -9,6 +9,9 @@ const api = {
   downloadImage: async (url: string): Promise<void> => {
     // alert(url)
     return await ipcRenderer.invoke('downloadImage', url)
+  },
+  setSaveDirectory: async (): Promise<string> => {
+    return await ipcRenderer.invoke('setSaveDirectory')
   }
 }
 
