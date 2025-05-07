@@ -4,6 +4,8 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import './ipc'
 
+import { createTray } from './tray'
+
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -13,7 +15,8 @@ function createWindow(): void {
     // alwaysOnTop: true,
     frame: false,
     resizable: false,
-    autoHideMenuBar: true,
+    autoHideMenuBar: true, // 隐藏菜单栏
+    skipTaskbar: true, // windows 隐藏任务栏图标
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
@@ -80,6 +83,11 @@ app.whenReady().then(() => {
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
+
+  if (process.platform === 'darwin') {
+    app.dock?.hide()
+  }
+  createTray()
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common

@@ -6,7 +6,7 @@ export const useWallpaper = (): {
 } => {
   const { config } = useConfigStore()
   const setWallpaper = async (): Promise<void> => {
-    await window.api.setWallpaper(config.url)
+    await window.api.setWallpaper(config.url, config.saveDirectory)
   }
 
   const setSaveDirectory = async (): Promise<void> => {

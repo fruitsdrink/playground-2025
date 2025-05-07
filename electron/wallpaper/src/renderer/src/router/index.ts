@@ -4,8 +4,8 @@ import Home from '@renderer/views/home.vue'
 import Setting from '@renderer/views/setting.vue'
 
 const routes = [
-  { path: '/', component: Home },
-  { path: '/setting', component: Setting }
+  { path: '/:any(.*)*', component: Home, name: 'home' },
+  { path: '/setting', component: Setting, name: 'setting' }
 ]
 
 const router = createRouter({

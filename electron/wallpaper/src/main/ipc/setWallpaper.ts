@@ -4,10 +4,10 @@ import fs from 'fs'
 import { setWallpaper, getWallpaper } from 'wallpaper'
 import { downloadWallpaper } from '../utils'
 
-ipcMain.handle('setWallpaper', async (_event: IpcMainInvokeEvent, url: string) => {
+ipcMain.handle('setWallpaper', async (_event: IpcMainInvokeEvent, url: string, path: string) => {
   const fileName = url.split('/').pop()
   if (!fileName) return
-  const savePath = resolve(__dirname, '../wallpaper')
+  const savePath = path ? path : resolve(__dirname, '../wallpaper')
   // 检测目录是否存在，如果不存在则创建目录
   if (!fs.existsSync(savePath)) {
     fs.mkdirSync(savePath)

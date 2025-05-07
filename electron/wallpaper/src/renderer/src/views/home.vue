@@ -46,7 +46,7 @@ const handleSetWallpaper = async (): Promise<void> => {
 const downloadImage = async (): Promise<void> => {
   try {
     isDownloadImaging.value = true
-    await window.api.downloadImage(configStore.config.url)
+    await window.api.downloadImage(configStore.config.url, configStore.config.saveDirectory)
   } finally {
     isDownloadImaging.value = false
   }

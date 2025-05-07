@@ -12,15 +12,25 @@ import { Pic as PicIcon, Config as ConfigIcon } from '@icon-park/vue-next'
       <PicIcon
         theme="outline"
         size="20"
-        class="no-drag cursor-pointer"
+        class="no-drag cursor-pointer text-gray-500 hover:shadow-md hover:text-gray-200"
+        :class="{ iconColor: $route.name === 'home' }"
         @click="$router.push('/')"
       />
       <ConfigIcon
         theme="outline"
         size="20"
-        class="no-drag cursor-pointer"
+        class="no-drag cursor-pointer text-gray-500 hover:shadow-md hover:text-gray-200"
+        :class="{ iconColor: $route.name === 'setting' }"
         @click="$router.push('/setting')"
       />
     </section>
   </nav>
 </template>
+
+<style scoped>
+@import '../assets//tailwind.css' reference;
+
+.iconColor {
+  @apply text-gray-200;
+}
+</style>

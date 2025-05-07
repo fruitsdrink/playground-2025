@@ -3,12 +3,12 @@ import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
 const api = {
-  setWallpaper: async (url: string): Promise<void> => {
-    await ipcRenderer.invoke('setWallpaper', url)
+  setWallpaper: async (url: string, path: string): Promise<void> => {
+    await ipcRenderer.invoke('setWallpaper', url, path)
   },
-  downloadImage: async (url: string): Promise<void> => {
+  downloadImage: async (url: string, path: string): Promise<void> => {
     // alert(url)
-    return await ipcRenderer.invoke('downloadImage', url)
+    return await ipcRenderer.invoke('downloadImage', url, path)
   },
   setSaveDirectory: async (): Promise<string> => {
     return await ipcRenderer.invoke('setSaveDirectory')
