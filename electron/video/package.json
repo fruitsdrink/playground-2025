@@ -25,7 +25,9 @@
     "@electron-toolkit/utils": "^4.0.0",
     "@icon-park/vue-next": "^1.4.2",
     "electron-updater": "^6.3.9",
-    "element-plus": "^2.9.9"
+    "element-plus": "^2.9.9",
+    "pinia": "^3.0.2",
+    "vue-router": "^4.5.1"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "3.0.0",
