@@ -1,3 +1,16 @@
 body {
   @apply bg-slate-100 text-sm;
 }
+
+.drag {
+  -webkit-app-region: drag;
+}
+
+.no-drag,
+input,
+textarea,
+button,
+select,
+option {
+  -webkit-app-region: no-drag;
+}

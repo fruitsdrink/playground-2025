@@ -1,34 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { CloseOne } from '@icon-park/vue-next'
+import { VideoItem } from '@renderer/components'
 
 const videos = ref([
-  'video1.mp4',
-  'video2.mp4',
-  'video3.mp4',
-  'video4.mp4',
-  'video5.mp4',
-  'video6.mp4',
-  'video7.mp4',
-  'video8.mp4',
-  'video9.mp4',
-  'video10.mp4'
+  '如果使用的是VSCode进行开发，可以去检查下已启用的插件列表，看下列表里是否同时启用了插件：Volar和Vue official，参考Vue官方的文档说明，在VSCode中开发Vue3时，应使用Vue official插件并禁用掉Volar插件',
+  '如果使用的是VSCode进行开发，可以去检查下已启用的插件列表，看下列表里是否同时启用了插件：Volar和Vue official，参考Vue官方的文档说明，在VSCode中开发Vue3时，应使用Vue official插件并禁用掉Volar插件'
 ])
 </script>
 
 <template>
   <main class="flex flex-col gap-2 overflow-y-auto h-76">
-    <section
-      v-for="(item, index) in videos"
-      :key="index"
-      class="bg-white px-3 py-2 rounded text-slate-600 flex justify-between items-center"
-    >
-      {{ item }}
-      <div
-        class="text-slate-500 opacity-20 cursor-pointer hover:text-orange-500 hover:opacity-80 hover:scale-110 duration-200"
-      >
-        <close-one theme="outline" size="20" />
-      </div>
-    </section>
+    <VideoItem v-for="(item, index) in videos" :key="index" :video="{ title: item }" />
   </main>
 </template>

@@ -1,9 +1,9 @@
 <script setup lang="ts"></script>
 
 <template>
-  <main class="flex justify-between bg-gray-50 text-slate-600 border-b px-3 py-2 border-gray-300">
+  <main class="flex justify-between bg-gray-50 text-slate-600 px-3 py-2 drag shadow-sm">
     <section class="opacity-80 font-bold">水果饮料</section>
-    <section class="flex justify-between gap-3">
+    <section class="flex justify-between gap-3 no-drag">
       <RouterLink :to="{ name: 'home' }" class="btn" active-class="active">转码</RouterLink>
       <RouterLink :to="{ name: 'setting' }" class="btn" active-class="active">配置</RouterLink>
     </section>

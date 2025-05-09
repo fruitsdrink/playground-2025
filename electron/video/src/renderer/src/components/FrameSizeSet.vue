@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useStore } from '@renderer/store'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { CloseOne } from '@icon-park/vue-next'
 
 defineOptions({
   name: 'FrameSizeSet'
@@ -13,10 +14,7 @@ interface Props {
   tip?: string
 }
 
-const { type, placeholder, tip } = withDefaults(defineProps<Props>(), {
-  placeholder: '请选择',
-  tip: '请输入'
-})
+const { type, placeholder = '请选择', tip = '请输入' } = defineProps<Props>()
 
 const { config } = useStore()
 
@@ -24,6 +22,7 @@ const list = computed(() => {
   return type === 'size' ? config.sizes : config.frames
 })
 const newValue = ref<string | number>('')
+
 const add = (type: 'size' | 'frame'): void => {
   if (newValue.value) {
     if (type === 'size' && !/^\d+x\d+$/.test(newValue.value as string)) {
@@ -83,12 +82,36 @@ const add = (type: 'size' | 'frame'): void => {
     newValue.value = ''
   }
 }
+
+const remove = async (type: 'size' | 'frame', index: number): Promise<void> => {
+  await ElMessageBox.confirm('是否删除该选项')
+  if (type === 'size') {
+    config.sizes.splice(index, 1)
+  } else {
+    config.frames.splice(index, 1)
+  }
+}
 </script>
 
 <template>
   <main>
     <el-select :placeholder="placeholder">
-      <el-option v-for="(item, index) in list" :key="index" :label="item" :value="item"></el-option>
+      <el-option
+        v-for="(item, index) in list"
+        :key="index"
+        :label="item"
+        :value="item"
+        class="flex flex-ro items-center justify-between"
+      >
+        {{ item }}
+        <close-one
+          v-if="index > 1"
+          theme="outline"
+          size="20"
+          class="text-slate-700 hover:text-red-500 hover:scale-110"
+          @click="remove(type, index)"
+        />
+      </el-option>
     </el-select>
     <div class="flex items-center gap-2 mt-2">
       <el-input v-model="newValue" :placeholder="tip" clearable size="default" />
