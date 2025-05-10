@@ -1,8 +1,17 @@
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
-const api = {}
+const api = {
+  compress: () => {
+    ipcRenderer.send('compress')
+  },
+  registerOnCompressReply: (callback: (arg: boolean) => void) => {
+    ipcRenderer.on('compress-reply', (event, arg) => {
+      callback(arg)
+    })
+  }
+}
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
