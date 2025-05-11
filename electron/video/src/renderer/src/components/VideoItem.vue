@@ -1,19 +1,39 @@
 <script setup lang="ts">
-import { VideoType } from '@renderer/types'
 import { CloseOne } from '@icon-park/vue-next'
-import { ref } from 'vue'
+import { useVideo } from '@renderer/composable/useVideo'
+import { useStore } from '@renderer/store'
+import { SelectFileOptions } from 'src/types'
+import { computed, ref } from 'vue'
 
 defineOptions({
   name: 'VideoItem'
 })
-const { video } = defineProps<{ video: VideoType }>()
-const process = ref(0)
+const { video, index } = defineProps<{ video: SelectFileOptions; index: number }>()
+const process = computed(() => {
+  const file = config.files.find((item) => item.index === index)
+  if (file) {
+    return file.progress
+  }
+  return 0
+})
+
+const { config } = useStore()
+
+const isCompressing = computed(() => {
+  const file = config.files.find((item) => item.index === index)
+  if (file) {
+    return file.isCompressing
+  }
+  return false
+})
+
+const { removeFile } = useVideo()
 </script>
 
 <template>
   <main class="video" :style="`--p:${process}%`">
-    <div class="title">{{ video.title }}</div>
-    <div class="icon">
+    <div class="title">{{ video.name }}</div>
+    <div v-if="!isCompressing" class="icon" @click="removeFile(index)">
       <close-one theme="outline" size="20" />
     </div>
   </main>

@@ -1,15 +1,31 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
+import { CompressOptions, SelectFileOptions, VideoInfo } from '../types'
 
 // Custom APIs for renderer
 const api = {
-  compress: () => {
-    ipcRenderer.send('compress')
+  compress: (file: CompressOptions) => {
+    ipcRenderer.send('compress', file)
   },
-  registerOnCompressReply: (callback: (arg: boolean) => void) => {
-    ipcRenderer.on('compress-reply', (event, arg) => {
+  registerOnCompressError: (
+    callback: (arg: { file: VideoInfo; error: { message: string } }) => void
+  ) => {
+    ipcRenderer.on('compress-error', (_event, arg) => {
       callback(arg)
     })
+  },
+  registerOnCompressProgress: (callback: (arg: { file: VideoInfo; percent: number }) => void) => {
+    ipcRenderer.on('compress-progress', (_event, arg) => {
+      callback(arg)
+    })
+  },
+  registerOnCompressEnd: (callback: (arg: { file: VideoInfo }) => void) => {
+    ipcRenderer.on('compress-end', (_event, arg) => {
+      callback(arg)
+    })
+  },
+  selectFile: async (): Promise<[SelectFileOptions]> => {
+    return await ipcRenderer.invoke('select-file')
   }
 }
 

@@ -1,23 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { VideoItem } from '@renderer/components'
+import { useStore } from '@renderer/store'
 
-const videos = ref([
-  '如果使用的是VSCode进行开发，可以去检查下已启用的插件列表，看下列表里是否同时启用了插件：Volar和Vue official，参考Vue官方的文档说明，在VSCode中开发Vue3时，应使用Vue official插件并禁用掉Volar插件',
-  '如果使用的是VSCode进行开发，可以去检查下已启用的插件列表，看下列表里是否同时启用了插件：Volar和Vue official，参考Vue官方的文档说明，在VSCode中开发Vue3时，应使用Vue official插件并禁用掉Volar插件',
-  '如果使用的是VSCode进行开发，可以去检查下已启用的插件列表，看下列表里是否同时启用了插件：Volar和Vue official，参考Vue官方的文档说明，在VSCode中开发Vue3时，应使用Vue official插件并禁用掉Volar插件',
-  '如果使用的是VSCode进行开发，可以去检查下已启用的插件列表，看下列表里是否同时启用了插件：Volar和Vue official，参考Vue官方的文档说明，在VSCode中开发Vue3时，应使用Vue official插件并禁用掉Volar插件',
-  '如果使用的是VSCode进行开发，可以去检查下已启用的插件列表，看下列表里是否同时启用了插件：Volar和Vue official，参考Vue官方的文档说明，在VSCode中开发Vue3时，应使用Vue official插件并禁用掉Volar插件',
-  '如果使用的是VSCode进行开发，可以去检查下已启用的插件列表，看下列表里是否同时启用了插件：Volar和Vue official，参考Vue官方的文档说明，在VSCode中开发Vue3时，应使用Vue official插件并禁用掉Volar插件',
-  '如果使用的是VSCode进行开发，可以去检查下已启用的插件列表，看下列表里是否同时启用了插件：Volar和Vue official，参考Vue官方的文档说明，在VSCode中开发Vue3时，应使用Vue official插件并禁用掉Volar插件',
-  '如果使用的是VSCode进行开发，可以去检查下已启用的插件列表，看下列表里是否同时启用了插件：Volar和Vue official，参考Vue官方的文档说明，在VSCode中开发Vue3时，应使用Vue official插件并禁用掉Volar插件',
-  '如果使用的是VSCode进行开发，可以去检查下已启用的插件列表，看下列表里是否同时启用了插件：Volar和Vue official，参考Vue官方的文档说明，在VSCode中开发Vue3时，应使用Vue official插件并禁用掉Volar插件',
-  '如果使用的是VSCode进行开发，可以去检查下已启用的插件列表，看下列表里是否同时启用了插件：Volar和Vue official，参考Vue官方的文档说明，在VSCode中开发Vue3时，应使用Vue official插件并禁用掉Volar插件'
-])
+const { config } = useStore()
 </script>
 
 <template>
   <main class="flex flex-col gap-2">
-    <VideoItem v-for="(item, index) in videos" :key="index" :video="{ title: item }" />
+    <VideoItem v-for="(item, index) in config.files" :key="index" :video="item" :index="index" />
+    <div v-if="config.files.length === 0" class="text-center text-xs text-slate-600 opacity-60">
+      暂无压缩视频
+    </div>
   </main>
 </template>
