@@ -1,47 +1,33 @@
-# Astro Starter Kit: Minimal
+# codeing in public
 
-```sh
-pnpm create astro@latest -- --template minimal
-```
+[github](https://github.com/coding-in-public/astro-course-files)
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+## lesson-14 style
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Colors
 
-## 🚀 Project Structure
+# F4F4F9
 
-Inside of your Astro project, you'll see the following folders and files:
+# 0C0C1D
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+# 4C4CB2
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+# D0AA25
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+# D93535
 
-Any static assets, like images, can be placed in the `public/` directory.
+# 1EAC3E
 
-## 🧞 Commands
+Shadows
 
-All commands are run from the root of the project, from a terminal:
+Default: 0px 20px 25px 0px rgba(194, 194, 214, 0.30)
+Purple: 0px 20px 25px 0px rgba(76, 76, 178, 0.20)
+Fonts
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+Family: 'Inter'
+Weights: semi-bold
+Sizes: 3.125rem, 1rem, 0.75rem
+Icons
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Check: <https://icones.js.org/collection/radix-icons?s=check> (check)
+X: <https://icones.js.org/collection/radix-icons?s=cross> (cross-2)

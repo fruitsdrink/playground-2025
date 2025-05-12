@@ -1,0 +1,59 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<keyof typeof sizes> {
+  tag: keyof typeof sizes;
+  size: keyof typeof sizes;
+  classes?: HTMLAttributes<keyof typeof sizes>["class"];
+}
+const { tag, size, classes, ...rest } = Astro.props;
+const Tag = tag;
+
+const sizes = {
+  h1: "h1",
+  h2: "h2",
+  h3: "h3",
+  h4: "h4",
+  h5: "h5",
+  h6: "h6",
+};
+---
+
+<Tag class:list={["default", sizes[size], classes]} {...rest}>
+  <slot />
+</Tag>
+
+<style>
+  default {
+  }
+  .h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .h4 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .h5 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .h6 {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+</style>
