@@ -1,9 +1,9 @@
 ---
-title: Hello, World
-layout: "../../../layout/lesson-19/BlogLayout.astro"
+title: Post2
+layout: "@/layout/module3/BlogLayout.astro"
 ---
 
-# Hi there
+# Hi there post 2
 
 This Markdown file creates a page at `your-domain.com/page-1/`
 
