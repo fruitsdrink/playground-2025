@@ -1,0 +1,31 @@
+---
+import { getCollection } from "astro:content";
+
+const teamData = await getCollection("team");
+const postsData = await getCollection("posts");
+const cats = await getCollection("cats");
+const toml = await getCollection("toml");
+const todos = await getCollection("todos");
+console.log("toml: ", todos);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Module 4</h1>
+    <div>
+      {teamData.map((p) => <p>{p.data.name}</p>)}
+    </div>
+    <div>
+      <p>todos</p>
+      <ul>
+        {todos.map((t) => <li>{t.data.title}</li>)}
+      </ul>
+    </div>
+  </body>
+</html>

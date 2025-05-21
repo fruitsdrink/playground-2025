@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("posts");
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <ul>
+      {posts.map((p) => <li>{p.data.title}</li>)}
+    </ul>
+  </body>
+</html>
