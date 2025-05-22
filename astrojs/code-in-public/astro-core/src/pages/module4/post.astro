@@ -1,4 +1,5 @@
 ---
+import { getEntry } from "astro:content";
 import { getCollection } from "astro:content";
 
 const posts = await getCollection("posts");
@@ -13,7 +14,16 @@ const posts = await getCollection("posts");
   </head>
   <body>
     <ul>
-      {posts.map((p) => <li>{p.data.title}</li>)}
+      {
+        posts.map((post) => (
+          <li>
+            <p>
+              {post.data.title} - by author id:{post.data.author.id}
+            </p>
+            <img src={post.data.cover.src} alt="" />
+          </li>
+        ))
+      }
     </ul>
   </body>
 </html>

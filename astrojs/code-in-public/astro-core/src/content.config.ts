@@ -1,5 +1,5 @@
 import { file, glob } from "astro/loaders";
-import { defineCollection, z } from "astro:content";
+import { defineCollection, reference, z } from "astro:content";
 import { parse as parseToml } from "toml";
 import { parse as parseCsv } from "csv-parse/sync";
 
@@ -21,15 +21,18 @@ export const collections = {
       pattern: "**/*.{md,mdx}",
       base: "src/data/module4/posts",
     }),
-    schema: z.object({
-      title: z.string(),
-      tags: z.array(z.string()),
-      pubDate: z.coerce.date(),
-      isDraft: z.boolean(),
-      canonicalURL: z.string().optional(),
-      cover: z.string(),
-      coverAlt: z.string(),
-    }),
+    schema: ({ image }) => {
+      return z.object({
+        title: z.string().max(32),
+        tags: z.array(z.string()),
+        pubDate: z.coerce.date(),
+        isDraft: z.boolean(),
+        canonicalURL: z.string().url().optional(),
+        cover: image(),
+        coverAlt: z.string(),
+        author: reference("team"),
+      });
+    },
   }),
   team: defineCollection({
     loader: file("src/data/module4/team.json", {
@@ -44,6 +47,7 @@ export const collections = {
         "Software Development",
         "Product Design",
       ]),
+      posts: z.array(reference("posts")),
     }),
   }),
   cats: defineCollection({
