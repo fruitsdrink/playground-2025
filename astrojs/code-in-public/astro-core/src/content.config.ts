@@ -20,6 +20,7 @@ export const collections = {
     loader: glob({
       pattern: "**/*.{md,mdx}",
       base: "src/data/module4/posts",
+      // generateId: ({ entry, data }) => data.title as unknown as string,
     }),
     schema: ({ image }) => {
       return z.object({

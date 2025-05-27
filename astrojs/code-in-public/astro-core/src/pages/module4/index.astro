@@ -1,7 +1,10 @@
 ---
 import { getCollection } from "astro:content";
 
-const teamData = await getCollection("team");
+const teamData = await getCollection(
+  "team",
+  (entry) => entry.data.department === "Engineering"
+);
 const postsData = await getCollection("posts");
 const cats = await getCollection("cats");
 const toml = await getCollection("toml");
