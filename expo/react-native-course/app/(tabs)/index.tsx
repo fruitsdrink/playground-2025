@@ -1,10 +1,16 @@
-import { StyleSheet, Text, View } from "react-native";
+import { useAuth } from "@/lib/auth-context";
+import { StyleSheet, View } from "react-native";
+import { Button } from "react-native-paper";
 
 export default function IndexScreen() {
+  const { signOut } = useAuth();
+
   return (
     <View style={styles.page}>
       <View>
-        <Text>首页</Text>
+        <Button mode="text" onPress={signOut} icon={"logout"}>
+          退出
+        </Button>
       </View>
     </View>
   );

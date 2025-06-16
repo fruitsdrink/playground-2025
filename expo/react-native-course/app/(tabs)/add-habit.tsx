@@ -1,9 +1,9 @@
 import { Text, View } from "react-native";
 
-export default function LoginScreen() {
+export default function AddHabitScreen() {
   return (
     <View>
-      <Text>登录页面</Text>
+      <Text>添加习惯</Text>
     </View>
   );
 }
