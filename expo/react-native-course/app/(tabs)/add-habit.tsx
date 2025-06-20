@@ -12,7 +12,7 @@ import {
   useTheme,
 } from "react-native-paper";
 
-const FREQUENCIES = [
+export const FREQUENCIES = [
   {
     value: "daily",
     label: "每天",
