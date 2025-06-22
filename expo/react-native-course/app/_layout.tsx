@@ -3,6 +3,7 @@ import { useMaterial3Theme } from "@pchmn/expo-material3-theme";
 import { Stack, useRouter, useSegments } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { MD3DarkTheme, MD3LightTheme, PaperProvider } from "react-native-paper";
 import { ThemeProp } from "react-native-paper/lib/typescript/types";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -134,18 +135,23 @@ export default function RootLayout() {
   }
 
   return (
-    <AuthProvider>
-      <PaperProvider>
-        <SafeAreaProvider>
-          <RouteGuard>
-            <PaperProvider theme={paperTheme}>
-              <Stack>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              </Stack>
-            </PaperProvider>
-          </RouteGuard>
-        </SafeAreaProvider>
-      </PaperProvider>
-    </AuthProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AuthProvider>
+        <PaperProvider>
+          <SafeAreaProvider>
+            <RouteGuard>
+              <PaperProvider theme={paperTheme}>
+                <Stack>
+                  <Stack.Screen
+                    name="(tabs)"
+                    options={{ headerShown: false }}
+                  />
+                </Stack>
+              </PaperProvider>
+            </RouteGuard>
+          </SafeAreaProvider>
+        </PaperProvider>
+      </AuthProvider>
+    </GestureHandlerRootView>
   );
 }
