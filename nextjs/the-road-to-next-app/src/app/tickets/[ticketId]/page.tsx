@@ -3,9 +3,9 @@ import { TicketItem } from "@/features/ticket/components/ticket-item";
 import { getTicket } from "@/features/ticket/queries/get-ticket";
 
 type TicketPageProps = {
-  params: {
+  params: Promise<{
     ticketId: string;
-  };
+  }>;
 };
 export default async function TicketPage({ params }: TicketPageProps) {
   const { ticketId } = await params;
@@ -20,3 +20,10 @@ export default async function TicketPage({ params }: TicketPageProps) {
     </div>
   );
 }
+
+// export async function generateStaticParams() {
+//   const tickets = await getTickets(); // Assuming this returns all tickets or a list of ticket IDs
+//   return tickets.map((ticket) => ({
+//     ticketId: ticket.id,
+//   }));
+// }

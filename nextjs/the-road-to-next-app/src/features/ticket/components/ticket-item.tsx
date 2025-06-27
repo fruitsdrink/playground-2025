@@ -1,11 +1,16 @@
 import clsx from "clsx";
-import { LucideSquareArrowOutUpRight } from "lucide-react";
+import {
+  LucidePencil,
+  LucideSquareArrowOutUpRight,
+  LucideTrash,
+} from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ticketPath } from "@/paths";
+import { Ticket } from "@/generated/prisma";
+import { ticketEditPath, ticketPath } from "@/paths";
+import { deleteTicket } from "../actions/delete-ticket";
 import { TICKET_ICONS } from "../constants";
-import { Ticket } from "../types";
 
 type TicketItemProps = {
   ticket: Ticket;
@@ -14,10 +19,26 @@ type TicketItemProps = {
 export function TicketItem({ ticket, isDetail }: TicketItemProps) {
   const detailButton = (
     <Button variant={"outline"} asChild size={"icon"}>
-      <Link href={ticketPath(ticket.id)} className="underline">
+      <Link prefetch href={ticketPath(ticket.id)} className="underline">
         <LucideSquareArrowOutUpRight />
       </Link>
     </Button>
+  );
+
+  const editButton = (
+    <Button variant={"outline"} asChild size={"icon"}>
+      <Link prefetch href={ticketEditPath(ticket.id)} className="underline">
+        <LucidePencil />
+      </Link>
+    </Button>
+  );
+
+  const deleteButton = (
+    <form action={deleteTicket.bind(null, ticket.id)}>
+      <Button variant={"outline"} size={"icon"}>
+        <LucideTrash className="w-4 h-4" />
+      </Button>
+    </form>
   );
 
   return (
@@ -44,9 +65,20 @@ export function TicketItem({ ticket, isDetail }: TicketItemProps) {
           </span>
         </CardContent>
       </Card>
-      {!isDetail && (
-        <div className="flex flex-col justify-between">{detailButton}</div>
-      )}
+
+      <div className="flex flex-col gap-y-2">
+        {isDetail ? (
+          <>
+            {deleteButton}
+            {editButton}
+          </>
+        ) : (
+          <>
+            {detailButton}
+            {editButton}
+          </>
+        )}
+      </div>
     </div>
   );
 }
