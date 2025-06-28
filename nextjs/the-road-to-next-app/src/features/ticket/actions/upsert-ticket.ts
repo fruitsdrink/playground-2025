@@ -3,9 +3,11 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { setCookieByKey } from "@/actions/cookies";
 import {
   ActionState,
   fromErrorToActionState,
+  toActionState,
 } from "@/components/form/utils/to-action-state";
 import { prisma } from "@/lib/prisma";
 import { ticketPath, ticketsPath } from "@/paths";
@@ -44,8 +46,9 @@ export async function upsertTicket(
 
   revalidatePath(ticketsPath());
   if (id) {
+    await setCookieByKey("toast", "Ticket updated successfully!");
     redirect(ticketPath(id));
   }
 
-  return { message: "Ticket created successfully!" };
+  return toActionState("SUCCESS", "Ticket created successfully!");
 }
