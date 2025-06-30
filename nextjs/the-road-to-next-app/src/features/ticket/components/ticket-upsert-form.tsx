@@ -1,7 +1,11 @@
 "use client";
 
 import { useActionState } from "react";
-import { DatePicker } from "@/components/date-picker";
+import { useRef } from "react";
+import {
+  DatePicker,
+  ImperativeHandleFromDataPicker,
+} from "@/components/date-picker";
 import { FieldError } from "@/components/form/field-error";
 import { Form } from "@/components/form/form";
 import { SubmitButton } from "@/components/form/submit-button";
@@ -22,8 +26,15 @@ export function TicketUpsertForm({ ticket }: TicketUpdateFormProps) {
     EMPTY_ACTION_STATE
   );
 
+  const datePickerImperativeHandleRef =
+    useRef<ImperativeHandleFromDataPicker>(null);
+
+  const handleOnSuccess = () => {
+    datePickerImperativeHandleRef.current?.reset();
+  };
+
   return (
-    <Form action={action} actionState={actionState}>
+    <Form action={action} actionState={actionState} onSuccess={handleOnSuccess}>
       <Label htmlFor="title">Title</Label>
       <Input
         type="text"
@@ -51,12 +62,14 @@ export function TicketUpsertForm({ ticket }: TicketUpdateFormProps) {
             Deadline
           </Label>
           <DatePicker
+            // key={actionState.timestamp} // 表单重置后重置日期
             id="deadline"
             name="deadline"
             defaultValue={
               (actionState.payload?.get("deadline") as string) ??
               ticket?.deadline
             }
+            imperativeHandleRef={datePickerImperativeHandleRef}
           />
           <FieldError actionState={actionState} name="deadline" />
         </div>
@@ -65,9 +78,10 @@ export function TicketUpsertForm({ ticket }: TicketUpdateFormProps) {
             Bounty
           </Label>
           <Input
-            type="text"
+            type="number"
             id="bounty"
             name="bounty"
+            step={0.01}
             defaultValue={
               (actionState.payload?.get("bounty") as string) ??
               (ticket?.bounty ? fromCent(ticket?.bounty) : "")

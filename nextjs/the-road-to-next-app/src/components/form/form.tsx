@@ -7,18 +7,29 @@ type FromProps = {
   action: (formData: FormData) => void;
   actionState: ActionState;
   children: React.ReactNode;
+  onSuccess?: (actionState: ActionState) => void;
+  onError?: (actionState: ActionState) => void;
 };
-export function Form({ action, actionState, children }: FromProps) {
+export function Form({
+  action,
+  actionState,
+  children,
+  onSuccess,
+  onError,
+}: FromProps) {
   useActionFeedback(actionState, {
     onSuccess: ({ actionState }) => {
       if (actionState.message) {
         toast.success(actionState.message);
       }
+      onSuccess?.(actionState);
     },
     onError: ({ actionState }) => {
       if (actionState.message) {
         toast.error(actionState.message);
       }
+
+      onError?.(actionState);
     },
   });
 
