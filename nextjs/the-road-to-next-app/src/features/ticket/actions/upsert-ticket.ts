@@ -11,6 +11,7 @@ import {
 } from "@/components/form/utils/to-action-state";
 import { prisma } from "@/lib/prisma";
 import { ticketPath, ticketsPath } from "@/paths";
+import { toCent } from "@/utils/currency";
 
 const upsertTicketSchema = z.object({
   title: z
@@ -21,6 +22,8 @@ const upsertTicketSchema = z.object({
     .string()
     .min(1, "Content is required")
     .max(1024, "Content must be less than 1024 characters"),
+  deadline: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format"),
+  bounty: z.coerce.number().positive(),
 });
 
 export async function upsertTicket(
@@ -32,12 +35,19 @@ export async function upsertTicket(
     const data = upsertTicketSchema.parse({
       title: formData.get("title"),
       content: formData.get("content"),
+      deadline: formData.get("deadline"),
+      bounty: formData.get("bounty"),
     });
+
+    const dbData = {
+      ...data,
+      bounty: toCent(data.bounty),
+    };
 
     await prisma.ticket.upsert({
       where: { id: id || "" },
-      create: data,
-      update: data,
+      create: dbData,
+      update: dbData,
     });
   } catch (error) {
     console.error("Error upsert ticket:", error);

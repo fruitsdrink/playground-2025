@@ -1,10 +1,12 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { deleteCookieByKey, getCookieByKey } from "@/actions/cookies";
 
 export function RedirectToast() {
+  const pathname = usePathname();
   useEffect(() => {
     (async () => {
       const message = await getCookieByKey("toast");
@@ -13,7 +15,7 @@ export function RedirectToast() {
         deleteCookieByKey("toast");
       }
     })();
-  }, []);
+  }, [pathname]);
 
   return null;
 }
