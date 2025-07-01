@@ -2,6 +2,7 @@
 
 import { LucideTrash } from "lucide-react";
 import { toast } from "sonner";
+import { useConfirmDialog } from "@/components/confirm-dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Ticket, TicketStatus } from "@/generated/prisma";
+import { deleteTicket } from "../actions/delete-ticket";
 import { updateTicketStatus } from "../actions/update-ticket-status";
 import { TICKET_STATUS_LABEL } from "../constants";
 
@@ -20,12 +22,18 @@ type TicketMoreMenuProps = {
   trigger: React.ReactNode;
 };
 export function TicketMoreMenu({ ticket, trigger }: TicketMoreMenuProps) {
-  const deleteButton = (
-    <DropdownMenuItem>
-      <LucideTrash className="w-4 h-4 mr-2" />
-      <span>Delete</span>
-    </DropdownMenuItem>
-  );
+  const [deleteButton, deleteDialog] = useConfirmDialog({
+    title: "Delete Ticket",
+    description:
+      "Are you sure you want to delete this ticket? This action cannot be undone.",
+    action: deleteTicket.bind(null, ticket.id),
+    trigger: (
+      <DropdownMenuItem>
+        <LucideTrash className="w-4 h-4 mr-2" />
+        <span>Delete</span>
+      </DropdownMenuItem>
+    ),
+  });
 
   const handleUpdateStatus = async (value: string) => {
     const promise = updateTicketStatus(ticket.id, value as TicketStatus);
@@ -55,13 +63,16 @@ export function TicketMoreMenu({ ticket, trigger }: TicketMoreMenuProps) {
   );
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" side="right">
-        {ticketStatusRadioGroupItems}
-        <DropdownMenuSeparator />
-        {deleteButton}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56" side="right">
+          {ticketStatusRadioGroupItems}
+          <DropdownMenuSeparator />
+          {deleteButton}
+        </DropdownMenuContent>
+      </DropdownMenu>
+      {deleteDialog}
+    </>
   );
 }

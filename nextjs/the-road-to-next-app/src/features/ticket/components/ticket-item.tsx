@@ -3,7 +3,6 @@ import {
   LucideMoreVertical,
   LucidePencil,
   LucideSquareArrowOutUpRight,
-  LucideTrash,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -17,7 +16,6 @@ import {
 import { Ticket } from "@/generated/prisma";
 import { ticketEditPath, ticketPath } from "@/paths";
 import { toCurrencyFromCent } from "@/utils/currency";
-import { deleteTicket } from "../actions/delete-ticket";
 import { TICKET_ICONS } from "../constants";
 import { TicketMoreMenu } from "./ticket-more-menu";
 
@@ -42,13 +40,13 @@ export function TicketItem({ ticket, isDetail }: TicketItemProps) {
     </Button>
   );
 
-  const deleteButton = (
-    <form action={deleteTicket.bind(null, ticket.id)}>
-      <Button variant={"outline"} size={"icon"}>
-        <LucideTrash className="w-4 h-4" />
-      </Button>
-    </form>
-  );
+  // const deleteButton = (
+  //   <form action={deleteTicket.bind(null, ticket.id)}>
+  //     <Button variant={"outline"} size={"icon"}>
+  //       <LucideTrash className="w-4 h-4" />
+  //     </Button>
+  //   </form>
+  // );
 
   const moreButton = (
     <TicketMoreMenu
@@ -96,7 +94,6 @@ export function TicketItem({ ticket, isDetail }: TicketItemProps) {
         {isDetail ? (
           <>
             {editButton}
-            {deleteButton}
             {moreButton}
           </>
         ) : (
