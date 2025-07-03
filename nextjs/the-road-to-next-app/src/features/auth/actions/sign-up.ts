@@ -9,7 +9,7 @@ import {
   fromErrorToActionState,
   toActionState,
 } from "@/components/form/utils/to-action-state";
-import { lucia } from "@/lib/lucia";
+import { luciaV3 } from "@/lib/lucia-v3";
 import { prisma } from "@/lib/prisma";
 import { ticketsPath } from "@/paths";
 
@@ -62,8 +62,8 @@ export async function signUp(_actionState: ActionState, formData: FormData) {
       },
     });
 
-    const session = await lucia.createSession(user.id, {});
-    const sessionCookie = lucia.createSessionCookie(session.id);
+    const session = await luciaV3.createSession(user.id, {});
+    const sessionCookie = luciaV3.createSessionCookie(session.id);
     const cookieStore = await cookies();
     cookieStore.set(sessionCookie.name, sessionCookie.value, {
       ...sessionCookie.attributes,
