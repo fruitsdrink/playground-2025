@@ -12,10 +12,19 @@ export function SignInForm() {
   const [actionState, action] = useActionState(signIn, EMPTY_ACTION_STATE);
   return (
     <Form action={action} actionState={actionState}>
-      <Input name="email" placeholder="Email" />
+      <Input
+        name="email"
+        placeholder="Email"
+        defaultValue={actionState.payload?.get("email") as string}
+      />
       <FieldError name="email" actionState={actionState} />
 
-      <Input name="password" placeholder="Password" type="password" />
+      <Input
+        name="password"
+        placeholder="Password"
+        type="password"
+        defaultValue={actionState.payload?.get("password") as string}
+      />
       <FieldError name="password" actionState={actionState} />
 
       <SubmitButton label="Sign In" />
