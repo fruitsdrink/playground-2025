@@ -14,13 +14,22 @@
   }
 }
 
-@keyframes headerFromTop {
-  from: {
+@keyframes headerFadeInFromTop {
+  from {
     transform: translateY(-100%);
   }
   ,
-  to: {
+  to {
     transform: translateY(0);
+  }
+}
+
+@keyframes sidebarFadeInFromLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
   }
 }
 
@@ -63,7 +72,8 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --animate-fade-in-from-top: fadeInFromTop 0.5s ease-out;
-  --animate-header-from-tip: headerFromTop 0.5s ease-out;
+  --animate-header-from-top: headerFadeInFromTop 0.5s ease-out;
+  --animate-sidebar-from-left: sidebarFadeInFromLeft 0.5s ease-out;
 }
 
 :root {

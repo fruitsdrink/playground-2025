@@ -1,4 +1,5 @@
 import { FlatCompat } from "@eslint/eslintrc";
+import { globalIgnores } from "eslint/config";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -26,6 +27,7 @@ const eslintConfig = [
       "simple-import-sort/exports": "error",
     },
   },
+  globalIgnores(["src/generated/"]),
 ];
 
 export default eslintConfig;

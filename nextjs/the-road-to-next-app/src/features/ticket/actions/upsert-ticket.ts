@@ -9,9 +9,10 @@ import {
   fromErrorToActionState,
   toActionState,
 } from "@/components/form/utils/to-action-state";
-import { getAuth } from "@/features/auth/queries/get-auth";
+import { getAuthRedirect } from "@/features/auth/queries/get-auth-redirect";
+import { isOwner } from "@/features/auth/utils/is-owner";
 import { prisma } from "@/lib/prisma";
-import { signInPath, ticketPath, ticketsPath } from "@/paths";
+import { ticketPath, ticketsPath } from "@/paths";
 import { toCent } from "@/utils/currency";
 
 const upsertTicketSchema = z.object({
@@ -32,12 +33,19 @@ export async function upsertTicket(
   _actionState: ActionState,
   formData: FormData
 ) {
-  const { user } = await getAuth();
+  const { user } = await getAuthRedirect();
 
-  if (!user) {
-    redirect(signInPath());
-  }
   try {
+    if (id) {
+      const ticket = await prisma.ticket.findUnique({
+        where: { id },
+      });
+
+      if (!ticket || !isOwner(user, ticket)) {
+        return toActionState("ERROR", "Not authorized");
+      }
+    }
+
     const data = upsertTicketSchema.parse({
       title: formData.get("title"),
       content: formData.get("content"),

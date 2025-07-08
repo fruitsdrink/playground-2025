@@ -4,8 +4,9 @@ import { LucideKanban, LucideLogOut } from "lucide-react";
 import Link from "next/link";
 import { signOut } from "@/features/auth/actions/sign-out";
 import { useAuth } from "@/features/auth/hooks/use-auth";
-import { homePath, signInPath, signUpPath, ticketsPath } from "@/paths";
-import { SubmitButton } from "./form/submit-button";
+import { cn } from "@/lib/utils";
+import { homePath, signInPath, signUpPath } from "@/paths";
+import { SubmitButton } from "./form/components/submit-button";
 import { ThemeSwitcher } from "./theme/theme-switcher";
 import { Button, buttonVariants } from "./ui/button";
 
@@ -17,17 +18,9 @@ export function Header() {
   }
 
   const navItems = user ? (
-    <>
-      <Link
-        href={ticketsPath()}
-        className={buttonVariants({ variant: "default" })}
-      >
-        Tickets
-      </Link>
-      <form action={signOut}>
-        <SubmitButton label="Sign Out" icon={<LucideLogOut />} />
-      </form>
-    </>
+    <form action={signOut}>
+      <SubmitButton label="Sign Out" icon={<LucideLogOut />} />
+    </form>
   ) : (
     <>
       <Link
@@ -46,7 +39,12 @@ export function Header() {
   );
 
   return (
-    <nav className=" animate-header-from-top  fixed left-0 top-0 right-0 w-full z-20 border-b flex items-center justify-between py-2.5 px-5 bg-background/55 backdrop-blur-sm supports-backdrop-blur:bg-background/60">
+    <nav
+      className={cn(
+        "animate-header-from-top",
+        "fixed left-0 top-0 right-0 w-full z-20 border-b flex items-center justify-between py-2.5 px-5 bg-background/55 backdrop-blur-sm supports-backdrop-blur:bg-background/60"
+      )}
+    >
       <div className="flex align-middle gap-x-2">
         <Button asChild variant={"ghost"}>
           <Link href={homePath()}>

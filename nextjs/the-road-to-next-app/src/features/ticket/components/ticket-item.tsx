@@ -14,6 +14,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getAuth } from "@/features/auth/queries/get-auth";
+import { isOwner } from "@/features/auth/utils/is-owner";
 import { Prisma } from "@/generated/prisma";
 import { ticketEditPath, ticketPath } from "@/paths";
 import { toCurrencyFromCent } from "@/utils/currency";
@@ -32,7 +34,11 @@ type TicketItemProps = {
   }>;
   isDetail?: boolean;
 };
-export function TicketItem({ ticket, isDetail }: TicketItemProps) {
+
+export async function TicketItem({ ticket, isDetail }: TicketItemProps) {
+  const { user } = await getAuth();
+  const isTicketOwner = isOwner(user, ticket);
+
   const detailButton = (
     <Button variant={"outline"} asChild size={"icon"}>
       <Link prefetch href={ticketPath(ticket.id)} className="underline">
@@ -41,13 +47,13 @@ export function TicketItem({ ticket, isDetail }: TicketItemProps) {
     </Button>
   );
 
-  const editButton = (
+  const editButton = isTicketOwner ? (
     <Button variant={"outline"} asChild size={"icon"}>
       <Link prefetch href={ticketEditPath(ticket.id)} className="underline">
         <LucidePencil />
       </Link>
     </Button>
-  );
+  ) : null;
 
   // const deleteButton = (
   //   <form action={deleteTicket.bind(null, ticket.id)}>
@@ -57,7 +63,7 @@ export function TicketItem({ ticket, isDetail }: TicketItemProps) {
   //   </form>
   // );
 
-  const moreButton = (
+  const moreButton = isTicketOwner ? (
     <TicketMoreMenu
       ticket={ticket}
       trigger={
@@ -66,7 +72,7 @@ export function TicketItem({ ticket, isDetail }: TicketItemProps) {
         </Button>
       }
     />
-  );
+  ) : null;
 
   return (
     <div
@@ -92,9 +98,11 @@ export function TicketItem({ ticket, isDetail }: TicketItemProps) {
           </span>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <p className="text-sm text-muted-foreground">{ticket.deadline}</p>
           <p className="text-sm text-muted-foreground">
-            {toCurrencyFromCent(ticket.bounty)} by {ticket.user.username}
+            {ticket.deadline} by {ticket.user.username}
+          </p>
+          <p className="text-sm text-muted-foreground">
+            {toCurrencyFromCent(ticket.bounty)}
           </p>
         </CardFooter>
       </Card>

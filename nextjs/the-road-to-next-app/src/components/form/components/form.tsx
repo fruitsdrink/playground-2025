@@ -1,7 +1,7 @@
 import React from "react";
 import { toast } from "sonner";
-import { useActionFeedback } from "./hooks/use-action-feedback";
-import { ActionState } from "./utils/to-action-state";
+import { useActionFeedback } from "../hooks/use-action-feedback";
+import { ActionState } from "../utils/to-action-state";
 
 type FromProps = {
   action: (formData: FormData) => void;

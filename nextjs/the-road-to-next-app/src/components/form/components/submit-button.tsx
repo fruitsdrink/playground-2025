@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { LucideLoaderCircle } from "lucide-react";
 import { cloneElement, ReactElement } from "react";
 import { useFormStatus } from "react-dom";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 
 type SubmitButtonProps = {
   label?: string;
