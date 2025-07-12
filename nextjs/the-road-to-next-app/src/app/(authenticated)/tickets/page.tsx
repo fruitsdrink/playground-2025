@@ -1,3 +1,4 @@
+import { SearchParams } from "nuqs/server";
 import { Suspense } from "react";
 import { CardCompact } from "@/components/card-compact";
 import { Heading } from "@/components/heading";
@@ -5,15 +6,16 @@ import { Spinner } from "@/components/spinner";
 import { getAuth } from "@/features/auth/queries/get-auth";
 import { TicketList } from "@/features/ticket/components/ticket-list";
 import { TicketUpsertForm } from "@/features/ticket/components/ticket-upsert-form";
-import { SearchParams } from "@/features/ticket/search-params";
+import { searchParamsCache } from "@/features/ticket/search-params";
 
 // export const dynamic = "force-dynamic"; // Force dynamic rendering for this page
 // export const revalidate = 5; // Reval date every 30 seconds
 
 type TicketsPageProps = {
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 };
-export default async function TicketsPage({ searchParams }: TicketsPageProps) {
+export default async function TicketsPage(params: TicketsPageProps) {
+  const { searchParams } = await params;
   const { user } = await getAuth();
   return (
     <div className="flex-1 flex flex-col gap-y-8">
@@ -27,7 +29,10 @@ export default async function TicketsPage({ searchParams }: TicketsPageProps) {
       />
 
       <Suspense fallback={<Spinner />}>
-        <TicketList userId={user?.id} searchParams={searchParams} />
+        <TicketList
+          userId={user?.id}
+          searchParams={searchParamsCache.parse(searchParams)}
+        />
       </Suspense>
     </div>
   );
