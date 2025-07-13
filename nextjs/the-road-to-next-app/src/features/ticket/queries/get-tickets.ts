@@ -44,6 +44,8 @@ export async function getTickets(
   return {
     list: tickets,
     metadata: {
+      page,
+      size,
       count,
       hasNextPage: count > skip + take,
     },
