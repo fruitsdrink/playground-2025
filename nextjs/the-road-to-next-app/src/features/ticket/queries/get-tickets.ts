@@ -1,3 +1,4 @@
+import { Prisma } from "@/generated/prisma";
 import { prisma } from "@/lib/prisma";
 import { ParsedSearchParams } from "../search-params";
 
@@ -7,26 +8,44 @@ export async function getTickets(
 ) {
   const { search, sortKey, sortValue, page, size } = await searchParams;
 
-  return await prisma.ticket.findMany({
-    where: {
-      userId,
-      title: {
-        contains: search,
-        mode: "insensitive",
+  const where: Prisma.TicketWhereInput = {
+    userId,
+    title: {
+      contains: search,
+      mode: "insensitive" as const,
+    },
+  };
+
+  const skip = page * size;
+  const take = size;
+
+  const [tickets, count] = await prisma.$transaction([
+    prisma.ticket.findMany({
+      where,
+      skip,
+      take,
+      orderBy: {
+        // createdAt: "desc",
+        // ...(sort === "newest" && { createdAt: "desc" }),
+        // ...(sort === "bounty" && { bounty: "desc" }),
+        [sortKey]: sortValue,
       },
-    },
-    orderBy: {
-      // createdAt: "desc",
-      // ...(sort === "newest" && { createdAt: "desc" }),
-      // ...(sort === "bounty" && { bounty: "desc" }),
-      [sortKey]: sortValue,
-    },
-    include: {
-      user: {
-        select: {
-          username: true,
+      include: {
+        user: {
+          select: {
+            username: true,
+          },
         },
       },
+    }),
+    prisma.ticket.count({ where }),
+  ]);
+
+  return {
+    list: tickets,
+    metadata: {
+      count,
+      hasNextPage: count > skip + take,
     },
-  });
+  };
 }
