@@ -1,4 +1,5 @@
-// import { Prisma } from "@prisma/client";
+"use client";
+
 import clsx from "clsx";
 import {
   LucideMoreVertical,
@@ -6,6 +7,7 @@ import {
   LucideSquareArrowOutUpRight,
 } from "lucide-react";
 import Link from "next/link";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,10 +16,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getAuth } from "@/features/auth/queries/get-auth";
-import { isOwner } from "@/features/auth/utils/is-owner";
-import { Comments } from "@/features/comment/components/comments";
-import { CommentWithMetadata } from "@/features/comment/types";
 import { Prisma } from "@/generated/prisma";
 import { ticketEditPath, ticketPath } from "@/paths";
 import { toCurrencyFromCent } from "@/utils/currency";
@@ -33,19 +31,12 @@ type TicketItemProps = {
         };
       };
     };
-  }>;
+  }> & { isOwner: boolean };
   isDetail?: boolean;
-  comments?: CommentWithMetadata[];
+  comments?: React.ReactNode;
 };
 
-export async function TicketItem({
-  ticket,
-  isDetail,
-  comments,
-}: TicketItemProps) {
-  const { user } = await getAuth();
-  const isTicketOwner = isOwner(user, ticket);
-
+export function TicketItem({ ticket, isDetail, comments }: TicketItemProps) {
   const detailButton = (
     <Button variant={"outline"} asChild size={"icon"}>
       <Link prefetch href={ticketPath(ticket.id)} className="underline">
@@ -54,7 +45,7 @@ export async function TicketItem({
     </Button>
   );
 
-  const editButton = isTicketOwner ? (
+  const editButton = ticket.isOwner ? (
     <Button variant={"outline"} asChild size={"icon"}>
       <Link prefetch href={ticketEditPath(ticket.id)} className="underline">
         <LucidePencil />
@@ -70,7 +61,7 @@ export async function TicketItem({
   //   </form>
   // );
 
-  const moreButton = isTicketOwner ? (
+  const moreButton = ticket.isOwner ? (
     <TicketMoreMenu
       ticket={ticket}
       trigger={
@@ -130,7 +121,7 @@ export async function TicketItem({
         </div>
       </div>
 
-      {isDetail ? <Comments ticketId={ticket.id} comments={comments} /> : null}
+      {comments}
     </div>
   );
 }

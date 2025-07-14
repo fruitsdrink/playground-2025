@@ -1,6 +1,7 @@
+"use client";
+
 import { CardCompact } from "@/components/card-compact";
-import { getAuth } from "@/features/auth/queries/get-auth";
-import { isOwner } from "@/features/auth/utils/is-owner";
+import { Button } from "@/components/ui/button";
 import { CommentWithMetadata } from "../types";
 import { CommentCreateForm } from "./comment-create-form";
 import { CommentDeleteButton } from "./comment-delete-button";
@@ -10,9 +11,10 @@ type CommentsProps = {
   ticketId: string;
   comments?: CommentWithMetadata[];
 };
-export async function Comments({ ticketId, comments = [] }: CommentsProps) {
-  const { user } = await getAuth();
-
+export function Comments({ ticketId, comments = [] }: CommentsProps) {
+  const handleMore = () => {
+    console.log("more");
+  };
   return (
     <>
       <CardCompact
@@ -26,12 +28,17 @@ export async function Comments({ ticketId, comments = [] }: CommentsProps) {
             key={comment.id}
             comment={comment}
             buttons={[
-              ...(isOwner(user, comment)
+              ...(comment.isOwner
                 ? [<CommentDeleteButton key={"0"} id={comment.id} />]
                 : []),
             ]}
           />
         ))}
+      </div>
+      <div className="flex flex-col justify-center ml-8">
+        <Button variant={"ghost"} onClick={handleMore}>
+          More
+        </Button>
       </div>
     </>
   );

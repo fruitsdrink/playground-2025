@@ -2,8 +2,6 @@ import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { CardCompact } from "@/components/card-compact";
 import { Separator } from "@/components/ui/separator";
-import { getAuth } from "@/features/auth/queries/get-auth";
-import { isOwner } from "@/features/auth/utils/is-owner";
 import { TicketUpsertForm } from "@/features/ticket/components/ticket-upsert-form";
 import { getTicket } from "@/features/ticket/queries/get-ticket";
 import { homePath, ticketPath } from "@/paths";
@@ -17,12 +15,8 @@ export default async function TicketEditPage({ params }: TicketEditPageProps) {
   const { ticketId } = await params;
   const ticket = await getTicket(ticketId);
 
-  const { user } = await getAuth();
-
   const isTicketFound = !!ticket;
-  const isTicketOwner = isOwner(user, ticket);
-
-  if (!isTicketFound || !isTicketOwner) {
+  if (!isTicketFound || !ticket.isOwner) {
     notFound();
   }
 
