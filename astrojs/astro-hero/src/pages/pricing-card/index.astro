@@ -1,0 +1,13 @@
+---
+import { BaseLayout } from "@/layouts";
+import { cards } from "./_data/card-data";
+import Card from "./_components/card.astro";
+---
+
+<BaseLayout title="定价卡片">
+  <main class="min-h-screen grid place-content-center">
+    <div class="flex gap-6 flex-wrap items-start justify-center">
+      {cards.map((card) => <Card card={card} />)}
+    </div>
+  </main>
+</BaseLayout>

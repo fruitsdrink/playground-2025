@@ -1,5 +1,11 @@
 ---
 import "@/styles/global.css";
+
+type Props = {
+  title?: string;
+};
+
+const { title } = Astro.props;
 ---
 
 <html lang="zh-CN">
@@ -8,9 +14,11 @@ import "@/styles/global.css";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro Hero</title>
+    <title>{title ? `${title} - Astro Hero` : "Astro Hero"}</title>
   </head>
   <body>
-    <slot />
+    <main>
+      <slot />
+    </main>
   </body>
 </html>

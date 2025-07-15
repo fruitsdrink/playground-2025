@@ -1,0 +1,27 @@
+---
+title: Hello, World mdx
+layout: "../../features/markdown/layouts/layout.astro"
+---
+
+import { Link, Button, Blockquote } from "@/components";
+
+export const customProp = "hi this is a custom prop";
+export const components = {
+  blockquote: Blockquote,
+};
+
+<Link href={"/markdown"}>Back</Link>
+<Button client:load>Click Me</Button>
+
+# hi there
+
+{frontmatter.title}
+{customProp}
+
+```astro
+---
+console.log("hello world");
+---
+```
+
+> 引用的内容
