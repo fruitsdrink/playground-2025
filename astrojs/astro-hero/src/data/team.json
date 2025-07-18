@@ -1,0 +1,25 @@
+{
+  "team-1": [
+    {
+      "id": "1",
+      "name": "Team Member 1",
+      "role": "Developer",
+      "email": "team1@example.com",
+      "department": "Engineering"
+    },
+    {
+      "id": "2",
+      "name": "Team Member 2",
+      "role": "Designer",
+      "email": "team2@example.com",
+      "department": "Design"
+    },
+    {
+      "id": "3",
+      "name": "Team Member 3",
+      "role": "Product Manager",
+      "email": "team3@example.com",
+      "department": "Product"
+    }
+  ]
+}
