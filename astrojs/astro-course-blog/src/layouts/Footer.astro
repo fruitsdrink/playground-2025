@@ -1,0 +1,13 @@
+<footer>
+  <p>
+    &copy; <span id="copyright">{new Date().getFullYear()}</span> Katie Haus. All
+    rights reserved. I'm a skilled web developer passionate about creating innovative
+    and user-friendly websites.
+  </p>
+</footer>
+
+<script>
+  const copyrightElement =
+    document.querySelector<HTMLSpanElement>("#copyright");
+  copyrightElement!.textContent = new Date().getFullYear().toString();
+</script>
