@@ -6,7 +6,8 @@ export interface LinkProps extends HTMLAttributes<"a"> {
   variant?: "primary" | "secondary" | "ghost" | "icon";
 }
 
-const { href, variant = "primary", ...rest } = Astro.props as LinkProps;
+type Props = LinkProps;
+const { href, variant = "primary", ...rest } = Astro.props;
 ---
 
 <a href={href} class:list={["link", variant]} {...rest}>
