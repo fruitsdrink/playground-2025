@@ -31,7 +31,9 @@ export function Comments({ ticketId, paginatedComments }: CommentsProps) {
     setComments((prev) => prev.filter((comment) => comment.id !== id));
   };
 
-  const handleCreateComment = (comment: CommentWithMetadata) => {
+  const handleCreateComment = (comment: CommentWithMetadata | undefined) => {
+    if (!comment) return;
+
     setComments((prev) => [comment, ...prev]);
   };
   return (

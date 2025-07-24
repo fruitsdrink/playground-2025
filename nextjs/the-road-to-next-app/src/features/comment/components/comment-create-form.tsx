@@ -14,7 +14,7 @@ import { CommentWithMetadata } from "../types";
 
 type CommentCreateFormProps = {
   ticketId: string;
-  onCreateComment?: (comment: CommentWithMetadata) => void;
+  onCreateComment?: (comment: CommentWithMetadata | undefined) => void;
 };
 export function CommentCreateForm({
   ticketId,
@@ -25,9 +25,11 @@ export function CommentCreateForm({
     EMPTY_ACTION_STATE
   );
 
-  const handleSuccess = (actionState: ActionState) => {
+  const handleSuccess = (
+    actionState: ActionState<CommentWithMetadata | undefined>
+  ) => {
     if (onCreateComment) {
-      onCreateComment(actionState.data as CommentWithMetadata);
+      onCreateComment(actionState.data);
     }
   };
   return (
