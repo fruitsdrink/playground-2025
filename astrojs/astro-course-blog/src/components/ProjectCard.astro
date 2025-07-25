@@ -6,9 +6,11 @@ import Link from "@/components/ui/Link.astro";
 
 type Props = {
   project: CollectionEntry<"projects">;
+  tagName: "h2" | "h3";
 };
 
 const {
+  tagName,
   project: {
     data: { title, href, image },
   },
@@ -18,7 +20,7 @@ const {
 <article aria-label={title} class="project-card">
   <img src={image.src} width={400} height={225} alt={title} />
   <div class="rows">
-    <Heading tagName="h2" tagSize="h3">{title}</Heading>
+    <Heading tagName={tagName} tagSize="h3">{title}</Heading>
     <Link href={href} variant="secondary">View Project</Link>
   </div>
 </article>
