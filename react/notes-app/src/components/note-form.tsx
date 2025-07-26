@@ -1,6 +1,7 @@
 import { useState } from "react";
 import style from "./note-form.module.css";
 import type { Note } from "../types";
+import { SelectInput, TextAreaInput, TextInput } from "./inputs";
 
 type NoteFormPorps = {
   setNotes: React.Dispatch<React.SetStateAction<Note[]>>;
@@ -47,52 +48,51 @@ export function NoteForm({ setNotes }: NoteFormPorps) {
     <>
       <button
         onClick={() => setIsFormVisible((prev) => !prev)}
-        className="w-full bg-gray-100 border border-gray-300 py-2 rounded-md text-purple-800 cursor-pointer hover:bg-purple-200 hover:border-purple-300 transition duration-200 mb-4"
+        className="w-full py-2 mb-4 text-purple-800 transition duration-200 bg-gray-100 border border-gray-300 rounded-md cursor-pointer hover:bg-purple-200 hover:border-purple-300"
       >
         {isFormVisible ? "Hide Form" : "Add New Note"}
       </button>
       {isFormVisible && (
         <form className="mb-6" onSubmit={handleSubmit}>
-          <div className={style.formItem}>
-            <label htmlFor="title">Title</label>
-            <input
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-            />
-          </div>
-          <div className={style.formItem}>
-            <label htmlFor="priority">Priority</label>
-            <select
-              name="priority"
-              value={formData.priority}
-              onChange={handleChange}
-            >
-              <option value="low">🟢 Low</option>
-              <option value="medium">🟡 Medium</option>
-              <option value="high">🔴 High</option>
-            </select>
-          </div>
-          <div className={style.formItem}>
-            <label htmlFor="category">Category</label>
-            <select
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-            >
-              <option value="work">🗃️ Work</option>
-              <option value="personal">🏠 Personal</option>
-              <option value="ideas">💡 Ideas</option>
-            </select>
-          </div>
-          <div className={style.formItem}>
-            <label htmlFor="description">Description</label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-            ></textarea>
-          </div>
+          <TextInput
+            label="Title"
+            name="title"
+            className={style.formItem}
+            value={formData.title}
+            onChange={handleChange}
+          />
+          <SelectInput
+            label="Priority"
+            name="priority"
+            value={formData.priority}
+            className={style.formItem}
+            onChange={handleChange}
+            options={[
+              { value: "low", label: "🟢 Low" },
+              { value: "medium", label: "🟡 Medium" },
+              { value: "high", label: "🔴 High" },
+            ]}
+          />
+          <SelectInput
+            label="Category"
+            name="category"
+            value={formData.category}
+            className={style.formItem}
+            onChange={handleChange}
+            options={[
+              { value: "work", label: "🗃️ Work" },
+              { value: "personal", label: "🏠 Personal" },
+              { value: "ideas", label: "💡 Ideas" },
+            ]}
+          />
+          <TextAreaInput
+            label="Description"
+            name="description"
+            value={formData.description}
+            className={style.formItem}
+            onChange={handleChange}
+          />
+
           <button type="submit" className={style.button}>
             Add Note
           </button>
