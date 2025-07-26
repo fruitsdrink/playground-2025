@@ -1,6 +1,6 @@
 import { file, glob } from "astro/loaders";
 import { z } from "astro/zod";
-import { defineCollection } from "astro:content";
+import { defineCollection, reference } from "astro:content";
 import { parse as parseCsv } from "csv-parse/sync";
 import { parse as parseToml } from "toml";
 
@@ -12,6 +12,7 @@ const team = defineCollection({
     name: z.string(),
     role: z.string(),
     email: z.string().email(),
+    todos: z.array(reference("todos")),
     department: z.enum(["Engineering", "Design", "Product", "Support"]),
   }),
 });
@@ -21,13 +22,24 @@ const posts = defineCollection({
     // pattern: "src/data/posts/*.md",
     pattern: ["*.md"],
     base: "src/data/posts",
-    generateId: (opts) => {
-      return opts.entry;
+    generateId: ({ entry }) => {
+      return entry.replace(/\.md$/, "");
+      // return data["slug"] as string;
     },
   }),
-  schema: z.object({
-    title: z.string().min(1, "Title is required"),
-  }),
+  schema: ({ image }) => {
+    return z.object({
+      title: z.string(),
+      tags: z.array(z.string()),
+      pubDate: z.coerce.date(),
+      isDraft: z.boolean(),
+      canonicalURL: z.string().url().optional(),
+      cover: image(),
+      coverAlt: z.string(),
+      author: reference("team"),
+      slug: z.string().min(1),
+    });
+  },
 });
 
 const cats = defineCollection({
@@ -52,6 +64,15 @@ const todos = defineCollection({
       id: todo.id.toString(), // Ensure id is a string
     }));
   },
+  schema: z
+    .object({
+      title: z.string(),
+      completed: z.boolean(),
+    })
+    .transform((data) => ({
+      taskName: data.title,
+      isCompleted: data.completed,
+    })),
 });
 export const collections = {
   team,

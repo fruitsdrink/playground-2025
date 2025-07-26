@@ -1,0 +1,19 @@
+---
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("posts", (post) => !post.data.isDraft);
+---
+
+<main class="content">
+  <ul>
+    {
+      posts
+        .sort((a, b) => a.data.title.localeCompare(b.data.title))
+        .map((post) => (
+          <li>
+            <a href={`/ssg/${post.data.slug}`}>{post.data.title}</a>
+          </li>
+        ))
+    }
+  </ul>
+</main>
