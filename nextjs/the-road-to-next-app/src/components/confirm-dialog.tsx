@@ -1,4 +1,4 @@
-import {
+import React, {
   cloneElement,
   useActionState,
   useEffect,
@@ -26,7 +26,9 @@ type UseConfirmDialogProps = {
   title?: string;
   description?: string;
   action: () => Promise<ActionState>;
-  trigger: React.ReactElement<{ onClick: () => void }>;
+  trigger:
+    | React.ReactElement<{ onClick: () => void }>
+    | ((isPending: boolean) => React.ReactElement<{ onClick: () => void }>);
   onSuccess?: (actionState: ActionState) => void;
 };
 export function useConfirmDialog({
@@ -38,13 +40,16 @@ export function useConfirmDialog({
 }: UseConfirmDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const dialogTrigger = cloneElement(trigger, {
-    onClick: () => setIsOpen((state) => !state),
-  });
-
   const [actionState, formAction, isPending] = useActionState(
     action,
     EMPTY_ACTION_STATE
+  );
+
+  const dialogTrigger = cloneElement(
+    typeof trigger === "function" ? trigger(isPending) : trigger,
+    {
+      onClick: () => setIsOpen((state) => !state),
+    }
   );
 
   // const handleSuccess = () => {
