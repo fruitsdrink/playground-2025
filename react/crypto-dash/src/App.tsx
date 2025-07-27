@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import type { Coin } from "./types";
-import { CoinCard } from "./components/coin-card";
-import { LimitSelect } from "./components/limit-select";
-import { SearchInput } from "./components/search-input";
-import { SortSelect } from "./components/sort-select";
+import { BrowserRouter, Route, Routes } from "react-router";
+import { HomePage } from "./pages/home";
+import { AboutPage } from "./pages/about";
+import { Header } from "./components/header";
+import { NotFoundPage } from "./pages/not-found";
+import { CoinDetailPage } from "./pages/coin-detail";
 
 const API_KEY = import.meta.env["VITE_API_KEY"];
-const API_URL = import.meta.env["VITE_API_URL"];
+const API_URL = import.meta.env["VITE_COINS_API_URL"];
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -44,66 +46,30 @@ export default function App() {
     fetchData();
   }, [fetchData]);
 
-  const filteredCoins = coins
-    .filter(
-      (coin) =>
-        coin.name.toLowerCase().includes(keyword?.toLowerCase() ?? "") ||
-        coin.symbol.toLowerCase().includes(keyword?.toLowerCase() ?? "")
-    )
-    .slice()
-    .sort((a, b) => {
-      switch (sortBy) {
-        case "market_cap_asc":
-          return a.market_cap - b.market_cap;
-        case "market_cap_desc":
-          return b.market_cap - a.market_cap;
-        case "price_asc":
-          return a.current_price - b.current_price;
-        case "price_desc":
-          return b.current_price - a.current_price;
-        case "change_asc":
-          return a.price_change_percentage_24h - b.price_change_percentage_24h;
-        case "change_desc":
-          return b.price_change_percentage_24h - a.price_change_percentage_24h;
-        default:
-          return 0;
-      }
-    });
-
   return (
-    <div>
-      <h1>🚀 Crypto Dash</h1>
-      {loading && (
-        <p
-          style={{
-            textAlign: "center",
-          }}
-        >
-          Loading...
-        </p>
-      )}
-      {error && <div className="error">{error}</div>}
-
-      <div className="top-controls">
-        <SearchInput
-          keyword={keyword}
-          onChange={(value) => {
-            setKeyword(value);
-          }}
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <HomePage
+              coins={coins}
+              keyword={keyword}
+              setKeyword={setKeyword}
+              limit={limit}
+              setLimit={setLimit}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+              loading={loading}
+              error={error}
+            />
+          }
         />
-        <SortSelect sort={sortBy} onChange={(sort) => setSortBy(sort)} />
-        <LimitSelect limit={limit} onChange={(limit) => setLimit(limit)} />
-      </div>
-
-      {!loading && !error && (
-        <main className="grid">
-          {filteredCoins.length > 0 ? (
-            filteredCoins.map((coin) => <CoinCard key={coin.id} coin={coin} />)
-          ) : (
-            <p>Not matching coins</p>
-          )}
-        </main>
-      )}
-    </div>
+        <Route path="/coin/:id" element={<CoinDetailPage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
