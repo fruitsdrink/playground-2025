@@ -6,6 +6,7 @@ import Projects from "@/components/home/Projects.astro";
 import Heading from "@/components/ui/Heading.astro";
 import { getCollection } from "astro:content";
 import BlogCard from "@/components/blog/BlogCard.astro";
+import Connect from "@/components/Connect.astro";
 
 const posts = await getCollection("blog", ({ data }) => !data.isDraft);
 ---
@@ -19,6 +20,9 @@ const posts = await getCollection("blog", ({ data }) => !data.isDraft);
     >
     <Projects limit={3} tagName="h3" />
   </section>
+
+  <Connect />
+
   <section aria-labelledby="#recent-posts" class="container rows">
     <Heading tagName="h2" tagSize="h2" id="recent-posts"
       >Latest Blog Posts
