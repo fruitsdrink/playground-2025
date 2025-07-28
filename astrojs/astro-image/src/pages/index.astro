@@ -1,0 +1,72 @@
+---
+import { Code } from "astro:components";
+import { Image, Picture } from "astro:assets";
+
+import "../styles/global.css";
+
+import Katie from "../assets/image.jpg";
+import { getImage } from "astro:assets";
+
+const optimizedImage = await getImage({ src: Katie, format: "webp" });
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro Image</title>
+  </head>
+  <body>
+    <div class="container mx-auto max-w-md flex flex-col gap-4 p-6">
+      <div>
+        <img src="/image.jpg" alt="astro image" />
+        <Code
+          code={`<img src="/astro.jpg" alt="astro image" />`}
+          lang={"html"}
+        />
+      </div>
+      <div>
+        <img src={Katie.src} alt="astro image" />
+        <Code
+          code={`<img src={Katie.src} alt="astro image" />`}
+          lang={"html"}
+        />
+      </div>
+      <div>
+        <Image src={Katie} alt={"astro Image"} />
+        <Code
+          code={`<Image src={Katie} alt={"astro Image"} />`}
+          lang={"html"}
+        />
+      </div>
+      <div>
+        <Picture src={Katie} alt={"astro Picture"} />
+        <Code
+          code={`<Picture src={Katie} alt={"astro Picture"} />`}
+          lang={"html"}
+        />
+      </div>
+      <div>
+        <img src={optimizedImage.src} alt="astro image" />
+        <Code
+          code={`<img src={optimizedImage.src} alt="astro image" />`}
+          lang={"html"}
+        />
+      </div>
+      <div>
+        <Image
+          inferSize
+          format="avif"
+          src={"https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_960_720.jpg"}
+          alt={"Remote Image"}
+        />
+        <Code
+          code={`<Image inferSize format="avif" src={"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"} alt={"Remote Image"} />`}
+          lang={"html"}
+        />
+      </div>
+    </div>
+  </body>
+</html>
