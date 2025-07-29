@@ -1,4 +1,11 @@
 {
   "postman.settings.dotenv-detection-notification-visibility": false,
-  "cSpell.words": ["Breadrumbs", "luciav", "nuqs", "Sonner", "turbopack"]
+  "cSpell.words": [
+    "Breadrumbs",
+    "luciav",
+    "nuqs",
+    "Sonner",
+    "turbopack"
+  ],
+  "kiroAgent.configureMCP": "Disabled"
 }
