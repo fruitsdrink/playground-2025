@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       astro:
-        specifier: ^5.12.3
-        version: 5.12.3(@types/node@24.1.0)(rollup@4.46.1)(typescript@5.8.3)
+        specifier: ^5.12.4
+        version: 5.12.4(@types/node@24.1.0)(rollup@4.46.1)(typescript@5.8.3)
 
 packages:
 
@@ -541,8 +541,8 @@ packages:
   array-iterate@2.0.1:
     resolution: {integrity: sha512-I1jXZMjAgCMmxT4qxXfPXa6SthSoE8h6gkSI9BGGNv8mP8G/v0blc+qFnZu6K42vTOiuME596QaLO0TP3Lk0xg==}
 
-  astro@5.12.3:
-    resolution: {integrity: sha512-fU1hNPMkccm+FuonGsY5DFkC2QyuLCju++8L2ubzBtYBDBf6bmfgmVM7A2dK+Hl+ZJCUNgepsClhBpczj+2LRw==}
+  astro@5.12.4:
+    resolution: {integrity: sha512-ns+/KpfWToKvVf2DJTj4EIa4U59/XVBXeeq6VZUr5DXe6OZJFs8NfJi+W20nRm5nduIeBZGRzaoxPFq9lm4WEg==}
     engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
@@ -1865,7 +1865,7 @@ snapshots:
 
   array-iterate@2.0.1: {}
 
-  astro@5.12.3(@types/node@24.1.0)(rollup@4.46.1)(typescript@5.8.3):
+  astro@5.12.4(@types/node@24.1.0)(rollup@4.46.1)(typescript@5.8.3):
     dependencies:
       '@astrojs/compiler': 2.12.2
       '@astrojs/internal-helpers': 0.6.1

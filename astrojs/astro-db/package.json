@@ -1,5 +1,5 @@
 {
-  "name": "astro-ssr-endpoints",
+  "name": "astro-db",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -9,7 +9,6 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/node": "^9.3.0",
     "astro": "^5.12.4"
   }
 }
