@@ -1,5 +1,5 @@
 {
-  "name": "friendly-backend",
+  "name": "friendly-dev-backend",
   "version": "0.1.0",
   "private": true,
   "description": "A Strapi application",
@@ -7,7 +7,7 @@
     "build": "strapi build",
     "console": "strapi console",
     "deploy": "strapi deploy",
-    "dev": "strapi develop",
+    "dev": "strapi develop --debug",
     "develop": "strapi develop",
     "start": "strapi start",
     "strapi": "strapi",
@@ -18,7 +18,7 @@
     "@strapi/plugin-cloud": "5.20.0",
     "@strapi/plugin-users-permissions": "5.20.0",
     "@strapi/strapi": "5.20.0",
-    "pg": "8.8.0",
+    "pg": "^8.8.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
@@ -35,7 +35,7 @@
     "npm": ">=6.0.0"
   },
   "strapi": {
-    "uuid": "df3a7b91-4dfd-423a-a53a-ba6348211ae5",
-    "installId": "3226d7c9726a40a6535f82e39f76c71091e14eb00e83c9a7e1458900a23ed55a"
+    "uuid": "071eb2f6-5e67-461d-b9e8-26e0c66e4eb4",
+    "installId": "93df9578ea007ec92a6097dcdad027e08872b0dd73526412d63bb3d6fec68252"
   }
 }

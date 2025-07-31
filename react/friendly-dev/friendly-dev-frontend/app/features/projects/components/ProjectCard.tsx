@@ -7,7 +7,7 @@ type ProjectCardProps = {
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Link
-      to={`/projects/${project.id}`}
+      to={`/projects/${project.documentId}`}
       className="block transform transition duration-300 hover:scale-[1.02]"
     >
       <div className="bg-gray-800 border border-gray-200 rounded-lg overflow-hidden shadow-sm transition hover:shadow-md">

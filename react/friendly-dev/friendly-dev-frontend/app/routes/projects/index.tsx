@@ -1,9 +1,10 @@
-import type { Project } from "~/features/projects/types";
+import type { Project, StrapiProject } from "~/features/projects/types";
 import type { Route } from "./+types";
 import { ProjectCard } from "~/features/projects/components/ProjectCard";
 import { useState } from "react";
 import { Pagination } from "~/components/Pagination";
 import { AnimatePresence, motion } from "motion/react";
+import type { StrapiResponse } from "~/types";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -15,11 +16,29 @@ export function meta({}: Route.MetaArgs) {
 export async function loader({ request }: Route.LoaderArgs): Promise<{
   projects: Project[];
 }> {
-  const res = await fetch(`${import.meta.env.VITE_API_URL}/projects`);
-  const data = await res.json();
+  const res = await fetch(
+    `${import.meta.env.VITE_API_URL}/projects?populate=*`
+  );
+
+  const { data, error } = (await res.json()) as StrapiResponse<StrapiProject[]>;
+  if (error) throw new Error("No data from strapi");
+
+  const projects = data.map((project) => ({
+    id: project.id,
+    documentId: project.documentId,
+    title: project.title,
+    description: project.description,
+    image: project.image?.url
+      ? `${import.meta.env.VITE_STRAPI_URL}${project.image.url}`
+      : "/images/no-image.png",
+    category: project.category,
+    url: project.url,
+    date: project.date,
+    featured: project.featured,
+  }));
 
   return {
-    projects: data,
+    projects,
   };
 }
 

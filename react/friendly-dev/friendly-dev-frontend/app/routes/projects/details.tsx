@@ -1,24 +1,42 @@
-import type { Project } from "~/features/projects/types";
+import type { Project, StrapiProject } from "~/features/projects/types";
 import type { Route } from "./+types/details";
 import { Link } from "react-router";
 import { FaArrowLeft } from "react-icons/fa";
+import type { StrapiResponse } from "~/types";
 
-export async function clientLoader({
+export async function loader({
   request,
   params,
-}: Route.ClientActionArgs): Promise<Project> {
+}: Route.LoaderArgs): Promise<Project> {
   const { id } = params;
 
-  const res = await fetch(`${import.meta.env.VITE_API_URL}/projects/${id}`);
+  const res = await fetch(
+    `${import.meta.env.VITE_API_URL}/projects/${id}?populate=*`
+  );
 
   if (!res.ok) throw new Response("Not Found", { status: 404 });
 
-  return await res.json();
+  const { data, error } = (await res.json()) as StrapiResponse<StrapiProject>;
+  if (error) throw new Response("Not Found", { status: 404 });
+
+  return {
+    id: data.id,
+    documentId: data.documentId,
+    title: data.title,
+    description: data.description,
+    date: data.date,
+    category: data.category,
+    featured: data.featured,
+    url: data.url,
+    image: data.image?.url
+      ? `${import.meta.env.VITE_STRAPI_URL}${data.image.url}`
+      : "/images/no-image.png",
+  };
 }
 
-export function HydrateFallback() {
-  return <div>Loading...</div>;
-}
+// export function HydrateFallback() {
+//   return <div>Loading...</div>;
+// }
 
 export default function ProjectDetailsPage({
   loaderData: project,
