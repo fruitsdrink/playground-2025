@@ -2,7 +2,7 @@ import { FeaturedProjects } from "~/features/home/components/FeaturedProjects";
 import type { Route } from "./+types";
 import type { Project, StrapiProject } from "~/features/projects/types";
 import { AboutPreview } from "~/features/home/components/AboutPreview";
-import type { PostMeta } from "~/features/blog/types";
+import type { PostMeta, StrapiPost } from "~/features/blog/types";
 import { LatestPosts } from "~/features/home/components/LatestPosts";
 import type { StrapiResponse } from "~/types";
 
@@ -25,14 +25,15 @@ export async function loader({ request }: Route.LoaderArgs): Promise<{
         import.meta.env.VITE_API_URL
       }/projects?filters[featured][$eq]=true&populate=*`
     ),
-    fetch(url.href),
+    fetch(`${import.meta.env.VITE_API_URL}/posts?sort[0]=date:desc&populate=*`),
+    // fetch(url.href),
   ]);
   if (!projectRes.ok || !postRes.ok) {
     throw new Error("Failed to fetch data");
   }
 
   const projectsJson: StrapiResponse<StrapiProject[]> = await projectRes.json();
-  const postJson = await postRes.json();
+  const postJson: StrapiResponse<StrapiPost[]> = await postRes.json();
 
   const projects = projectsJson.data.map((project) => {
     return {
@@ -50,9 +51,21 @@ export async function loader({ request }: Route.LoaderArgs): Promise<{
     };
   });
 
+  const posts = postJson.data.map((post) => ({
+    id: post.id,
+    title: post.title,
+    slug: post.slug,
+    excerpt: post.excerpt,
+    body: post.body,
+    image: post.image?.url
+      ? `${import.meta.env.VITE_STRAPI_URL}${post.image.url}`
+      : "/images/no-image.png",
+    date: post.date,
+  }));
+
   return {
     projects,
-    posts: postJson,
+    posts,
   };
 }
 
