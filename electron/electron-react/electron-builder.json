@@ -2,6 +2,7 @@
   "appId": "com.example.app",
   "files": ["dist-electron", "dist-ui"],
   "icon": "./desktopIcon.png",
+  "extraResources": ["dist-electron/preload.cjs", "src/assets/**"],
   "mac": {
     "target": "dmg"
   },
