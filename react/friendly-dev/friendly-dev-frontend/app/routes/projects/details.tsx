@@ -28,9 +28,7 @@ export async function loader({
     category: data.category,
     featured: data.featured,
     url: data.url,
-    image: data.image?.url
-      ? `${import.meta.env.VITE_STRAPI_URL}${data.image.url}`
-      : "/images/no-image.png",
+    image: data.image?.url ? `${data.image.url}` : "/images/no-image.png",
   };
 }
 

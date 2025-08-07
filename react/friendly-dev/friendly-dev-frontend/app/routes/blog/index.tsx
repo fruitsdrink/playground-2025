@@ -27,9 +27,7 @@ export async function loader({
     excerpt: post.excerpt,
     date: post.date,
     body: post.body,
-    image: post.image?.url
-      ? `${import.meta.env.VITE_STRAPI_URL}${post.image.url}`
-      : "/images/no-image.png",
+    image: post.image?.url ? `${post.image.url}` : "/images/no-image.png",
   }));
 
   return { posts };

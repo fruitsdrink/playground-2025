@@ -42,7 +42,7 @@ export async function loader({ request }: Route.LoaderArgs): Promise<{
       title: project.title,
       description: project.description,
       image: project.image?.url
-        ? `${import.meta.env.VITE_STRAPI_URL}${project.image.url}`
+        ? `${project.image.url}`
         : "/images/no-image.png",
       category: project.category,
       url: project.url,
@@ -57,9 +57,7 @@ export async function loader({ request }: Route.LoaderArgs): Promise<{
     slug: post.slug,
     excerpt: post.excerpt,
     body: post.body,
-    image: post.image?.url
-      ? `${import.meta.env.VITE_STRAPI_URL}${post.image.url}`
-      : "/images/no-image.png",
+    image: post.image?.url ? `${post.image.url}` : "/images/no-image.png",
     date: post.date,
   }));
 

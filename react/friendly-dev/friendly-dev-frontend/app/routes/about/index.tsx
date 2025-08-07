@@ -47,7 +47,9 @@ export default function AboutPage() {
           "Appwrite",
           "Docker",
         ].map((tech) => (
-          <li className="bg-gray-700 px-3 py-1 rounded-md">{tech}</li>
+          <li key={tech} className="bg-gray-700 px-3 py-1 rounded-md">
+            {tech}
+          </li>
         ))}
       </ul>
     </div>
