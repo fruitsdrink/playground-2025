@@ -1,26 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { FaGithubAlt } from "react-icons/fa";
+import { fetchGithubUser } from "../api/github";
+import { UserCard } from "./UserCard";
 
 export const UserSearch = () => {
-  const [username, setUsername] = useState("");
-  const [submittedUsername, setSubmittedUsername] = useState("");
+  const [username, setUsername] = useState("divanov11");
+  const [submittedUsername, setSubmittedUsername] = useState("divanov11");
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["users", submittedUsername],
-    queryFn: async () => {
-      const res = await fetch(
-        `${import.meta.env.VITE_GITHUB_API_URL}/users/${submittedUsername}`
-      );
-      if (!res.ok) {
-        throw new Error("User not found");
-      }
-
-      const data = await res.json();
-      console.log(data);
-
-      return data;
-    },
+    queryFn: () => fetchGithubUser(submittedUsername),
     enabled: !!submittedUsername,
   });
 
@@ -42,21 +31,7 @@ export const UserSearch = () => {
       </form>
       {isLoading && <p className="status">Loading...</p>}
       {isError && <p className="status error">{error.message}</p>}
-      {data && (
-        <div className="user-card">
-          <img src={data.avatar_url} alt={data.name} className="avatar" />
-          <h2>{data.name || data.login}</h2>
-          <p className="bio">{data.bio}</p>
-          <a
-            href={data.html_url}
-            className="profile-btn"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaGithubAlt /> View GithHub Profile
-          </a>
-        </div>
-      )}
+      {data && <UserCard user={data} />}
     </>
   );
 };
