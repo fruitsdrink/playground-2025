@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "idea-drop-api"
+		},
+		{
+			"path": "idea-drop-ui"
+		}
+	],
+	"settings": {
+		"kiroAgent.configureMCP": "Disabled"
+	}
+}
