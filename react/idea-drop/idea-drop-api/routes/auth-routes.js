@@ -32,7 +32,7 @@ router.post("/register", async (req, res, next) => {
     });
 
     const payload = { userId: user._id.toString() };
-    const accessToken = await generateToken(payload, "1m");
+    const accessToken = await generateToken(payload, "5s");
     const refreshToken = await generateToken(payload, "30d");
 
     // set refresh token in HTTP-Only cookie
@@ -40,7 +40,7 @@ router.post("/register", async (req, res, next) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // Use secure cookies in production
       // sameSite: 'strict', // Prevent CSRF attacks
-      sameSite: "none",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     });
 
@@ -85,7 +85,7 @@ router.post("/login", async (req, res, next) => {
     }
 
     const payload = { userId: user._id.toString() };
-    const accessToken = await generateToken(payload, "1m");
+    const accessToken = await generateToken(payload, "5s");
     const refreshToken = await generateToken(payload, "30d");
 
     // set refresh token in HTTP-Only cookie
@@ -93,7 +93,7 @@ router.post("/login", async (req, res, next) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production", // Use secure cookies in production
       // sameSite: 'strict', // Prevent CSRF attacks
-      sameSite: "none",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
     });
 

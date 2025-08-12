@@ -16,7 +16,7 @@ export default function IdeaCard({ idea, button = true }: Props) {
 
   return (
     <li
-      key={idea.id}
+      key={idea._id}
       className="border border-gray-300 p-4 rounded shadow bg-white flex flex-col justify-between"
     >
       <div>
@@ -25,7 +25,7 @@ export default function IdeaCard({ idea, button = true }: Props) {
       </div>
       <Link
         to="/ideas/$ideaId"
-        params={{ ideaId: idea.id }}
+        params={{ ideaId: idea._id }}
         className={linkClasses}
       >
         {button ? "View Idea" : "Read more →"}

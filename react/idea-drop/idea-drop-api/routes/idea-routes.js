@@ -163,7 +163,6 @@ router.put("/:id", protect, async (req, res, next) => {
 router.delete("/:id", protect, async (req, res, next) => {
   try {
     const { id } = req.params || {};
-    console.log({ id });
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       res.status(400);
@@ -175,7 +174,7 @@ router.delete("/:id", protect, async (req, res, next) => {
       res.status(404);
       throw new Error("Idea not found");
     }
-    if (idea.user.toString() !== req.user._id.toString()) {
+    if (idea.user && idea.user.toString() !== req.user._id.toString()) {
       res.status(403);
       throw new Error("User not authorized");
     }

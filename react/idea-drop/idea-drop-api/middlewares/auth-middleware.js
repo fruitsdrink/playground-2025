@@ -5,7 +5,6 @@ import { JWT_SECRET } from "../utils/token.js";
 export async function protect(req, res, next) {
   try {
     const authHeader = req.headers.authorization;
-    console.log({ authHeader });
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       res.status(401);
