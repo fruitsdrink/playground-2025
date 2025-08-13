@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import ideaRouter from "./routes/idea-routes.js";
-import authRouter from './routes/auth-routes.js'
+import authRouter from "./routes/auth-routes.js";
 import { errorHandler } from "./middlewares/error-handler.js";
 import connectDB from "./config/db.js";
 import cookieParser from "cookie-parser";
@@ -14,13 +14,19 @@ const PORT = process.env.PORT || 8000;
 
 connectDB();
 
-app.use(cors());
+const allowOrigins = ["http://localhost:3000"];
+app.use(
+  cors({
+    origin: allowOrigins,
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser())
+app.use(cookieParser());
 
 app.use("/api/ideas", ideaRouter);
-app.use('/api/auth', authRouter)
+app.use("/api/auth", authRouter);
 
 // 404 fallback
 app.use((req, res, next) => {
